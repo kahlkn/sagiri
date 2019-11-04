@@ -1,0 +1,21 @@
+server:
+  port: 1210
+
+spring:
+  application:
+    name: sagiri
+  profiles:
+    active: dev
+#  main:
+#    allow-bean-definition-overriding: true
+
+---
+spring:
+  profiles: dev
+
+---
+spring:
+  profiles: test
+
+
+
