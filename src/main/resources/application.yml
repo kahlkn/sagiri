@@ -1,21 +1,52 @@
 server:
   port: 1210
+  servlet:
+    session:
+      timeout: 30M
+  tomcat:
+    min-spare-threads: 5
+    max-threads: 300
+    uri-encoding: utf-8
 
 spring:
   application:
     name: sagiri
   profiles:
-    active: dev
-#  main:
-#    allow-bean-definition-overriding: true
+    active: default
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/sagiri?useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: root
+    password: root
+  thymeleaf:
+    mode: HTML5
+    cache: false
+  servlet:
+    multipart:
+      max-file-size: 30MB
+      max-request-size: 30MB
+  cache:
+    type: ehcache
+    ehcache:
+      config: classpath:ehcache.xml
+  jackson:
+    serialization:
+      write-dates-as-timestamps: true
+#  redis:
+#    host: 127.0.0.1
+#    port: 6379
+#    password: 123456
 
----
-spring:
-  profiles: dev
+logging:
+  config: classpath:logback-spring.xml
+  home: /tmp/logs/
+  level:
+    root: info
+#    org.springframework.boot: off
 
----
-spring:
-  profiles: test
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
 
 
 
