@@ -14,10 +14,10 @@ spring:
   profiles:
     active: default
   datasource:
-    driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/sagiri?useUnicode=true&characterEncoding=utf8&useSSL=false
-    username: root
-    password: root
+    driverClassName: org.sqlite.JDBC
+    url: jdbc:sqlite:sagiri.sqlite
+    username:
+    password:
   thymeleaf:
     mode: HTML5
     cache: false
@@ -25,10 +25,10 @@ spring:
     multipart:
       max-file-size: 30MB
       max-request-size: 30MB
-  cache:
-    type: ehcache
-    ehcache:
-      config: classpath:ehcache.xml
+#  cache:
+#    type: ehcache
+#    ehcache:
+#      config: classpath:ehcache.xml
   jackson:
     serialization:
       write-dates-as-timestamps: true
@@ -47,6 +47,23 @@ logging:
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
+
+artoria:
+  trace:
+    enabled: false
+    showAccessLog: true
+    clientNameKey: platform
+  exception:
+    enabled: true
+    showErrorMessage: true
+    defaultServerErrorMessage: 服务器繁忙！
+  user:
+    enabled: true
+    token-expire: 259200000
+    exclude-path-patterns:
+      - /api/**
+  lock:
+    enabled: false
 
 
 
