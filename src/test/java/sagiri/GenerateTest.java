@@ -20,10 +20,10 @@ public class GenerateTest {
                 .setBasePackageName("sagiri")
                 .setRenderer(new VelocityRenderer())
                 .addRemovedTableNamePrefixes("t_")
-//                .addExcludedTables("t_15_user")
-//                .addReservedTables("t_user")
+//                .addExcludedTables("t_user_bak")
+                .addReservedTables("t_domain_info")
                 ;
-        generator.addAttribute("author", "Egg Xiao Er Team");
+        generator.addAttribute("author", "Kahle");
         generator.generate();
     }
 

@@ -14,10 +14,10 @@ spring:
   profiles:
     active: default
   datasource:
-    driverClassName: org.sqlite.JDBC
-    url: jdbc:sqlite:sagiri.sqlite
-    username:
-    password:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/sagiri?useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: root
+    password: root
   thymeleaf:
     mode: HTML5
     cache: false
