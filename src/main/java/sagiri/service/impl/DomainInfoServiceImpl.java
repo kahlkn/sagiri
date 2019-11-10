@@ -1,6 +1,10 @@
 package sagiri.service.impl;
 
 import artoria.beans.BeanUtils;
+import artoria.common.PageResult;
+import artoria.common.Paging;
+import artoria.thread.SimpleThreadFactory;
+import artoria.time.DateUtils;
 import artoria.util.CollectionUtils;
 import artoria.util.PagingUtils;
 import artoria.util.ThreadUtils;
@@ -12,15 +16,20 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sagiri.persistence.entity.DomainInfo;
+import sagiri.persistence.entity.DomainInfoQuery;
 import sagiri.persistence.mapper.DomainInfoMapper;
+import sagiri.pojo.dto.DomainInfoDTO;
+import sagiri.pojo.dto.DomainInfoQueryDTO;
 import sagiri.service.DomainInfoService;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.*;
 
 import static artoria.common.Constants.*;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 /**
  * DomainInfoServiceImpl.
@@ -67,6 +76,8 @@ public class DomainInfoServiceImpl implements DomainInfoService {
             domainName.append(domainSuffix);
             DomainInfo domainInfo = new DomainInfo();
             domainInfo.setDomainName(domainName.toString());
+            domainInfo.setDomainLength(length);
+            domainInfo.setDomainSuffix(domainSuffix.startsWith(DOT) ? domainSuffix.substring(ONE) : domainSuffix);
             domainInfo.setStatus(ZERO);
             domainInfo.setCreateDate(new Date());
             domainInfo.setCreateUser(SYSTEM);
@@ -127,25 +138,83 @@ public class DomainInfoServiceImpl implements DomainInfoService {
 
     @Override
     public void updateAllDomain() {
-        DomainInfo query = new DomainInfo();
-        int pageNum = 1, pageSize = 200;
-        while (true) {
-            PagingUtils.startPage(pageNum, pageSize);
-            List<DomainInfo> list = domainInfoMapper.querySelective(query);
-            if (CollectionUtils.isEmpty(list)) { break; }
-            for (DomainInfo domainInfo : list) {
-                if (domainInfo == null) { continue; }
-                String domainName = domainInfo.getDomainName();
-                try {
-                    updateDomain(domainName);
-                }
-                catch (Exception e) {
-                    log.info("Update \"" + domainName + "\" failed. ", e);
-                }
-                ThreadUtils.sleepQuietly(THREE_HUNDRED);
+        String threadNamePrefix = "update-domain-executor";
+        ExecutorService pool = null;
+        final int refreshRate = 0;
+        final int pageSize = 500;
+        final int poolSize = 50;
+        try {
+            ThreadFactory threadFactory = new SimpleThreadFactory(threadNamePrefix, Boolean.TRUE);
+            pool = new ThreadPoolExecutor(
+                    poolSize, poolSize, ZERO, MILLISECONDS, new LinkedBlockingQueue<Runnable>(), threadFactory
+            );
+            final CyclicBarrier cyclicBarrier = new CyclicBarrier(poolSize);
+            for (int i = ONE; i <= poolSize; i++) {
+                final int pageIndex = i;
+                pool.submit(new Runnable() {
+                    @Override
+                    public void run() {
+                        for (int count = 0; ; count++) {
+                            int pageNum = pageIndex + count * poolSize;
+                            DomainInfoQueryDTO domainInfoQuery = new DomainInfoQueryDTO();
+                            domainInfoQuery.setPaging(new Paging(pageNum, pageSize));
+                            PageResult<List<DomainInfoDTO>> listPageResult = queryDomainInfoList(domainInfoQuery);
+                            if (listPageResult == null
+                                    || CollectionUtils.isEmpty(listPageResult.getData())) {
+                                break;
+                            }
+                            Date endUpdateDate = DateUtils.create().addDay(ZERO - refreshRate).getDate();
+                            List<DomainInfoDTO> resultData = listPageResult.getData();
+                            for (DomainInfoDTO domainInfo : resultData) {
+                                if (domainInfo == null) { continue; }
+                                Integer status = domainInfo.getStatus();
+                                Date updateDate = domainInfo.getUpdateDate();
+                                if (updateDate.getTime() > endUpdateDate.getTime()
+                                        && status != ZERO) {
+                                    continue;
+                                }
+                                String domainName = domainInfo.getDomainName();
+                                try {
+                                    updateDomain(domainName);
+                                }
+                                catch (Exception e) {
+                                    log.info("Update \"" + domainName + "\" failed. ", e);
+                                }
+                                ThreadUtils.sleepQuietly(THREE_HUNDRED);
+                            }
+                        }
+                        try {
+                            cyclicBarrier.await();
+                        }
+                        catch (Exception e) {
+                            log.info("Cyclic barrier await error. ", e);
+                        }
+                    }
+                });
             }
-            pageNum++;
+            try {
+                cyclicBarrier.await();
+            }
+            catch (Exception e) {
+                log.info("Cyclic barrier await error. ", e);
+            }
+            log.info("End of update all domain. ");
         }
+        finally {
+            if (pool != null) {
+                pool.shutdownNow();
+            }
+        }
+    }
+
+    @Override
+    public PageResult<List<DomainInfoDTO>> queryDomainInfoList(DomainInfoQueryDTO domainInfoQueryDTO) {
+        DomainInfoQuery domainInfoQuery = BeanUtils.beanToBean(domainInfoQueryDTO, DomainInfoQuery.class);
+        Paging paging = domainInfoQueryDTO.getPaging();
+        if (paging == null) { paging = new Paging(); }
+        PagingUtils.startPage(paging);
+        List<DomainInfo> domainInfoList = domainInfoMapper.queryDomainInfoList(domainInfoQuery);
+        return PagingUtils.handleResult(domainInfoList, DomainInfoDTO.class);
     }
 
 }

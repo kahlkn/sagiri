@@ -42,7 +42,8 @@ logging:
   home: /tmp/logs/
   level:
     root: info
-#    org.springframework.boot: off
+    sagiri.persistence.mapper: debug
+    sagiri.persistence.mapper.DomainInfoMapper.updateByPrimaryKeySelective: info
 
 mybatis:
   configuration:

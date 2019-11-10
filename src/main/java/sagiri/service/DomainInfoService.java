@@ -1,5 +1,11 @@
 package sagiri.service;
 
+import artoria.common.PageResult;
+import sagiri.pojo.dto.DomainInfoDTO;
+import sagiri.pojo.dto.DomainInfoQueryDTO;
+
+import java.util.List;
+
 /**
  * DomainInfoService.
  * @author Kahle
@@ -12,5 +18,7 @@ public interface DomainInfoService {
     void updateDomain(String domainName);
 
     void updateAllDomain();
+
+    PageResult<List<DomainInfoDTO>> queryDomainInfoList(DomainInfoQueryDTO domainInfoQueryDTO);
 
 }

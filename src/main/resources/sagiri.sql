@@ -3,8 +3,10 @@
 DROP TABLE IF EXISTS `t_domain_info`;
 CREATE TABLE `t_domain_info` (
   `domain_name` varchar(150) NOT NULL,
-  `domain_statuses` varchar(300) DEFAULT '',
-  `name_servers` varchar(500) DEFAULT '',
+  `domain_length` int(8) NOT NULL,
+  `domain_suffix` varchar(30) NOT NULL,
+  `domain_statuses` varchar(500) DEFAULT '',
+  `name_servers` varchar(600) DEFAULT '',
   `registry_domain_id` varchar(50) DEFAULT '',
   `registry_registration_time` datetime DEFAULT NULL,
   `registry_expiration_time` datetime DEFAULT NULL,
@@ -35,7 +37,19 @@ CREATE TABLE `t_domain_info` (
   `update_user` varchar(32) NOT NULL,
   `update_date` datetime NOT NULL,
   `alive_flag` tinyint(4) DEFAULT '1',
-  PRIMARY KEY (`domain_name`)
+  PRIMARY KEY (`domain_name`),
+  KEY `idx_domain_length` (`domain_length`) USING BTREE,
+  KEY `idx_domain_suffix` (`domain_suffix`) USING BTREE,
+  KEY `idx_registry_registration_time` (`registry_registration_time`) USING BTREE,
+  KEY `idx_registry_expiration_time` (`registry_expiration_time`) USING BTREE,
+  KEY `idx_registry_update_time` (`registry_update_time`) USING BTREE,
+  KEY `idx_registrar` (`registrar`) USING BTREE,
+  KEY `idx_registrar_iana_id` (`registrar_iana_id`) USING BTREE,
+  KEY `idx_registrant` (`registrant`) USING BTREE,
+  KEY `idx_registrant_organization` (`registrant_organization`) USING BTREE,
+  KEY `idx_whois_last_update_time` (`whois_last_update_time`) USING BTREE,
+  KEY `idx_status` (`status`) USING BTREE,
+  KEY `idx_update_date` (`update_date`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 

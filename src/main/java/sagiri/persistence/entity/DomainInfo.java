@@ -21,6 +21,14 @@ public class DomainInfo implements Serializable {
     /**
      * 
      */
+    private Integer domainLength;
+    /**
+     * 
+     */
+    private String domainSuffix;
+    /**
+     * 
+     */
     private String domainStatuses;
     /**
      * 
