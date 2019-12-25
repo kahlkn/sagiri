@@ -109,7 +109,7 @@
 
         <dependency>
             <groupId>com.github.kahlkn</groupId>
-            <artifactId>kuroko</artifactId>
+            <artifactId>kurumi</artifactId>
             <version>1.0.0.20190445-SNAPSHOT</version>
         </dependency>
 

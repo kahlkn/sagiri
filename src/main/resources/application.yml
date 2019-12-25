@@ -50,16 +50,20 @@ mybatis:
     map-underscore-to-camel-case: true
 
 artoria:
-  trace:
-    enabled: false
-    showAccessLog: true
-    clientNameKey: platform
+  event:
+    enabled: true
+    destination: EVENT_RECORD
+    visitor-id-property-name: visitorId
+    client-app-id-property-name: clientAppId
+    trace: true
+    show-trace-record: true
+    send-trace-record: true
   exception:
     enabled: true
     showErrorMessage: true
     defaultServerErrorMessage: 服务器繁忙！
   user:
-    enabled: true
+    enabled: false
     token-expire: 259200000
     exclude-path-patterns:
       - /api/**
