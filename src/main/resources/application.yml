@@ -51,7 +51,7 @@ mybatis:
 
 artoria:
   event:
-    enabled: true
+    enabled: false
     destination: EVENT_RECORD
     visitor-id-property-name: visitorId
     client-app-id-property-name: clientAppId

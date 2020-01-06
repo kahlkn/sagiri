@@ -22,21 +22,9 @@ public class DomainInfoController {
     private DomainInfoService domainInfoService;
 
     @ResponseBody
-    @RequestMapping(value = "/domain/initialize", method = RequestMethod.POST)
-    public Result<Object> initialize(String domainSuffix, Integer length, Boolean existNumber) {
-        domainInfoService.initialize(domainSuffix, length, existNumber);
-        return new Result<>();
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "/domain/update", method = RequestMethod.POST)
-    public Result<Object> updateDomain(String domainName) {
-        if ("all".equalsIgnoreCase(domainName)) {
-            domainInfoService.updateAllDomain();
-        }
-        else {
-            domainInfoService.updateDomain(domainName);
-        }
+    @RequestMapping(value = "/domain/batch", method = RequestMethod.GET)
+    public Result<Object> batch(String domainSuffix, Integer length, Boolean existNumber) {
+        domainInfoService.batchCheckDomainUnregistered(length, existNumber, 500L, domainSuffix);
         return new Result<>();
     }
 

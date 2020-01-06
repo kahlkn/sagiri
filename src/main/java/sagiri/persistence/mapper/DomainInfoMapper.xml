@@ -4,9 +4,8 @@
 
     <!-- **** (Start) This will be covered, please do not modify. **** -->
     <resultMap id="BaseResultMap" type="sagiri.persistence.entity.DomainInfo" >
-        <id column="domain_name" property="domainName" />
-        <result column="domain_length" property="domainLength" />
-        <result column="domain_suffix" property="domainSuffix" />
+        <id column="id" property="id" />
+        <result column="domain_name" property="domainName" />
         <result column="domain_statuses" property="domainStatuses" />
         <result column="name_servers" property="nameServers" />
         <result column="registry_domain_id" property="registryDomainId" />
@@ -31,8 +30,8 @@
         <result column="registrant_contact_phone" property="registrantContactPhone" />
         <result column="dns_sec" property="dnsSec" />
         <result column="whois_last_update_time" property="whoisLastUpdateTime" />
-        <result column="raw_data" property="rawData" />
         <result column="remark" property="remark" />
+        <result column="raw_data" property="rawData" />
         <result column="status" property="status" />
         <result column="create_user" property="createUser" />
         <result column="create_date" property="createDate" />
@@ -42,9 +41,8 @@
     </resultMap>
 
     <sql id="Base_Column_List" >
+        `id`,
         `domain_name`,
-        `domain_length`,
-        `domain_suffix`,
         `domain_statuses`,
         `name_servers`,
         `registry_domain_id`,
@@ -69,8 +67,8 @@
         `registrant_contact_phone`,
         `dns_sec`,
         `whois_last_update_time`,
-        `raw_data`,
         `remark`,
+        `raw_data`,
         `status`,
         `create_user`,
         `create_date`,
@@ -80,9 +78,8 @@
     </sql>
 
     <sql id="Base_Selective_Where" >
+        <if test="id != null and id != ''">and `id` = #{id}</if>
         <if test="domainName != null and domainName != ''">and `domain_name` = #{domainName}</if>
-        <if test="domainLength != null">and `domain_length` = #{domainLength}</if>
-        <if test="domainSuffix != null and domainSuffix != ''">and `domain_suffix` = #{domainSuffix}</if>
         <if test="domainStatuses != null and domainStatuses != ''">and `domain_statuses` = #{domainStatuses}</if>
         <if test="nameServers != null and nameServers != ''">and `name_servers` = #{nameServers}</if>
         <if test="registryDomainId != null and registryDomainId != ''">and `registry_domain_id` = #{registryDomainId}</if>
@@ -107,8 +104,8 @@
         <if test="registrantContactPhone != null and registrantContactPhone != ''">and `registrant_contact_phone` = #{registrantContactPhone}</if>
         <if test="dnsSec != null and dnsSec != ''">and `dns_sec` = #{dnsSec}</if>
         <if test="whoisLastUpdateTime != null">and `whois_last_update_time` = #{whoisLastUpdateTime}</if>
-        <if test="rawData != null and rawData != ''">and `raw_data` = #{rawData}</if>
         <if test="remark != null and remark != ''">and `remark` = #{remark}</if>
+        <if test="rawData != null and rawData != ''">and `raw_data` = #{rawData}</if>
         <if test="status != null">and `status` = #{status}</if>
         <if test="createUser != null and createUser != ''">and `create_user` = #{createUser}</if>
         <if test="createDate != null">and `create_date` = #{createDate}</if>
@@ -122,9 +119,8 @@
             <include refid="Base_Column_List" />
         )
         values (
+            #{id},
             #{domainName},
-            #{domainLength},
-            #{domainSuffix},
             #{domainStatuses},
             #{nameServers},
             #{registryDomainId},
@@ -149,8 +145,8 @@
             #{registrantContactPhone},
             #{dnsSec},
             #{whoisLastUpdateTime},
-            #{rawData},
             #{remark},
+            #{rawData},
             #{status},
             #{createUser},
             #{createDate},
@@ -167,9 +163,8 @@
         values
         <foreach collection="recordList" index="index" item="item" separator="," >
         (
+            #{item.id},
             #{item.domainName},
-            #{item.domainLength},
-            #{item.domainSuffix},
             #{item.domainStatuses},
             #{item.nameServers},
             #{item.registryDomainId},
@@ -194,8 +189,8 @@
             #{item.registrantContactPhone},
             #{item.dnsSec},
             #{item.whoisLastUpdateTime},
-            #{item.rawData},
             #{item.remark},
+            #{item.rawData},
             #{item.status},
             #{item.createUser},
             #{item.createDate},
@@ -209,9 +204,8 @@
     <insert id="insertSelective" parameterType="sagiri.persistence.entity.DomainInfo" >
         insert into `t_domain_info`
         <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >`id`, </if>
             <if test="domainName != null" >`domain_name`, </if>
-            <if test="domainLength != null" >`domain_length`, </if>
-            <if test="domainSuffix != null" >`domain_suffix`, </if>
             <if test="domainStatuses != null" >`domain_statuses`, </if>
             <if test="nameServers != null" >`name_servers`, </if>
             <if test="registryDomainId != null" >`registry_domain_id`, </if>
@@ -236,8 +230,8 @@
             <if test="registrantContactPhone != null" >`registrant_contact_phone`, </if>
             <if test="dnsSec != null" >`dns_sec`, </if>
             <if test="whoisLastUpdateTime != null" >`whois_last_update_time`, </if>
-            <if test="rawData != null" >`raw_data`, </if>
             <if test="remark != null" >`remark`, </if>
+            <if test="rawData != null" >`raw_data`, </if>
             <if test="status != null" >`status`, </if>
             <if test="createUser != null" >`create_user`, </if>
             <if test="createDate != null" >`create_date`, </if>
@@ -246,9 +240,8 @@
             <if test="aliveFlag != null" >`alive_flag`, </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >#{id}, </if>
             <if test="domainName != null" >#{domainName}, </if>
-            <if test="domainLength != null" >#{domainLength}, </if>
-            <if test="domainSuffix != null" >#{domainSuffix}, </if>
             <if test="domainStatuses != null" >#{domainStatuses}, </if>
             <if test="nameServers != null" >#{nameServers}, </if>
             <if test="registryDomainId != null" >#{registryDomainId}, </if>
@@ -273,8 +266,8 @@
             <if test="registrantContactPhone != null" >#{registrantContactPhone}, </if>
             <if test="dnsSec != null" >#{dnsSec}, </if>
             <if test="whoisLastUpdateTime != null" >#{whoisLastUpdateTime}, </if>
-            <if test="rawData != null" >#{rawData}, </if>
             <if test="remark != null" >#{remark}, </if>
+            <if test="rawData != null" >#{rawData}, </if>
             <if test="status != null" >#{status}, </if>
             <if test="createUser != null" >#{createUser}, </if>
             <if test="createDate != null" >#{createDate}, </if>
@@ -291,7 +284,7 @@
             `update_date` = NOW(),
             `alive_flag` = 0
         where `alive_flag` = 1
-            and `domain_name` = #{domainName}
+            and `id` = #{id}
     </delete>
 
     <delete id="deleteByPrimaryKeyList" >
@@ -301,8 +294,8 @@
             `update_date` = NOW(),
             `alive_flag` = 0
         where `alive_flag` = 1
-            and `domain_name` in
-            <foreach collection="domainNameList" index="index" item="item" open="(" separator="," close=")">
+            and `id` in
+            <foreach collection="idList" index="index" item="item" open="(" separator="," close=")">
                     #{item}
             </foreach>
     </delete>
@@ -314,9 +307,8 @@
             `update_date` = NOW(),
             `alive_flag` = 0
         where `alive_flag` = 1
+            <if test="id != null" >and `id` = #{id}</if>
             <if test="domainName != null" >and `domain_name` = #{domainName}</if>
-            <if test="domainLength != null" >and `domain_length` = #{domainLength}</if>
-            <if test="domainSuffix != null" >and `domain_suffix` = #{domainSuffix}</if>
             <if test="domainStatuses != null" >and `domain_statuses` = #{domainStatuses}</if>
             <if test="nameServers != null" >and `name_servers` = #{nameServers}</if>
             <if test="registryDomainId != null" >and `registry_domain_id` = #{registryDomainId}</if>
@@ -341,8 +333,8 @@
             <if test="registrantContactPhone != null" >and `registrant_contact_phone` = #{registrantContactPhone}</if>
             <if test="dnsSec != null" >and `dns_sec` = #{dnsSec}</if>
             <if test="whoisLastUpdateTime != null" >and `whois_last_update_time` = #{whoisLastUpdateTime}</if>
-            <if test="rawData != null" >and `raw_data` = #{rawData}</if>
             <if test="remark != null" >and `remark` = #{remark}</if>
+            <if test="rawData != null" >and `raw_data` = #{rawData}</if>
             <if test="status != null" >and `status` = #{status}</if>
             <if test="createUser != null" >and `create_user` = #{createUser}</if>
             <if test="createDate != null" >and `create_date` = #{createDate}</if>
@@ -353,9 +345,8 @@
     <update id="updateByPrimaryKey" parameterType="sagiri.persistence.entity.DomainInfo" >
         update `t_domain_info`
         set
+            `id` = #{id},
             `domain_name` = #{domainName},
-            `domain_length` = #{domainLength},
-            `domain_suffix` = #{domainSuffix},
             `domain_statuses` = #{domainStatuses},
             `name_servers` = #{nameServers},
             `registry_domain_id` = #{registryDomainId},
@@ -380,8 +371,8 @@
             `registrant_contact_phone` = #{registrantContactPhone},
             `dns_sec` = #{dnsSec},
             `whois_last_update_time` = #{whoisLastUpdateTime},
-            `raw_data` = #{rawData},
             `remark` = #{remark},
+            `raw_data` = #{rawData},
             `status` = #{status},
             `create_user` = #{createUser},
             `create_date` = #{createDate},
@@ -389,15 +380,14 @@
             `update_date` = #{updateDate},
             `alive_flag` = #{aliveFlag}
         where `alive_flag` = 1
-            and `domain_name` = #{domainName}
+            and `id` = #{id}
     </update>
 
     <update id="updateByPrimaryKeySelective" parameterType="sagiri.persistence.entity.DomainInfo" >
         update `t_domain_info`
         <set>
+            <if test="id != null" >`id` = #{id}, </if>
             <if test="domainName != null" >`domain_name` = #{domainName}, </if>
-            <if test="domainLength != null" >`domain_length` = #{domainLength}, </if>
-            <if test="domainSuffix != null" >`domain_suffix` = #{domainSuffix}, </if>
             <if test="domainStatuses != null" >`domain_statuses` = #{domainStatuses}, </if>
             <if test="nameServers != null" >`name_servers` = #{nameServers}, </if>
             <if test="registryDomainId != null" >`registry_domain_id` = #{registryDomainId}, </if>
@@ -422,8 +412,8 @@
             <if test="registrantContactPhone != null" >`registrant_contact_phone` = #{registrantContactPhone}, </if>
             <if test="dnsSec != null" >`dns_sec` = #{dnsSec}, </if>
             <if test="whoisLastUpdateTime != null" >`whois_last_update_time` = #{whoisLastUpdateTime}, </if>
-            <if test="rawData != null" >`raw_data` = #{rawData}, </if>
             <if test="remark != null" >`remark` = #{remark}, </if>
+            <if test="rawData != null" >`raw_data` = #{rawData}, </if>
             <if test="status != null" >`status` = #{status}, </if>
             <if test="createUser != null" >`create_user` = #{createUser}, </if>
             <if test="createDate != null" >`create_date` = #{createDate}, </if>
@@ -432,7 +422,7 @@
             <if test="aliveFlag != null" >`alive_flag` = #{aliveFlag}, </if>
         </set>
         where `alive_flag` = 1
-            and `domain_name` = #{domainName}
+            and `id` = #{id}
     </update>
 
     <select id="countSelective" resultType="int" parameterType="sagiri.persistence.entity.DomainInfo" >
@@ -448,7 +438,7 @@
             <include refid="Base_Column_List" />
         from `t_domain_info`
         where `alive_flag` = 1
-            and `domain_name` = #{domainName}
+            and `id` = #{id}
     </select>
 
     <select id="queryByPrimaryKeyList" resultMap="BaseResultMap" >
@@ -456,13 +446,13 @@
             <include refid="Base_Column_List" />
         from `t_domain_info`
         where `alive_flag` = 1
-            and `domain_name` in
-            <foreach collection="domainNameList" index="index" item="item" open="(" separator="," close=")">
+            and `id` in
+            <foreach collection="idList" index="index" item="item" open="(" separator="," close=")">
                     #{item}
             </foreach>
     </select>
 
-    <select id="selectFirst" resultMap="BaseResultMap" parameterType="sagiri.persistence.entity.DomainInfo">
+    <select id="findFirst" resultMap="BaseResultMap" parameterType="sagiri.persistence.entity.DomainInfo">
         select
             <include refid="Base_Column_List" />
         from `t_domain_info`

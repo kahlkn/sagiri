@@ -13,11 +13,21 @@ import java.util.List;
  */
 public interface DomainInfoService {
 
-    void initialize(String domainSuffix, Integer length, Boolean existNumber);
+    /**
+     * 增加一条域名信息.
+     */
+    void addDomainInfo(DomainInfoDTO domainInfoDTO);
 
-    void updateDomain(String domainName);
+    /**
+     * 编辑一条域名信息.
+     */
+    void editDomainInfo(DomainInfoDTO domainInfoDTO);
 
-    void updateAllDomain();
+    void addDomainInfoByName(String domainName, boolean saveRegistered, boolean saveUnregistered);
+
+    void batchCheckDomainUnregistered(List<List<String>> table, List<String> suffixes, Long sleepTime);
+
+    void batchCheckDomainUnregistered(Integer length, Boolean existNumber, Long sleepTime, String... suffixes);
 
     PageResult<List<DomainInfoDTO>> queryDomainInfoList(DomainInfoQueryDTO domainInfoQueryDTO);
 

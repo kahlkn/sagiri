@@ -39,19 +39,19 @@ public interface DomainInfoMapper {
 
     /**
      * Delete by primary key.
-     * @param domainName Primary key
+     * @param id Primary key
      * @param updateUser Current operator
      * @return Number of rows effected
      */
-    int deleteByPrimaryKey(@Param("domainName") String domainName, @Param("updateUser") String updateUser);
+    int deleteByPrimaryKey(@Param("id") Long id, @Param("updateUser") String updateUser);
 
     /**
      * Delete by primary key list.
-     * @param domainNameList Primary key list
+     * @param idList Primary key list
      * @param updateUser Current operator
      * @return Number of rows effected
      */
-    int deleteByPrimaryKeyList(@Param("domainNameList") List<String> domainNameList, @Param("updateUser") String updateUser);
+    int deleteByPrimaryKeyList(@Param("idList") List<Long> idList, @Param("updateUser") String updateUser);
 
     /**
      * Delete selective.
@@ -83,24 +83,24 @@ public interface DomainInfoMapper {
 
     /**
      * Query by primary key.
-     * @param domainName Primary key
+     * @param id Primary key
      * @return Query result
      */
-    DomainInfo queryByPrimaryKey(@Param("domainName") String domainName);
+    DomainInfo queryByPrimaryKey(@Param("id") Long id);
 
     /**
      * Query by primary key list.
-     * @param domainNameList Primary key list
+     * @param idList Primary key list
      * @return Query result list
      */
-    List<DomainInfo> queryByPrimaryKeyList(@Param("domainNameList") List<String> domainNameList);
+    List<DomainInfo> queryByPrimaryKeyList(@Param("idList") List<Long> idList);
 
     /**
-     * Select first.
+     * Find first.
      * @param record Query condition
      * @return Query result
      */
-    DomainInfo selectFirst(DomainInfo record);
+    DomainInfo findFirst(DomainInfo record);
 
     /**
      * Query selective.
