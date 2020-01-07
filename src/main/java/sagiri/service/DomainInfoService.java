@@ -25,9 +25,11 @@ public interface DomainInfoService {
 
     void addDomainInfoByName(String domainName, boolean saveRegistered, boolean saveUnregistered);
 
-    void batchCheckDomainUnregistered(List<List<String>> table, List<String> suffixes, Long sleepTime);
+    void asyncAddDomainInfoByName(String domainName, boolean saveRegistered, boolean saveUnregistered);
 
-    void batchCheckDomainUnregistered(Integer length, Boolean existNumber, Long sleepTime, String... suffixes);
+    void batchDomainChecking(List<List<String>> table, List<String> suffixes, Long sleepTime);
+
+    void batchDomainChecking(Integer length, Boolean existNumber, Long sleepTime, String... suffixes);
 
     PageResult<List<DomainInfoDTO>> queryDomainInfoList(DomainInfoQueryDTO domainInfoQueryDTO);
 

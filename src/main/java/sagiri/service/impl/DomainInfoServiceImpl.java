@@ -4,6 +4,7 @@ import artoria.beans.BeanUtils;
 import artoria.common.PageResult;
 import artoria.common.Paging;
 import artoria.exception.BusinessException;
+import artoria.spring.ApplicationContextUtils;
 import artoria.util.CollectionUtils;
 import artoria.util.PagingUtils;
 import artoria.util.StringUtils;
@@ -14,13 +15,13 @@ import kurumi.whois.WhoisObject;
 import kurumi.whois.WhoisProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import sagiri.persistence.entity.DomainInfo;
 import sagiri.persistence.entity.DomainInfoQuery;
 import sagiri.persistence.mapper.DomainInfoMapper;
 import sagiri.pojo.dto.DomainInfoDTO;
 import sagiri.pojo.dto.DomainInfoQueryDTO;
-import sagiri.service.AsyncService;
 import sagiri.service.DomainInfoService;
 
 import java.util.*;
@@ -38,8 +39,6 @@ public class DomainInfoServiceImpl implements DomainInfoService {
 
     @Autowired
     private DomainInfoMapper domainInfoMapper;
-    @Autowired
-    private AsyncService asyncService;
 
     @Override
     public void addDomainInfo(DomainInfoDTO domainInfoDTO) {
@@ -85,9 +84,9 @@ public class DomainInfoServiceImpl implements DomainInfoService {
         if (whoisObject == null) {
             throw new BusinessException("Domain name cannot be found. ");
         }
-        String registrantId = whoisObject.getRegistrantId();
-        String registrant = whoisObject.getRegistrant();
-        boolean isUnregistered = StringUtils.isBlank(registrantId) && StringUtils.isBlank(registrant);
+        Date registryExpirationTime = whoisObject.getRegistryExpirationTime();
+        String registryDomainId = whoisObject.getRegistryDomainId();
+        boolean isUnregistered = registryExpirationTime == null && StringUtils.isBlank(registryDomainId);
         boolean needSave = (isUnregistered && saveUnregistered) || (!isUnregistered && saveRegistered);
         log.info("{} >> {}", domainName, needSave);
         if (!needSave) { return; }
@@ -97,21 +96,37 @@ public class DomainInfoServiceImpl implements DomainInfoService {
         whoisObject.setNameServers(null);
         DomainInfoDTO domainInfoDTO =
                 BeanUtils.beanToBean(whoisObject, DomainInfoDTO.class);
-        domainInfoDTO.setDomainStatuses(JSON.toJSONString(domainStatuses));
-        domainInfoDTO.setNameServers(JSON.toJSONString(nameServers));
+        if (CollectionUtils.isNotEmpty(domainStatuses)) {
+            domainInfoDTO.setDomainStatuses(JSON.toJSONString(domainStatuses));
+        }
+        if (CollectionUtils.isNotEmpty(nameServers)) {
+            domainInfoDTO.setNameServers(JSON.toJSONString(nameServers));
+        }
         domainInfoDTO.setRawData((String) whoisObject.rawData());
         addDomainInfo(domainInfoDTO);
     }
 
+    @Async
     @Override
-    public void batchCheckDomainUnregistered(List<List<String>> table, List<String> suffixes, Long sleepTime) {
+    public void asyncAddDomainInfoByName(String domainName, boolean saveRegistered, boolean saveUnregistered) {
+        try {
+            addDomainInfoByName(domainName, saveRegistered, saveUnregistered);
+        }
+        catch (Exception e) {
+            log.info("An error occurred while processing \"{}\". ", domainName);
+        }
+    }
+
+    @Override
+    public void batchDomainChecking(List<List<String>> table, List<String> suffixes, Long sleepTime) {
+        boolean needSleep = sleepTime != null && sleepTime > ZERO;
         Integer length = table.size();
         int[] counter = new int[length];
+        int maxIndex = length - ONE;
+        int maxCount = ZERO;
         for (int i = ZERO; i < length; i++) {
             counter[i] = ZERO;
         }
-        int maxIndex = length - ONE;
-        int maxCount = ZERO;
         for (List<String> list : table) {
             if (CollectionUtils.isEmpty(list)) {
                 throw new BusinessException("Columns in a table cannot be empty. ");
@@ -124,6 +139,18 @@ public class DomainInfoServiceImpl implements DomainInfoService {
                 throw new BusinessException("Each column should have the same length. ");
             }
         }
+        List<String> tempList = new ArrayList<>();
+        for (String suffix : suffixes) {
+            if (StringUtils.isBlank(suffix)) {
+                continue;
+            }
+            if (!suffix.startsWith(DOT)) {
+                suffix = DOT + suffix;
+            }
+            tempList.add(suffix);
+        }
+        suffixes.clear();
+        suffixes.addAll(tempList);
         //
         while (counter[ZERO] < maxCount) {
             StringBuilder bodyBuilder = new StringBuilder();
@@ -136,11 +163,9 @@ public class DomainInfoServiceImpl implements DomainInfoService {
             // Do something.
             for (String suffix : suffixes) {
                 String domainName = body + suffix;
-//                asyncService.addDomainInfoByName(domainName, Boolean.FALSE, Boolean.TRUE);
-                asyncService.addDomainInfoByName(domainName, Boolean.TRUE, Boolean.TRUE);
-                if (sleepTime != null && sleepTime > ZERO) {
-                    ThreadUtils.sleepQuietly(sleepTime);
-                }
+                DomainInfoService domainInfoService = ApplicationContextUtils.getBean(DomainInfoService.class);
+                domainInfoService.asyncAddDomainInfoByName(domainName, Boolean.FALSE, Boolean.TRUE);
+                if (needSleep) { ThreadUtils.sleepQuietly(sleepTime); }
             }
             // Counter to count.
             counter[maxIndex]++;
@@ -158,11 +183,8 @@ public class DomainInfoServiceImpl implements DomainInfoService {
     }
 
     @Override
-    public void batchCheckDomainUnregistered(Integer length, Boolean existNumber, Long sleepTime, String... suffixes) {
+    public void batchDomainChecking(Integer length, Boolean existNumber, Long sleepTime, String... suffixes) {
         if (existNumber == null) { existNumber = false; }
-//        if (!domainSuffix.startsWith(DOT)) {
-//            domainSuffix = DOT + domainSuffix;
-//        }
         List<List<String>> table = new ArrayList<>(length);
         for (int i = ZERO; i < length; i++) {
             List<String> list = new ArrayList<>();
@@ -175,7 +197,8 @@ public class DomainInfoServiceImpl implements DomainInfoService {
             }
             table.add(list);
         }
-        batchCheckDomainUnregistered(table, Arrays.asList(suffixes), sleepTime);
+        List<String> suffixList = new ArrayList<>(Arrays.asList(suffixes));
+        batchDomainChecking(table, suffixList, sleepTime);
     }
 
     @Override

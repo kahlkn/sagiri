@@ -23,8 +23,9 @@ public class DomainInfoController {
 
     @ResponseBody
     @RequestMapping(value = "/domain/batch", method = RequestMethod.GET)
-    public Result<Object> batch(String domainSuffix, Integer length, Boolean existNumber) {
-        domainInfoService.batchCheckDomainUnregistered(length, existNumber, 500L, domainSuffix);
+    public Result<Object> batch(String domainSuffix, Integer length, Boolean existNumber, Long sleepTime) {
+        if (sleepTime == null) { sleepTime = 500L; }
+        domainInfoService.batchDomainChecking(length, existNumber, sleepTime, domainSuffix.split(","));
         return new Result<>();
     }
 

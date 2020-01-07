@@ -25,10 +25,6 @@ spring:
     multipart:
       max-file-size: 30MB
       max-request-size: 30MB
-#  cache:
-#    type: ehcache
-#    ehcache:
-#      config: classpath:ehcache.xml
   jackson:
     serialization:
       write-dates-as-timestamps: true
@@ -43,6 +39,7 @@ logging:
   level:
     root: info
     sagiri.persistence.mapper: debug
+    sagiri.persistence.mapper.DomainInfoMapper.insertSelective: info
     sagiri.persistence.mapper.DomainInfoMapper.updateByPrimaryKeySelective: info
 
 mybatis:

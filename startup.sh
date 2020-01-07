@@ -1,0 +1,1 @@
+nohup java -jar sagiri.jar >> log/sagiri.log 2>&1 &
