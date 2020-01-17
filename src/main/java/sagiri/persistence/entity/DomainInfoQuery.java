@@ -8,7 +8,6 @@ import java.util.Date;
 /**
  * 域名信息的查询条件对象.
  * @author Kahle
- * @date 2019-11-08T09:48:18.613+0800
  */
 @Data
 public class DomainInfoQuery implements Serializable {
