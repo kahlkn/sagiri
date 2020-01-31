@@ -13,7 +13,7 @@
         </encoder>
     </appender>
 
-    <!--<appender name="DAILY_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <appender name="DAILY_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_HOME}/${PROJECT_NAME}/${PROJECT_NAME}-daily.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <FileNamePattern>${LOG_HOME}/${PROJECT_NAME}/${PROJECT_NAME}-daily.%d{yyyy-MM-dd}.log</FileNamePattern>
@@ -47,7 +47,7 @@
         </encoder>
     </appender>
 
-    <appender name="FIXED_SIZE_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <!--<appender name="FIXED_SIZE_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_HOME}/${PROJECT_NAME}/${PROJECT_NAME}-fixed-size.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
             <FileNamePattern>${LOG_HOME}/${PROJECT_NAME}/${PROJECT_NAME}-fixed-size.%i.log.zip</FileNamePattern>
@@ -89,19 +89,19 @@
         </encoder>
     </appender>-->
 
-    <root level="INFO">
+    <!--<root level="INFO">
         <appender-ref ref="CONSOLE"/>
-        <!--<appender-ref ref="DAILY_FILE"/>
+        <appender-ref ref="DAILY_FILE"/>
         <appender-ref ref="DAILY_ERROR_FILE"/>
         <appender-ref ref="FIXED_SIZE_FILE"/>
-        <appender-ref ref="FIXED_SIZE_ERROR_FILE"/>-->
-    </root>
+        <appender-ref ref="FIXED_SIZE_ERROR_FILE"/>
+    </root>-->
 
     <logger name="org.apache.commons.beanutils.BeanUtils" addtivity="false" level="INFO">
         <appender-ref ref="CONSOLE"/>
     </logger>
 
-    <!--<springProfile name="default,dev,develop">
+    <springProfile name="default,dev,develop">
         <root level="INFO">
             <appender-ref ref="CONSOLE"/>
         </root>
@@ -109,7 +109,6 @@
 
     <springProfile name="test">
         <root level="INFO">
-            <appender-ref ref="CONSOLE"/>
             <appender-ref ref="DAILY_FILE"/>
             <appender-ref ref="DAILY_ERROR_FILE"/>
         </root>
@@ -120,6 +119,6 @@
             <appender-ref ref="DAILY_FILE"/>
             <appender-ref ref="DAILY_ERROR_FILE"/>
         </root>
-    </springProfile>-->
+    </springProfile>
 
 </configuration>
