@@ -18,16 +18,16 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 @Controller
 public class RedirectController {
 
-    @RequestMapping(value = "/go", method = RequestMethod.GET)
-    public String redirectNothing() {
-
-        return "redirect:/";
-    }
-
-    @RequestMapping(value = "/go/{address}", method = RequestMethod.GET)
-    public String redirect(@PathVariable String address) {
-        byte[] bytes = Base64Utils.decodeFromString(address);
-        return "redirect:" + new String(bytes, UTF_8);
-    }
+//    @RequestMapping(value = "/go", method = RequestMethod.GET)
+//    public String redirectNothing() {
+//
+//        return "redirect:/";
+//    }
+//
+//    @RequestMapping(value = "/go/{address}", method = RequestMethod.GET)
+//    public String redirect(@PathVariable String address) {
+//        byte[] bytes = Base64Utils.decodeFromString(address);
+//        return "redirect:" + new String(bytes, UTF_8);
+//    }
 
 }

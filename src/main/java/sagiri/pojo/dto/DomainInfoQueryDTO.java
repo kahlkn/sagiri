@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 域名信息的查询条件DTO对象.
+ * 域名信息的查询条件 DTO 对象.
  * @author Kahle
  */
 @Data
