@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="sagiri.tool.persistence.mapper.DomainInfoMapper" >
+
+    <!-- **** (Start) This will be covered, please do not modify. **** -->
+    <resultMap id="BaseResultMap" type="sagiri.tool.persistence.entity.DomainInfo" >
+        <id column="id" property="id" />
+        <result column="domain_name" property="domainName" />
+        <result column="domain_statuses" property="domainStatuses" />
+        <result column="name_servers" property="nameServers" />
+        <result column="registry_domain_id" property="registryDomainId" />
+        <result column="registry_registration_time" property="registryRegistrationTime" />
+        <result column="registry_expiration_time" property="registryExpirationTime" />
+        <result column="registry_update_time" property="registryUpdateTime" />
+        <result column="reseller" property="reseller" />
+        <result column="registrar" property="registrar" />
+        <result column="registrar_url" property="registrarUrl" />
+        <result column="registrar_whois_server" property="registrarWhoisServer" />
+        <result column="registrar_abuse_contact_email" property="registrarAbuseContactEmail" />
+        <result column="registrar_abuse_contact_phone" property="registrarAbuseContactPhone" />
+        <result column="registrar_iana_id" property="registrarIanaId" />
+        <result column="registrar_registration_expiration_date" property="registrarRegistrationExpirationDate" />
+        <result column="registrant" property="registrant" />
+        <result column="registrant_id" property="registrantId" />
+        <result column="registrant_organization" property="registrantOrganization" />
+        <result column="registrant_country" property="registrantCountry" />
+        <result column="registrant_region" property="registrantRegion" />
+        <result column="registrant_city" property="registrantCity" />
+        <result column="registrant_contact_email" property="registrantContactEmail" />
+        <result column="registrant_contact_phone" property="registrantContactPhone" />
+        <result column="dns_sec" property="dnsSec" />
+        <result column="whois_last_update_time" property="whoisLastUpdateTime" />
+        <result column="remark" property="remark" />
+        <result column="raw_data" property="rawData" />
+        <result column="status" property="status" />
+        <result column="create_user" property="createUser" />
+        <result column="create_date" property="createDate" />
+        <result column="update_user" property="updateUser" />
+        <result column="update_date" property="updateDate" />
+        <result column="alive_flag" property="aliveFlag" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        `id`,
+        `domain_name`,
+        `domain_statuses`,
+        `name_servers`,
+        `registry_domain_id`,
+        `registry_registration_time`,
+        `registry_expiration_time`,
+        `registry_update_time`,
+        `reseller`,
+        `registrar`,
+        `registrar_url`,
+        `registrar_whois_server`,
+        `registrar_abuse_contact_email`,
+        `registrar_abuse_contact_phone`,
+        `registrar_iana_id`,
+        `registrar_registration_expiration_date`,
+        `registrant`,
+        `registrant_id`,
+        `registrant_organization`,
+        `registrant_country`,
+        `registrant_region`,
+        `registrant_city`,
+        `registrant_contact_email`,
+        `registrant_contact_phone`,
+        `dns_sec`,
+        `whois_last_update_time`,
+        `remark`,
+        `raw_data`,
+        `status`,
+        `create_user`,
+        `create_date`,
+        `update_user`,
+        `update_date`,
+        `alive_flag`
+    </sql>
+
+    <sql id="Base_Selective_Where" >
+        <if test="id != null and id != ''">and `id` = #{id}</if>
+        <if test="domainName != null and domainName != ''">and `domain_name` = #{domainName}</if>
+        <if test="domainStatuses != null and domainStatuses != ''">and `domain_statuses` = #{domainStatuses}</if>
+        <if test="nameServers != null and nameServers != ''">and `name_servers` = #{nameServers}</if>
+        <if test="registryDomainId != null and registryDomainId != ''">and `registry_domain_id` = #{registryDomainId}</if>
+        <if test="registryRegistrationTime != null">and `registry_registration_time` = #{registryRegistrationTime}</if>
+        <if test="registryExpirationTime != null">and `registry_expiration_time` = #{registryExpirationTime}</if>
+        <if test="registryUpdateTime != null">and `registry_update_time` = #{registryUpdateTime}</if>
+        <if test="reseller != null and reseller != ''">and `reseller` = #{reseller}</if>
+        <if test="registrar != null and registrar != ''">and `registrar` = #{registrar}</if>
+        <if test="registrarUrl != null and registrarUrl != ''">and `registrar_url` = #{registrarUrl}</if>
+        <if test="registrarWhoisServer != null and registrarWhoisServer != ''">and `registrar_whois_server` = #{registrarWhoisServer}</if>
+        <if test="registrarAbuseContactEmail != null and registrarAbuseContactEmail != ''">and `registrar_abuse_contact_email` = #{registrarAbuseContactEmail}</if>
+        <if test="registrarAbuseContactPhone != null and registrarAbuseContactPhone != ''">and `registrar_abuse_contact_phone` = #{registrarAbuseContactPhone}</if>
+        <if test="registrarIanaId != null and registrarIanaId != ''">and `registrar_iana_id` = #{registrarIanaId}</if>
+        <if test="registrarRegistrationExpirationDate != null">and `registrar_registration_expiration_date` = #{registrarRegistrationExpirationDate}</if>
+        <if test="registrant != null and registrant != ''">and `registrant` = #{registrant}</if>
+        <if test="registrantId != null and registrantId != ''">and `registrant_id` = #{registrantId}</if>
+        <if test="registrantOrganization != null and registrantOrganization != ''">and `registrant_organization` = #{registrantOrganization}</if>
+        <if test="registrantCountry != null and registrantCountry != ''">and `registrant_country` = #{registrantCountry}</if>
+        <if test="registrantRegion != null and registrantRegion != ''">and `registrant_region` = #{registrantRegion}</if>
+        <if test="registrantCity != null and registrantCity != ''">and `registrant_city` = #{registrantCity}</if>
+        <if test="registrantContactEmail != null and registrantContactEmail != ''">and `registrant_contact_email` = #{registrantContactEmail}</if>
+        <if test="registrantContactPhone != null and registrantContactPhone != ''">and `registrant_contact_phone` = #{registrantContactPhone}</if>
+        <if test="dnsSec != null and dnsSec != ''">and `dns_sec` = #{dnsSec}</if>
+        <if test="whoisLastUpdateTime != null">and `whois_last_update_time` = #{whoisLastUpdateTime}</if>
+        <if test="remark != null and remark != ''">and `remark` = #{remark}</if>
+        <if test="rawData != null and rawData != ''">and `raw_data` = #{rawData}</if>
+        <if test="status != null">and `status` = #{status}</if>
+        <if test="createUser != null and createUser != ''">and `create_user` = #{createUser}</if>
+        <if test="createDate != null">and `create_date` = #{createDate}</if>
+        <if test="updateUser != null and updateUser != ''">and `update_user` = #{updateUser}</if>
+        <if test="updateDate != null">and `update_date` = #{updateDate}</if>
+        <if test="aliveFlag != null">and `alive_flag` = #{aliveFlag}</if>
+    </sql>
+
+    <insert id="insert" parameterType="sagiri.tool.persistence.entity.DomainInfo" >
+        insert into `t_domain_info` (
+            <include refid="Base_Column_List" />
+        )
+        values (
+            #{id},
+            #{domainName},
+            #{domainStatuses},
+            #{nameServers},
+            #{registryDomainId},
+            #{registryRegistrationTime},
+            #{registryExpirationTime},
+            #{registryUpdateTime},
+            #{reseller},
+            #{registrar},
+            #{registrarUrl},
+            #{registrarWhoisServer},
+            #{registrarAbuseContactEmail},
+            #{registrarAbuseContactPhone},
+            #{registrarIanaId},
+            #{registrarRegistrationExpirationDate},
+            #{registrant},
+            #{registrantId},
+            #{registrantOrganization},
+            #{registrantCountry},
+            #{registrantRegion},
+            #{registrantCity},
+            #{registrantContactEmail},
+            #{registrantContactPhone},
+            #{dnsSec},
+            #{whoisLastUpdateTime},
+            #{remark},
+            #{rawData},
+            #{status},
+            #{createUser},
+            #{createDate},
+            #{updateUser},
+            #{updateDate},
+            #{aliveFlag}
+        )
+    </insert>
+
+    <insert id="insertBatch" >
+        insert into `t_domain_info` (
+            <include refid="Base_Column_List" />
+        )
+        values
+        <foreach collection="recordList" index="index" item="item" separator="," >
+        (
+            #{item.id},
+            #{item.domainName},
+            #{item.domainStatuses},
+            #{item.nameServers},
+            #{item.registryDomainId},
+            #{item.registryRegistrationTime},
+            #{item.registryExpirationTime},
+            #{item.registryUpdateTime},
+            #{item.reseller},
+            #{item.registrar},
+            #{item.registrarUrl},
+            #{item.registrarWhoisServer},
+            #{item.registrarAbuseContactEmail},
+            #{item.registrarAbuseContactPhone},
+            #{item.registrarIanaId},
+            #{item.registrarRegistrationExpirationDate},
+            #{item.registrant},
+            #{item.registrantId},
+            #{item.registrantOrganization},
+            #{item.registrantCountry},
+            #{item.registrantRegion},
+            #{item.registrantCity},
+            #{item.registrantContactEmail},
+            #{item.registrantContactPhone},
+            #{item.dnsSec},
+            #{item.whoisLastUpdateTime},
+            #{item.remark},
+            #{item.rawData},
+            #{item.status},
+            #{item.createUser},
+            #{item.createDate},
+            #{item.updateUser},
+            #{item.updateDate},
+            #{item.aliveFlag}
+        )
+        </foreach>
+    </insert>
+
+    <insert id="insertSelective" parameterType="sagiri.tool.persistence.entity.DomainInfo" >
+        insert into `t_domain_info`
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >`id`, </if>
+            <if test="domainName != null" >`domain_name`, </if>
+            <if test="domainStatuses != null" >`domain_statuses`, </if>
+            <if test="nameServers != null" >`name_servers`, </if>
+            <if test="registryDomainId != null" >`registry_domain_id`, </if>
+            <if test="registryRegistrationTime != null" >`registry_registration_time`, </if>
+            <if test="registryExpirationTime != null" >`registry_expiration_time`, </if>
+            <if test="registryUpdateTime != null" >`registry_update_time`, </if>
+            <if test="reseller != null" >`reseller`, </if>
+            <if test="registrar != null" >`registrar`, </if>
+            <if test="registrarUrl != null" >`registrar_url`, </if>
+            <if test="registrarWhoisServer != null" >`registrar_whois_server`, </if>
+            <if test="registrarAbuseContactEmail != null" >`registrar_abuse_contact_email`, </if>
+            <if test="registrarAbuseContactPhone != null" >`registrar_abuse_contact_phone`, </if>
+            <if test="registrarIanaId != null" >`registrar_iana_id`, </if>
+            <if test="registrarRegistrationExpirationDate != null" >`registrar_registration_expiration_date`, </if>
+            <if test="registrant != null" >`registrant`, </if>
+            <if test="registrantId != null" >`registrant_id`, </if>
+            <if test="registrantOrganization != null" >`registrant_organization`, </if>
+            <if test="registrantCountry != null" >`registrant_country`, </if>
+            <if test="registrantRegion != null" >`registrant_region`, </if>
+            <if test="registrantCity != null" >`registrant_city`, </if>
+            <if test="registrantContactEmail != null" >`registrant_contact_email`, </if>
+            <if test="registrantContactPhone != null" >`registrant_contact_phone`, </if>
+            <if test="dnsSec != null" >`dns_sec`, </if>
+            <if test="whoisLastUpdateTime != null" >`whois_last_update_time`, </if>
+            <if test="remark != null" >`remark`, </if>
+            <if test="rawData != null" >`raw_data`, </if>
+            <if test="status != null" >`status`, </if>
+            <if test="createUser != null" >`create_user`, </if>
+            <if test="createDate != null" >`create_date`, </if>
+            <if test="updateUser != null" >`update_user`, </if>
+            <if test="updateDate != null" >`update_date`, </if>
+            <if test="aliveFlag != null" >`alive_flag`, </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >#{id}, </if>
+            <if test="domainName != null" >#{domainName}, </if>
+            <if test="domainStatuses != null" >#{domainStatuses}, </if>
+            <if test="nameServers != null" >#{nameServers}, </if>
+            <if test="registryDomainId != null" >#{registryDomainId}, </if>
+            <if test="registryRegistrationTime != null" >#{registryRegistrationTime}, </if>
+            <if test="registryExpirationTime != null" >#{registryExpirationTime}, </if>
+            <if test="registryUpdateTime != null" >#{registryUpdateTime}, </if>
+            <if test="reseller != null" >#{reseller}, </if>
+            <if test="registrar != null" >#{registrar}, </if>
+            <if test="registrarUrl != null" >#{registrarUrl}, </if>
+            <if test="registrarWhoisServer != null" >#{registrarWhoisServer}, </if>
+            <if test="registrarAbuseContactEmail != null" >#{registrarAbuseContactEmail}, </if>
+            <if test="registrarAbuseContactPhone != null" >#{registrarAbuseContactPhone}, </if>
+            <if test="registrarIanaId != null" >#{registrarIanaId}, </if>
+            <if test="registrarRegistrationExpirationDate != null" >#{registrarRegistrationExpirationDate}, </if>
+            <if test="registrant != null" >#{registrant}, </if>
+            <if test="registrantId != null" >#{registrantId}, </if>
+            <if test="registrantOrganization != null" >#{registrantOrganization}, </if>
+            <if test="registrantCountry != null" >#{registrantCountry}, </if>
+            <if test="registrantRegion != null" >#{registrantRegion}, </if>
+            <if test="registrantCity != null" >#{registrantCity}, </if>
+            <if test="registrantContactEmail != null" >#{registrantContactEmail}, </if>
+            <if test="registrantContactPhone != null" >#{registrantContactPhone}, </if>
+            <if test="dnsSec != null" >#{dnsSec}, </if>
+            <if test="whoisLastUpdateTime != null" >#{whoisLastUpdateTime}, </if>
+            <if test="remark != null" >#{remark}, </if>
+            <if test="rawData != null" >#{rawData}, </if>
+            <if test="status != null" >#{status}, </if>
+            <if test="createUser != null" >#{createUser}, </if>
+            <if test="createDate != null" >#{createDate}, </if>
+            <if test="updateUser != null" >#{updateUser}, </if>
+            <if test="updateDate != null" >#{updateDate}, </if>
+            <if test="aliveFlag != null" >#{aliveFlag}, </if>
+        </trim>
+    </insert>
+
+    <delete id="deleteByPrimaryKey" >
+        update `t_domain_info`
+        set
+            `update_user` = #{updateUser},
+            `update_date` = NOW(),
+            `alive_flag` = 0
+        where `alive_flag` = 1
+            and `id` = #{id}
+    </delete>
+
+    <delete id="deleteByPrimaryKeyList" >
+        update `t_domain_info`
+        set
+            `update_user` = #{updateUser},
+            `update_date` = NOW(),
+            `alive_flag` = 0
+        where `alive_flag` = 1
+            and `id` in
+            <foreach collection="idList" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+            </foreach>
+    </delete>
+
+    <delete id="deleteSelective" parameterType="sagiri.tool.persistence.entity.DomainInfo" >
+        update `t_domain_info`
+        set
+            `update_user` = #{updateUser},
+            `update_date` = NOW(),
+            `alive_flag` = 0
+        where `alive_flag` = 1
+            <if test="id != null" >and `id` = #{id}</if>
+            <if test="domainName != null" >and `domain_name` = #{domainName}</if>
+            <if test="domainStatuses != null" >and `domain_statuses` = #{domainStatuses}</if>
+            <if test="nameServers != null" >and `name_servers` = #{nameServers}</if>
+            <if test="registryDomainId != null" >and `registry_domain_id` = #{registryDomainId}</if>
+            <if test="registryRegistrationTime != null" >and `registry_registration_time` = #{registryRegistrationTime}</if>
+            <if test="registryExpirationTime != null" >and `registry_expiration_time` = #{registryExpirationTime}</if>
+            <if test="registryUpdateTime != null" >and `registry_update_time` = #{registryUpdateTime}</if>
+            <if test="reseller != null" >and `reseller` = #{reseller}</if>
+            <if test="registrar != null" >and `registrar` = #{registrar}</if>
+            <if test="registrarUrl != null" >and `registrar_url` = #{registrarUrl}</if>
+            <if test="registrarWhoisServer != null" >and `registrar_whois_server` = #{registrarWhoisServer}</if>
+            <if test="registrarAbuseContactEmail != null" >and `registrar_abuse_contact_email` = #{registrarAbuseContactEmail}</if>
+            <if test="registrarAbuseContactPhone != null" >and `registrar_abuse_contact_phone` = #{registrarAbuseContactPhone}</if>
+            <if test="registrarIanaId != null" >and `registrar_iana_id` = #{registrarIanaId}</if>
+            <if test="registrarRegistrationExpirationDate != null" >and `registrar_registration_expiration_date` = #{registrarRegistrationExpirationDate}</if>
+            <if test="registrant != null" >and `registrant` = #{registrant}</if>
+            <if test="registrantId != null" >and `registrant_id` = #{registrantId}</if>
+            <if test="registrantOrganization != null" >and `registrant_organization` = #{registrantOrganization}</if>
+            <if test="registrantCountry != null" >and `registrant_country` = #{registrantCountry}</if>
+            <if test="registrantRegion != null" >and `registrant_region` = #{registrantRegion}</if>
+            <if test="registrantCity != null" >and `registrant_city` = #{registrantCity}</if>
+            <if test="registrantContactEmail != null" >and `registrant_contact_email` = #{registrantContactEmail}</if>
+            <if test="registrantContactPhone != null" >and `registrant_contact_phone` = #{registrantContactPhone}</if>
+            <if test="dnsSec != null" >and `dns_sec` = #{dnsSec}</if>
+            <if test="whoisLastUpdateTime != null" >and `whois_last_update_time` = #{whoisLastUpdateTime}</if>
+            <if test="remark != null" >and `remark` = #{remark}</if>
+            <if test="rawData != null" >and `raw_data` = #{rawData}</if>
+            <if test="status != null" >and `status` = #{status}</if>
+            <if test="createUser != null" >and `create_user` = #{createUser}</if>
+            <if test="createDate != null" >and `create_date` = #{createDate}</if>
+            <if test="updateDate != null" >and `update_date` = #{updateDate}</if>
+            <if test="aliveFlag != null" >and `alive_flag` = #{aliveFlag}</if>
+    </delete>
+
+    <update id="updateByPrimaryKey" parameterType="sagiri.tool.persistence.entity.DomainInfo" >
+        update `t_domain_info`
+        set
+            `id` = #{id},
+            `domain_name` = #{domainName},
+            `domain_statuses` = #{domainStatuses},
+            `name_servers` = #{nameServers},
+            `registry_domain_id` = #{registryDomainId},
+            `registry_registration_time` = #{registryRegistrationTime},
+            `registry_expiration_time` = #{registryExpirationTime},
+            `registry_update_time` = #{registryUpdateTime},
+            `reseller` = #{reseller},
+            `registrar` = #{registrar},
+            `registrar_url` = #{registrarUrl},
+            `registrar_whois_server` = #{registrarWhoisServer},
+            `registrar_abuse_contact_email` = #{registrarAbuseContactEmail},
+            `registrar_abuse_contact_phone` = #{registrarAbuseContactPhone},
+            `registrar_iana_id` = #{registrarIanaId},
+            `registrar_registration_expiration_date` = #{registrarRegistrationExpirationDate},
+            `registrant` = #{registrant},
+            `registrant_id` = #{registrantId},
+            `registrant_organization` = #{registrantOrganization},
+            `registrant_country` = #{registrantCountry},
+            `registrant_region` = #{registrantRegion},
+            `registrant_city` = #{registrantCity},
+            `registrant_contact_email` = #{registrantContactEmail},
+            `registrant_contact_phone` = #{registrantContactPhone},
+            `dns_sec` = #{dnsSec},
+            `whois_last_update_time` = #{whoisLastUpdateTime},
+            `remark` = #{remark},
+            `raw_data` = #{rawData},
+            `status` = #{status},
+            `create_user` = #{createUser},
+            `create_date` = #{createDate},
+            `update_user` = #{updateUser},
+            `update_date` = #{updateDate},
+            `alive_flag` = #{aliveFlag}
+        where `alive_flag` = 1
+            and `id` = #{id}
+    </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="sagiri.tool.persistence.entity.DomainInfo" >
+        update `t_domain_info`
+        <set>
+            <if test="id != null" >`id` = #{id}, </if>
+            <if test="domainName != null" >`domain_name` = #{domainName}, </if>
+            <if test="domainStatuses != null" >`domain_statuses` = #{domainStatuses}, </if>
+            <if test="nameServers != null" >`name_servers` = #{nameServers}, </if>
+            <if test="registryDomainId != null" >`registry_domain_id` = #{registryDomainId}, </if>
+            <if test="registryRegistrationTime != null" >`registry_registration_time` = #{registryRegistrationTime}, </if>
+            <if test="registryExpirationTime != null" >`registry_expiration_time` = #{registryExpirationTime}, </if>
+            <if test="registryUpdateTime != null" >`registry_update_time` = #{registryUpdateTime}, </if>
+            <if test="reseller != null" >`reseller` = #{reseller}, </if>
+            <if test="registrar != null" >`registrar` = #{registrar}, </if>
+            <if test="registrarUrl != null" >`registrar_url` = #{registrarUrl}, </if>
+            <if test="registrarWhoisServer != null" >`registrar_whois_server` = #{registrarWhoisServer}, </if>
+            <if test="registrarAbuseContactEmail != null" >`registrar_abuse_contact_email` = #{registrarAbuseContactEmail}, </if>
+            <if test="registrarAbuseContactPhone != null" >`registrar_abuse_contact_phone` = #{registrarAbuseContactPhone}, </if>
+            <if test="registrarIanaId != null" >`registrar_iana_id` = #{registrarIanaId}, </if>
+            <if test="registrarRegistrationExpirationDate != null" >`registrar_registration_expiration_date` = #{registrarRegistrationExpirationDate}, </if>
+            <if test="registrant != null" >`registrant` = #{registrant}, </if>
+            <if test="registrantId != null" >`registrant_id` = #{registrantId}, </if>
+            <if test="registrantOrganization != null" >`registrant_organization` = #{registrantOrganization}, </if>
+            <if test="registrantCountry != null" >`registrant_country` = #{registrantCountry}, </if>
+            <if test="registrantRegion != null" >`registrant_region` = #{registrantRegion}, </if>
+            <if test="registrantCity != null" >`registrant_city` = #{registrantCity}, </if>
+            <if test="registrantContactEmail != null" >`registrant_contact_email` = #{registrantContactEmail}, </if>
+            <if test="registrantContactPhone != null" >`registrant_contact_phone` = #{registrantContactPhone}, </if>
+            <if test="dnsSec != null" >`dns_sec` = #{dnsSec}, </if>
+            <if test="whoisLastUpdateTime != null" >`whois_last_update_time` = #{whoisLastUpdateTime}, </if>
+            <if test="remark != null" >`remark` = #{remark}, </if>
+            <if test="rawData != null" >`raw_data` = #{rawData}, </if>
+            <if test="status != null" >`status` = #{status}, </if>
+            <if test="createUser != null" >`create_user` = #{createUser}, </if>
+            <if test="createDate != null" >`create_date` = #{createDate}, </if>
+            <if test="updateUser != null" >`update_user` = #{updateUser}, </if>
+            <if test="updateDate != null" >`update_date` = #{updateDate}, </if>
+            <if test="aliveFlag != null" >`alive_flag` = #{aliveFlag}, </if>
+        </set>
+        where `alive_flag` = 1
+            and `id` = #{id}
+    </update>
+
+    <select id="countSelective" resultType="int" parameterType="sagiri.tool.persistence.entity.DomainInfo" >
+        select
+            count(0)
+        from `t_domain_info`
+        where `alive_flag` = 1
+            <include refid="Base_Selective_Where" />
+    </select>
+
+    <select id="queryByPrimaryKey" resultMap="BaseResultMap" >
+        select
+            <include refid="Base_Column_List" />
+        from `t_domain_info`
+        where `alive_flag` = 1
+            and `id` = #{id}
+    </select>
+
+    <select id="queryByPrimaryKeyList" resultMap="BaseResultMap" >
+        select
+            <include refid="Base_Column_List" />
+        from `t_domain_info`
+        where `alive_flag` = 1
+            and `id` in
+            <foreach collection="idList" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+            </foreach>
+    </select>
+
+    <select id="findFirst" resultMap="BaseResultMap" parameterType="sagiri.tool.persistence.entity.DomainInfo">
+        select
+            <include refid="Base_Column_List" />
+        from `t_domain_info`
+        where `alive_flag` = 1
+            <include refid="Base_Selective_Where" />
+        limit 1
+    </select>
+
+    <select id="querySelective" resultMap="BaseResultMap" parameterType="sagiri.tool.persistence.entity.DomainInfo">
+        select
+            <include refid="Base_Column_List" />
+        from `t_domain_info`
+        where `alive_flag` = 1
+            <include refid="Base_Selective_Where" />
+    </select>
+    <!-- **** (End) This will be covered, please do not modify. **** -->
+    <!-- Generated by artoria-extend in 2019-11-08T09:48:22.329+0800. -->
+
+    <select id="queryDomainInfoList" resultMap="BaseResultMap" parameterType="sagiri.tool.persistence.entity.DomainInfoQuery">
+        select
+            <include refid="Base_Column_List" />
+        from `t_domain_info`
+        where `alive_flag` = 1
+            <include refid="Base_Selective_Where" />
+            <if test="beginUpdateDate != null">and `update_date` &gt;= #{beginUpdateDate}</if>
+            <if test="endUpdateDate != null">and `update_date` &lt;= #{endUpdateDate}</if>
+    </select>
+
+</mapper>

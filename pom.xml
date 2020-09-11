@@ -98,19 +98,19 @@
         <dependency>
             <groupId>com.github.kahlkn</groupId>
             <artifactId>artoria</artifactId>
-            <version>1.0.0.2019044505-2-SNAPSHOT</version>
+            <version>1.0.0.20190642-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>com.github.kahlkn</groupId>
             <artifactId>artoria-extend</artifactId>
-            <version>1.0.0.2019044513-4-SNAPSHOT</version>
+            <version>1.0.0.20190642-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>com.github.kahlkn</groupId>
-            <artifactId>kurumi</artifactId>
-            <version>1.0.0.20190445-SNAPSHOT</version>
+            <artifactId>misaka</artifactId>
+            <version>1.0.0.20191020.beta</version>
         </dependency>
 
         <dependency>
