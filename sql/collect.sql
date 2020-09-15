@@ -15,10 +15,10 @@ CREATE TABLE `t_event_record` (
   `server_id` varchar(40) NOT NULL DEFAULT '' COMMENT '服务器的ID',
   `server_app_id` varchar(40) NOT NULL DEFAULT '' COMMENT '服务器的应用的ID',
   `properties_json` text COMMENT '属性JSON',
-  `create_user` varchar(32) DEFAULT 'system' COMMENT '创建者',
-  `create_date` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_user` varchar(32) DEFAULT 'system' COMMENT '修改者',
-  `update_date` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
+  `creator_id` varchar(32) DEFAULT 'system' COMMENT '创建人ID',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updater_id` varchar(32) DEFAULT 'system' COMMENT '更新人ID',
+  `update_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
   `alive_flag` tinyint(4) DEFAULT '1' COMMENT '数据状态',
   PRIMARY KEY (`id`),
   KEY `idx_event_name` (`event_name`) USING BTREE,
@@ -37,7 +37,7 @@ CREATE TABLE `t_event_record` (
 
 
 
-CREATE TABLE `t_device_record` (
+/*CREATE TABLE `t_device_record` (
   `id` varchar(60) NOT NULL COMMENT 'ID',
   `name` varchar(50) DEFAULT '' COMMENT '名称',
   `type` varchar(30) DEFAULT '' COMMENT '类型',
@@ -50,19 +50,17 @@ CREATE TABLE `t_device_record` (
   `udid` varchar(60) DEFAULT '' COMMENT 'UDID',
   `idfa` varchar(60) DEFAULT '' COMMENT 'IDFA',
   `register_time` datetime DEFAULT NULL COMMENT '注册时间',
-  `create_user` varchar(32) NOT NULL COMMENT '创建者',
-  `create_date` datetime NOT NULL COMMENT '创建时间',
-  `update_user` varchar(32) NOT NULL COMMENT '修改者',
-  `update_date` datetime NOT NULL COMMENT '修改时间',
+  `creator_id` varchar(32) NOT NULL COMMENT '创建者',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `updater_id` varchar(32) NOT NULL COMMENT '修改者',
+  `update_time` datetime NOT NULL COMMENT '修改时间',
   `alive_flag` tinyint(4) DEFAULT '1' COMMENT '数据状态',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='设备表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='设备表';*/
 
 
 
-
-
-CREATE TABLE `t_client_record` (
+/*CREATE TABLE `t_client_record` (
   `id` int(13) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `device_id` varchar(60) NOT NULL COMMENT '设备',
   `app_id` varchar(40) NOT NULL COMMENT '应用',
@@ -76,13 +74,13 @@ CREATE TABLE `t_client_record` (
   `user_name` varchar(50) DEFAULT '' COMMENT '用户名称',
   `description` varchar(200) DEFAULT '' COMMENT '描述',
   `register_time` datetime DEFAULT NULL COMMENT '注册时间',
-  `create_user` varchar(32) NOT NULL COMMENT '创建者',
-  `create_date` datetime NOT NULL COMMENT '创建时间',
-  `update_user` varchar(32) NOT NULL COMMENT '修改者',
-  `update_date` datetime NOT NULL COMMENT '修改时间',
+  `creator_id` varchar(32) NOT NULL COMMENT '创建者',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `updater_id` varchar(32) NOT NULL COMMENT '修改者',
+  `update_time` datetime NOT NULL COMMENT '修改时间',
   `alive_flag` tinyint(4) DEFAULT '1' COMMENT '数据状态',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='客户端表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='客户端表';*/
 
 
 

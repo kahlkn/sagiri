@@ -114,6 +114,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.github.kahlkn</groupId>
+            <artifactId>misaka-extend</artifactId>
+            <version>1.0.0.20191020.beta</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>

@@ -15,13 +15,13 @@ public class GenerateTest {
     public void generate() {
         JavaCodeGenerator generator = new JavaCodeGenerator().newCreator()
                 .setDatabaseClient(databaseClient)
-                .setBaseTemplatePath("classpath:templates/generator/java/custom")
+                .setBaseTemplatePath("classpath:templates/generator/java/custom1")
                 .setBaseOutputPath("src\\main\\java")
-                .setBasePackageName("sagiri")
+                .setBasePackageName("sagiri.collect")
                 .setRenderer(new VelocityRenderer())
                 .addRemovedTableNamePrefixes("t_")
 //                .addExcludedTables("t_user_bak")
-                .addReservedTables("t_domain_info")
+                .addReservedTables("t_event_record")
                 ;
         generator.addAttribute("author", "Kahle");
         generator.generate();
