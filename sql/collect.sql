@@ -50,10 +50,10 @@ CREATE TABLE `t_event_record` (
   `udid` varchar(60) DEFAULT '' COMMENT 'UDID',
   `idfa` varchar(60) DEFAULT '' COMMENT 'IDFA',
   `register_time` datetime DEFAULT NULL COMMENT '注册时间',
-  `creator_id` varchar(32) NOT NULL COMMENT '创建者',
+  `creator_id` varchar(32) NOT NULL COMMENT '创建人ID',
   `create_time` datetime NOT NULL COMMENT '创建时间',
-  `updater_id` varchar(32) NOT NULL COMMENT '修改者',
-  `update_time` datetime NOT NULL COMMENT '修改时间',
+  `updater_id` varchar(32) NOT NULL COMMENT '更新人ID',
+  `update_time` datetime NOT NULL COMMENT '更新时间',
   `alive_flag` tinyint(4) DEFAULT '1' COMMENT '数据状态',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='设备表';*/
@@ -74,10 +74,10 @@ CREATE TABLE `t_event_record` (
   `user_name` varchar(50) DEFAULT '' COMMENT '用户名称',
   `description` varchar(200) DEFAULT '' COMMENT '描述',
   `register_time` datetime DEFAULT NULL COMMENT '注册时间',
-  `creator_id` varchar(32) NOT NULL COMMENT '创建者',
+  `creator_id` varchar(32) NOT NULL COMMENT '创建人ID',
   `create_time` datetime NOT NULL COMMENT '创建时间',
-  `updater_id` varchar(32) NOT NULL COMMENT '修改者',
-  `update_time` datetime NOT NULL COMMENT '修改时间',
+  `updater_id` varchar(32) NOT NULL COMMENT '更新人ID',
+  `update_time` datetime NOT NULL COMMENT '更新时间',
   `alive_flag` tinyint(4) DEFAULT '1' COMMENT '数据状态',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='客户端表';*/

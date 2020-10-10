@@ -1,6 +1,10 @@
 
 
 
+
+
+
+
 CREATE TABLE `t_system_user` (
   `uid` varchar(32) NOT NULL,
   `username` varchar(40) NOT NULL,
@@ -14,11 +18,11 @@ CREATE TABLE `t_system_user` (
   `register_type` tinyint(4) DEFAULT '0',
   `register_date` datetime DEFAULT NULL,
   `enabled` tinyint(4) DEFAULT '1',
-  `create_user` varchar(32) NOT NULL,
-  `create_date` datetime NOT NULL,
-  `update_user` varchar(32) NOT NULL,
-  `update_date` datetime NOT NULL,
-  `alive_flag` tinyint(4) DEFAULT '1',
+  `creator_id` varchar(32) NOT NULL COMMENT '创建人ID',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `updater_id` varchar(32) NOT NULL COMMENT '更新人ID',
+  `update_time` datetime NOT NULL COMMENT '更新时间',
+  `alive_flag` tinyint(4) DEFAULT '1' COMMENT '数据状态',
   PRIMARY KEY (`uid`),
   UNIQUE KEY `idx_username` (`username`) USING HASH,
   KEY `idx_real_name` (`real_name`) USING BTREE,
