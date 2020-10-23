@@ -49,23 +49,34 @@ mybatis:
 artoria:
   event:
     enabled: false
-    destination: EVENT_RECORD
-    visitor-id-property-name: visitorId
-    client-app-id-property-name: clientAppId
-    trace: true
-    show-trace-record: true
-    send-trace-record: true
+    destination: event_record
+    anonymous-id-name: Authorization
+    client-app-id-name: platform
   exception:
     enabled: true
-    showErrorMessage: true
-    defaultServerErrorMessage: 服务器繁忙！
+    default-error-message: 服务器繁忙！
+  logging:
+    print-access-log: true
   user:
     enabled: false
-    token-expire: 259200000
-    exclude-path-patterns:
-      - /api/**
+    token-expiration-time: 604800000
   lock:
     enabled: false
+  cors:
+    enabled: true
+    configs:
+      - urlPattern: /**
+        allowedOrigins:
+          - "*"
+        allowedHeaders:
+          - "*"
+        allowedMethods:
+          - GET
+          - POST
+          - OPTIONS
+      - urlPattern: /api/**
+        allowedOrigins:
+          - "*"
 
 
 
