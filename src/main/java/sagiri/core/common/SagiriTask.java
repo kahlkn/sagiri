@@ -20,7 +20,7 @@ import java.util.Map;
 public class SagiriTask {
     private static String workspace = "E:\\Test\\workspace";
 
-    @Scheduled(cron = "0 0/1 * * * ?")
+//    @Scheduled(cron = "0 0/1 * * * ?")
     public void autoUpdateAvgPrice() {
         File workspace = new File(SagiriTask.workspace);
         File[] files = workspace.listFiles();

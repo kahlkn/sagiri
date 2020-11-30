@@ -38,7 +38,7 @@ public class WebPageAddressDTO implements Serializable {
      */
     private String description;
     /**
-     * 创建人ID
+     * 创建者ID
      */
     private String creatorId;
     /**
@@ -46,7 +46,7 @@ public class WebPageAddressDTO implements Serializable {
      */
     private Date createTime;
     /**
-     * 更新人ID
+     * 更新者ID
      */
     private String updaterId;
     /**

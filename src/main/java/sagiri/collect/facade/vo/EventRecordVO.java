@@ -78,7 +78,7 @@ public class EventRecordVO implements Serializable {
      */
     private String propertiesJson;
     /**
-     * 创建人ID
+     * 创建者ID
      */
     private String creatorId;
     /**
@@ -86,7 +86,7 @@ public class EventRecordVO implements Serializable {
      */
     private Date createTime;
     /**
-     * 更新人ID
+     * 更新者ID
      */
     private String updaterId;
     /**
