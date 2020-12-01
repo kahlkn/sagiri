@@ -1,13 +1,13 @@
 package sagiri.tools.service.impl;
 
 import artoria.beans.BeanUtils;
-import artoria.random.RandomUtils;
+import artoria.util.RandomUtils;
 import artoria.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import sagiri.tools.service.RandomStringService;
 import sagiri.tools.service.dto.RandomStringDTO;
 import sagiri.tools.service.dto.RandomStringInputDTO;
-import sagiri.tools.service.RandomStringService;
 
 import static artoria.common.Constants.*;
 

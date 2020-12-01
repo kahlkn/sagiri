@@ -17,11 +17,11 @@ public class GenerateTest {
                 .setDatabaseClient(databaseClient)
                 .setBaseTemplatePath("classpath:templates/generator/java/custom1")
                 .setBaseOutputPath("src\\main\\java")
-                .setBasePackageName("sagiri.collect")
+                .setBasePackageName("sagiri.core")
                 .setRenderer(new VelocityRenderer())
                 .addRemovedTableNamePrefixes("t_")
 //                .addExcludedTables("t_user_bak")
-                .addReservedTables("t_event_record")
+                .addReservedTables("t_article")
                 ;
         generator.addAttribute("author", "Kahle");
         generator.generate();

@@ -1,23 +1,18 @@
 package sagiri.core.service.impl;
 
 import artoria.beans.BeanUtils;
+import artoria.common.*;
 import artoria.exception.ExceptionUtils;
 import artoria.file.FilenameUtils;
+import artoria.identifier.IdentifierUtils;
 import artoria.io.IOUtils;
-import artoria.random.RandomUtils;
 import artoria.spring.RequestContextUtils;
 import artoria.storage.StorageObject;
 import artoria.storage.StorageUtils;
 import artoria.time.DateUtils;
-import artoria.util.Assert;
-import artoria.util.CloseUtils;
-import artoria.util.CollectionUtils;
-import artoria.common.Paging;
-import artoria.util.PagingUtils;
-import artoria.common.Input;
-import artoria.common.PageResult;
-import artoria.common.Result;
+import artoria.util.*;
 import artoria.exception.VerifyUtils;
+import artoria.validate.ValidatorUtils;
 import org.springframework.web.multipart.MultipartFile;
 import sagiri.core.common.FileUtils;
 import sagiri.core.persistence.entity.Article;
@@ -26,6 +21,7 @@ import sagiri.core.service.ArticleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sagiri.core.service.dto.ArticleDTO;
 import sagiri.core.service.dto.UploadedFileDTO;
 
 import javax.servlet.ServletOutputStream;
@@ -53,28 +49,56 @@ public class ArticleServiceImpl implements ArticleService {
     @Autowired
     private ArticleMapper articleMapper;
 
-    /*private long newId(Integer articleType) {
-        // 80  01  1606719596   1001
-        // 80  固定头
-        // 01  业务类型  大类    01 表示资源相关    02 表示文章相关
-        // 1606719596   unix  时间戳
-        // 1001   自定义序列
-        //    100  毫秒值  ，  1  文章类型
-        if (articleType == null) { articleType = ZERO; }
-        String valueOf = String.valueOf(articleType);
-        VerifyUtils.isTrue(valueOf.length() == ONE, INTERNAL_SERVER_BUSY);
-        String str = "8001" + DateUtils.getTimestamp() + articleType;
-        return Long.parseLong(str);
-    }*/
+    @Override
+    public void addArticle(ArticleDTO articleDTO) {
+        VerifyUtils.notNull(articleDTO, PARAMETER_IS_REQUIRED);
+        VerifyUtils.notBlank(articleDTO.getTitle(), PARAMETER_IS_REQUIRED);
+        VerifyUtils.notNull(articleDTO.getType(), PARAMETER_IS_REQUIRED);
+        VerifyUtils.notBlank(articleDTO.getCategory(), PARAMETER_IS_REQUIRED);
+        VerifyUtils.notBlank(articleDTO.getAuthorId(), PARAMETER_IS_REQUIRED);
+        VerifyUtils.notBlank(articleDTO.getAuthorName(), PARAMETER_IS_REQUIRED);
+        VerifyUtils.notBlank(articleDTO.getContent(), PARAMETER_IS_REQUIRED);
+        if (StringUtils.isBlank(articleDTO.getId())) {
+            articleDTO.setId(IdentifierUtils.nextStringIdentifier());
+        }
+        if (articleDTO.getStatus() == null) {
+            articleDTO.setStatus(ZERO);
+        }
+        //
+        Date nowDate = new Date();
+        //
+        Article article = BeanUtils.beanToBean(articleDTO, Article.class);
+        if (article.getStatus() == ONE) {
+            article.setReleaseTime(nowDate);
+        }
+        article.setCreatorId(SYSTEM);
+        article.setCreateTime(nowDate);
+        article.setUpdaterId(SYSTEM);
+        article.setUpdateTime(nowDate);
+        article.setAliveFlag(ONE);
+        //
+        int effect = articleMapper.insertSelective(article);
+        VerifyUtils.isTrue(effect == ONE, INTERNAL_SERVER_BUSY);
+    }
 
-    private long newFileId() {
-        //   1 02011301752 34  00
-        // 1  业务类型  大类    1 内容相关
-        // 020   年份      1130   月日     1752  时分
-        // 34   秒     00  随机或者序列
-        // 1 020 1130 18 06 54 83
-        String str = "1" + DateUtils.format("yyyyMMddHHmmss").substring(1, 14) + RandomUtils.nextInt(100);
-        return Long.parseLong(str);
+    @Override
+    public void editArticle(ArticleDTO articleDTO) {
+        VerifyUtils.notNull(articleDTO, PARAMETER_IS_REQUIRED);
+        VerifyUtils.notBlank(articleDTO.getId(), PARAMETER_IS_REQUIRED);
+        //
+        Date nowDate = new Date();
+        //
+        Article article = BeanUtils.beanToBean(articleDTO, Article.class);
+        if (article.getStatus() == ONE) {
+            article.setReleaseTime(nowDate);
+        }
+        article.setUpdaterId(SYSTEM);
+        article.setUpdateTime(nowDate);
+        //
+        article.setNumberId(null);
+        article.setType(null);
+        int effect = articleMapper.updateByIdSelective(article);
+        VerifyUtils.isTrue(effect == ONE, INTERNAL_SERVER_BUSY);
     }
 
     @Override
@@ -91,11 +115,9 @@ public class ArticleServiceImpl implements ArticleService {
                 metadata.put("originalFilename", originalFilename);
                 metadata.put("content-type", contentType);
 
-
                 String directoryName = DateUtils.format(createTime, "yyyy/MM/dd/");
-                String fileName = String.valueOf(newFileId());
+                String fileName = String.valueOf(IdentifierUtils.nextStringIdentifier());
                 String objectKey = directoryName + fileName + "." + FilenameUtils.getExtension(originalFilename);
-
 
                 Assert.notBlank(objectKey, "Variable \"objectKey\" must not blank. ");
                 StorageUtils.putObject(bucket, objectKey, file.getBytes(), metadata);
@@ -103,7 +125,7 @@ public class ArticleServiceImpl implements ArticleService {
 
                 UploadedFileDTO uploadedFileDTO = new UploadedFileDTO();
                 uploadedFileDTO.setName(originalFilename);
-                uploadedFileDTO.setAddress(objectKey);
+                uploadedFileDTO.setAddress("/article/file/" + objectKey);
                 fileList.add(uploadedFileDTO);
             }
             return fileList;
@@ -134,5 +156,7 @@ public class ArticleServiceImpl implements ArticleService {
             CloseUtils.closeQuietly(outputStream);
         }
     }
+
+
 
 }

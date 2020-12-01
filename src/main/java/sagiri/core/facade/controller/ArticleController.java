@@ -14,6 +14,7 @@ import sagiri.core.service.ArticleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import sagiri.core.service.dto.ArticleDTO;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
@@ -36,12 +37,25 @@ public class ArticleController {
     @Autowired
     private ArticleService articleService;
 
-    /*@ResponseBody
-    @RequestMapping(value = "/hello", method = RequestMethod.POST)
-    public Result<Object> hello(@RequestBody ArticleVO articleVO) {
+    @RequestMapping(value = "/article/index", method = RequestMethod.GET)
+    public String index(@RequestParam String str) {
 
-        return new Result<Object>("Hello, World! ");
-    }*/
+        return "/admin/articles";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/article/add", method = RequestMethod.POST)
+    public Result<Object> addArticle(@RequestBody ArticleDTO articleDTO) {
+        articleService.addArticle(articleDTO);
+        return new Result<Object>(articleDTO.getId());
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/article/edit", method = RequestMethod.POST)
+    public Result<Object> editArticle(@RequestBody ArticleDTO articleDTO) {
+        articleService.editArticle(articleDTO);
+        return new Result<Object>(articleDTO.getId());
+    }
 
     @ResponseBody
     @RequestMapping(value = "/article/file/upload", method = RequestMethod.POST)

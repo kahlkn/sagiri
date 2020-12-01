@@ -38,6 +38,11 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
@@ -98,13 +103,13 @@
         <dependency>
             <groupId>com.github.kahlkn</groupId>
             <artifactId>artoria</artifactId>
-            <version>1.0.0.20190642-SNAPSHOT</version>
+            <version>1.0.0.20190645-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>com.github.kahlkn</groupId>
             <artifactId>artoria-extend</artifactId>
-            <version>1.0.0.20190643-SNAPSHOT</version>
+            <version>1.0.0.20190645-SNAPSHOT</version>
         </dependency>
 
         <dependency>

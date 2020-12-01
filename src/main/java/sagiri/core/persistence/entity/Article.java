@@ -20,15 +20,15 @@ public class Article implements Serializable {
     /**
      * 文章ID
      */
-    private Long id;
+    private String id;
+    /**
+     * 文章的数字ID
+     */
+    private Long numberId;
     /**
      * 文章标题
      */
     private String title;
-    /**
-     * 文章内容
-     */
-    private String content;
     /**
      * 文章类型
      */
@@ -38,9 +38,21 @@ public class Article implements Serializable {
      */
     private String category;
     /**
-     * 作者
+     * 作者ID
      */
-    private String author;
+    private String authorId;
+    /**
+     * 作者名称
+     */
+    private String authorName;
+    /**
+     * 文章内容
+     */
+    private String content;
+    /**
+     * 文章来源
+     */
+    private String origin;
     /**
      * 状态：0 草稿，1 发布
      */
