@@ -7,6 +7,7 @@ import artoria.io.IOUtils;
 import artoria.spring.RequestContextUtils;
 import artoria.storage.StorageObject;
 import artoria.storage.StorageUtils;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import sagiri.core.common.FileUtils;
@@ -20,10 +21,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * ArticleController.
@@ -38,8 +36,13 @@ public class ArticleController {
     private ArticleService articleService;
 
     @RequestMapping(value = "/article/index", method = RequestMethod.GET)
-    public String index(@RequestParam String str) {
+    public String index(@RequestParam String str, Model model) {
+        Map<String, Object> system = new HashMap<>();
+        system.put("cdnUrl", "/admin");
+        // 暂时还不清楚这个版本是什么
+        system.put("cdnVersion", "");
 
+        model.addAttribute("system", system);
         return "/admin/articles";
     }
 

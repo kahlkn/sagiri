@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
-<head th:include="admin/include :: header(测试呀)"></head>
+<head th:include="admin/include::header('文章管理')"></head>
 
 <body class="fixed-left">
 <div id="wrapper">
-    <div th:include="admin/include::topbar"></div>
-    <div th:include="admin/include::side-menu"></div>
+    <div class="topbar" th:include="admin/include::topbar"></div>
+    <div class="left side-menu" th:include="admin/include::left-side-menu"></div>
     <div class="content-page">
         <div class="content">
             <div class="container">
@@ -117,6 +117,14 @@
     </div>
 </div>
 #include('./footer.html')
+
+                <footer class="footer text-right" th:include="admin/include::footer"></footer>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="admin/include::common_js"></div>
+
 <script >
     var tale = new $.tale();
     var vm = new Vue({

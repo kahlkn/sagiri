@@ -1,19 +1,19 @@
 
 
-<head th:fragment=header(title)>
+<head th:fragment="header(title)">
     <meta charset="utf-8"/>
-    <title>${title ?! '博客后台'} - Tale</title>
+    <title th:text="${title} + ' - Sagiri'">Sagiri</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <meta content="biezhi" name="author"/>
     <meta content="${_csrf_token}" name="csrf_token"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <link rel="shortcut icon" href="/static/admin/images/favicon.png"/>
     #if(allow_cloud_CDN() == "true")
-    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="https://cdn.bootcss.com/limonte-sweetalert2/6.4.1/sweetalert2.min.css" rel="stylesheet">
-    <link href="${cdnURL()}/plugins/vue-loading/vue-loading.min.css" rel="stylesheet">
-    <link href="${cdnURL()}/css/style.min.css?v=${version}" rel="stylesheet" >
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+    <link href="https://cdn.bootcss.com/limonte-sweetalert2/6.4.1/sweetalert2.min.css" rel="stylesheet"/>
+    <link th:href="@{'{cdnUrl}/plugins/vue-loading/vue-loading.min.css'(cdnUrl=${system.cdnUrl})}" rel="stylesheet"/>
+    <link th:href="@{'{cdnUrl}/css/style.min.css?v={cdnVersion}'(cdnUrl=${system.cdnUrl},cdnVersion=${system.cdnVersion})}" rel="stylesheet"/>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -21,28 +21,28 @@
     <script src="https://cdn.bootcss.com/respond.js/1.4.0/respond.min.js"></script>
     <![endif]-->
     #else
-    <link href="${cdnURL()}/plugins/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="${cdnURL()}/plugins/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="${cdnURL()}/plugins/limonte-sweetalert2/6.4.1/sweetalert2.min.css" rel="stylesheet">
-    <link href="${cdnURL()}/plugins/vue-loading/vue-loading.min.css" rel="stylesheet">
-    <link href="${cdnURL()}/css/style.min.css?v=${version}" rel="stylesheet" >
+    <link th:href="@{'{cdnUrl}/plugins/bootstrap/3.3.7/css/bootstrap.min.css'(cdnUrl=${system.cdnUrl})}" rel="stylesheet"/>
+    <link th:href="@{'{cdnUrl}/plugins/font-awesome/4.7.0/css/font-awesome.min.css'(cdnUrl=${system.cdnUrl})}" rel="stylesheet"/>
+    <link th:href="@{'{cdnUrl}/plugins/limonte-sweetalert2/6.4.1/sweetalert2.min.css'(cdnUrl=${system.cdnUrl})}" rel="stylesheet"/>
+    <link th:href="@{'{cdnUrl}/plugins/vue-loading/vue-loading.min.css'(cdnUrl=${system.cdnUrl})}" rel="stylesheet"/>
+    <link th:href="@{'{cdnUrl}/css/style.min.css?v={cdnVersion}'(cdnUrl=${system.cdnUrl},cdnVersion=${system.cdnVersion})}" rel="stylesheet"/>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-    <script src="${cdnURL()}/plugins/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="${cdnURL()}/plugins/respond.js/1.3.0/respond.min.js"></script>
+    <script th:src="@{'{cdnUrl}/plugins/html5shiv/3.7.0/html5shiv.js'(cdnUrl=${system.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/respond.js/1.3.0/respond.min.js'(cdnUrl=${system.cdnUrl})}"></script>
     <![endif]-->
     #end
 </head>
 
 
 
-<div class="topbar" th:fragment="topbar">
+<div th:fragment="topbar">
     <div class="topbar-left">
         <div class="text-center p-t-10" style="margin: 0 auto;">
             <div class="pull-left" style="padding-left: 10px;">
                 <a href="/admin/index">
-                    <img src="/static/admin/images/unicorn.png" width="50" height="50"/>
+                    <img src="/admin/images/unicorn.png" width="50" height="50"/>
                 </a>
             </div>
             <div class="pull-left admin-title" style="padding-left: 10px;">
@@ -63,7 +63,7 @@
                 <ul class="nav navbar-nav navbar-right pull-right">
                     <li class="dropdown">
                         <a href="index.html" class="dropdown-toggle profile" data-toggle="dropdown"
-                           aria-expanded="true"><img src="${gravatar(login_user.email)}" alt="user-img" class="img-circle"> </a>
+                           aria-expanded="true"><img src="https://avatars2.githubusercontent.com/u/16236755" alt="user-img" class="img-circle"> </a>
                         <ul class="dropdown-menu">
                             <li><a href="${site_url()}" target="_blank"><i class="fa fa-eye" aria-hidden="true"></i> 预览站点</a></li>
                             <li><a href="/admin/profile"><i class="fa fa-sun-o"></i> 个人设置</a></li>
@@ -78,8 +78,7 @@
 
 
 
-
-<div class="left side-menu" th:fragment="side-menu">
+<div th:fragment="left-side-menu">
     <div class="sidebar-inner slimscrollleft">
         <div id="sidebar-menu">
             <ul>
@@ -139,7 +138,29 @@
 
 
 
+<footer th:fragment="footer">
+    2017 © <a href="https://github.com/biezhi" target="_blank">Tale</a>.
+</footer>
 
+
+
+
+<div th:fragment="common_js">
+    <script th:src="@{'{cdnUrl}/plugins/jquery/3.2.1/jquery.min.js'(cdnUrl=${system.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/bootstrap/3.3.7/js/bootstrap.min.js'(cdnUrl=${system.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/md5/md5.min.js'(cdnUrl=${system.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/dashborad/detect.js'(cdnUrl=${system.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/dashborad/fastclick.js'(cdnUrl=${system.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/dashborad/wow.min.js'(cdnUrl=${system.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/dashborad/jquery.slimscroll.js'(cdnUrl=${system.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/limonte-sweetalert2/6.4.1/sweetalert2.min.js'(cdnUrl=${system.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/axios/axios.min.js'(cdnUrl=${system.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/vue/vue.min.js'(cdnUrl=${system.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/moment/moment.min.js'(cdnUrl=${system.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/vue-loading/vue-loading.min.js'(cdnUrl=${system.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/dashborad/jquery.app.js?v={cdnVersion}'(cdnUrl=${system.cdnUrl},cdnVersion=${system.cdnVersion})}"></script>
+    <script th:src="@{'{cdnUrl}/js/base.js?v={cdnVersion}'(cdnUrl=${system.cdnUrl},cdnVersion=${system.cdnVersion})}"></script>
+</div>
 
 
 
