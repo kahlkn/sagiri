@@ -1,3 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head th:include="admin/include::header('编辑文章')"></head>
+
+<body class="fixed-left">
+<div id="wrapper">
+    <div class="topbar" th:include="admin/include::topbar"></div>
+    <div class="left side-menu" th:include="admin/include::left-side-menu"></div>
+    <div class="content-page">
+        <div class="content">
+            <div class="container">
+
 #include('../header.html',{active: 'articles', title:'编辑文章'})
 #include('./_header.html')
 <div id="app" class="row" v-cloak>
@@ -116,6 +128,14 @@
     </div>
 </div>
 #include('./_footer.html')
+
+                <footer class="footer text-right" th:include="admin/include::footer"></footer>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="admin/include::footer-js"></div>
+
 <script src="/static/admin/js/edit_article.js?v=${version}" ></script>
 </body>
 </html>

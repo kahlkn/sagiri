@@ -39,14 +39,6 @@
                                     <option value="publish">已发布</option>
                                     <option value="draft">草稿</option>
                                 </select>
-
-                                <select v-model="search1.type" class="form-control">
-                                    <option value="" selected>文章类型</option>
-                                    <option value="0">默认</option>
-                                    <option value="1">我的</option>
-                                    <option value="2">笔记</option>
-                                </select>
-
                                 <button type="button" class="btn btn-success waves-effect waves-light m-l-10"
                                         @click="load(1)">查询
                                 </button>
@@ -147,11 +139,6 @@
                 categories: '',
                 page: 1
             },
-            search1: {
-                type: '',
-            },
-            articleArray: {
-            },
             categories:[]
         },
         beforeCreate: function () {
@@ -175,7 +162,7 @@
                     }
                 });
             },
-            /*load: function (page) {
+            load: function (page) {
                 var $vm = this;
                 $vm.search.page = page;
 
@@ -190,24 +177,6 @@
                         alert(error || '数据加载失败');
                     }
                 });
-            },*/
-            load: function (page) {
-                var $vm = this;
-                $vm.search.page = page;
-
-                tale.post({
-                    url : '/article/queryList',
-                    data: $vm.search1,
-                    success: function (result) {
-                        if(result && result.success){
-                            $vm.articleArray = result.data;
-                            tale.alertOk('查询成功' + JSON.stringify(result));
-                        } else {
-                            tale.alertError(result.message || '查询失败');
-                        }
-                    }
-                });
-
             },
             deleteArticle: function (cid) {
                 var $vm = this;

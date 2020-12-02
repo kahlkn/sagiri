@@ -1,3 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head th:include="admin/include::header('新建页面')"></head>
+
+<body class="fixed-left">
+<div id="wrapper">
+    <div class="topbar" th:include="admin/include::topbar"></div>
+    <div class="left side-menu" th:include="admin/include::left-side-menu"></div>
+    <div class="content-page">
+        <div class="content">
+            <div class="container">
+
 #include('../header.html',{active: 'pages', title:'新建页面'})
 #include('../article/_header.html')
 <div id="app" class="row" v-cloak>
@@ -82,8 +94,15 @@
         </div>
     </div>
 </div>
-
 #include('../article/_footer.html')
+
+                <footer class="footer text-right" th:include="admin/include::footer"></footer>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="admin/include::footer-js"></div>
+
 <script src="/static/admin/js/new_page.js?v=${version}" ></script>
 </body>
 </html>

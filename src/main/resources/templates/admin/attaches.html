@@ -1,3 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head th:include="admin/include::header('文件管理')"></head>
+
+<body class="fixed-left">
+<div id="wrapper">
+    <div class="topbar" th:include="admin/include::topbar"></div>
+    <div class="left side-menu" th:include="admin/include::left-side-menu"></div>
+    <div class="content-page">
+        <div class="content">
+            <div class="container">
+
 #include('./header.html',{active:'attaches', title:'文件管理'})
 <link href="${cdnURL()}/plugins/dropzone/4.3.0/min/dropzone.min.css" rel="stylesheet">
 <style>
@@ -122,6 +134,14 @@
     </div>
 </div>
 #include('./footer.html')
+
+                <footer class="footer text-right" th:include="admin/include::footer"></footer>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="admin/include::footer-js"></div>
+
 <script src="${cdnURL()}/plugins/dropzone/4.3.0/min/dropzone.min.js"></script>
 <script src="${cdnURL()}/plugins/clipboard.js/1.6.0/clipboard.min.js"></script>
 <script >

@@ -1,10 +1,7 @@
 package sagiri.core.service;
 
-import artoria.common.Input;
 import artoria.common.PageResult;
-import artoria.common.Result;
 import org.springframework.web.multipart.MultipartFile;
-import sagiri.core.persistence.entity.Article;
 import sagiri.core.service.dto.ArticleDTO;
 import sagiri.core.service.dto.UploadedFileDTO;
 
@@ -27,6 +24,11 @@ public interface ArticleService {
      * 编辑文章
      */
     void editArticle(ArticleDTO articleDTO);
+
+    /**
+     * 编辑文章
+     */
+    PageResult<List<ArticleDTO>> queryArticleList(ArticleDTO articleDTO);
 
     /**
      * 上传文件

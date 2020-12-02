@@ -12,8 +12,8 @@
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
     <link href="https://cdn.bootcss.com/limonte-sweetalert2/6.4.1/sweetalert2.min.css" rel="stylesheet"/>
-    <link th:href="@{'{cdnUrl}/plugins/vue-loading/vue-loading.min.css'(cdnUrl=${system.cdnUrl})}" rel="stylesheet"/>
-    <link th:href="@{'{cdnUrl}/css/style.min.css?v={cdnVersion}'(cdnUrl=${system.cdnUrl},cdnVersion=${system.cdnVersion})}" rel="stylesheet"/>
+    <link th:href="@{'{cdnUrl}/plugins/vue-loading/vue-loading.min.css'(cdnUrl=${app.cdnUrl})}" rel="stylesheet"/>
+    <link th:href="@{'{cdnUrl}/css/style.min.css?v={version}'(cdnUrl=${app.cdnUrl},version=${app.version})}" rel="stylesheet"/>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -21,16 +21,16 @@
     <script src="https://cdn.bootcss.com/respond.js/1.4.0/respond.min.js"></script>
     <![endif]-->
     #else
-    <link th:href="@{'{cdnUrl}/plugins/bootstrap/3.3.7/css/bootstrap.min.css'(cdnUrl=${system.cdnUrl})}" rel="stylesheet"/>
-    <link th:href="@{'{cdnUrl}/plugins/font-awesome/4.7.0/css/font-awesome.min.css'(cdnUrl=${system.cdnUrl})}" rel="stylesheet"/>
-    <link th:href="@{'{cdnUrl}/plugins/limonte-sweetalert2/6.4.1/sweetalert2.min.css'(cdnUrl=${system.cdnUrl})}" rel="stylesheet"/>
-    <link th:href="@{'{cdnUrl}/plugins/vue-loading/vue-loading.min.css'(cdnUrl=${system.cdnUrl})}" rel="stylesheet"/>
-    <link th:href="@{'{cdnUrl}/css/style.min.css?v={cdnVersion}'(cdnUrl=${system.cdnUrl},cdnVersion=${system.cdnVersion})}" rel="stylesheet"/>
+    <link th:href="@{'{cdnUrl}/plugins/bootstrap/3.3.7/css/bootstrap.min.css'(cdnUrl=${app.cdnUrl})}" rel="stylesheet"/>
+    <link th:href="@{'{cdnUrl}/plugins/font-awesome/4.7.0/css/font-awesome.min.css'(cdnUrl=${app.cdnUrl})}" rel="stylesheet"/>
+    <link th:href="@{'{cdnUrl}/plugins/limonte-sweetalert2/6.4.1/sweetalert2.min.css'(cdnUrl=${app.cdnUrl})}" rel="stylesheet"/>
+    <link th:href="@{'{cdnUrl}/plugins/vue-loading/vue-loading.min.css'(cdnUrl=${app.cdnUrl})}" rel="stylesheet"/>
+    <link th:href="@{'{cdnUrl}/css/style.min.css?v={version}'(cdnUrl=${app.cdnUrl},version=${app.version})}" rel="stylesheet"/>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-    <script th:src="@{'{cdnUrl}/plugins/html5shiv/3.7.0/html5shiv.js'(cdnUrl=${system.cdnUrl})}"></script>
-    <script th:src="@{'{cdnUrl}/plugins/respond.js/1.3.0/respond.min.js'(cdnUrl=${system.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/html5shiv/3.7.0/html5shiv.js'(cdnUrl=${app.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/respond.js/1.3.0/respond.min.js'(cdnUrl=${app.cdnUrl})}"></script>
     <![endif]-->
     #end
 </head>
@@ -145,21 +145,21 @@
 
 
 
-<div th:fragment="common_js">
-    <script th:src="@{'{cdnUrl}/plugins/jquery/3.2.1/jquery.min.js'(cdnUrl=${system.cdnUrl})}"></script>
-    <script th:src="@{'{cdnUrl}/plugins/bootstrap/3.3.7/js/bootstrap.min.js'(cdnUrl=${system.cdnUrl})}"></script>
-    <script th:src="@{'{cdnUrl}/plugins/md5/md5.min.js'(cdnUrl=${system.cdnUrl})}"></script>
-    <script th:src="@{'{cdnUrl}/plugins/dashborad/detect.js'(cdnUrl=${system.cdnUrl})}"></script>
-    <script th:src="@{'{cdnUrl}/plugins/dashborad/fastclick.js'(cdnUrl=${system.cdnUrl})}"></script>
-    <script th:src="@{'{cdnUrl}/plugins/dashborad/wow.min.js'(cdnUrl=${system.cdnUrl})}"></script>
-    <script th:src="@{'{cdnUrl}/plugins/dashborad/jquery.slimscroll.js'(cdnUrl=${system.cdnUrl})}"></script>
-    <script th:src="@{'{cdnUrl}/plugins/limonte-sweetalert2/6.4.1/sweetalert2.min.js'(cdnUrl=${system.cdnUrl})}"></script>
-    <script th:src="@{'{cdnUrl}/plugins/axios/axios.min.js'(cdnUrl=${system.cdnUrl})}"></script>
-    <script th:src="@{'{cdnUrl}/plugins/vue/vue.min.js'(cdnUrl=${system.cdnUrl})}"></script>
-    <script th:src="@{'{cdnUrl}/plugins/moment/moment.min.js'(cdnUrl=${system.cdnUrl})}"></script>
-    <script th:src="@{'{cdnUrl}/plugins/vue-loading/vue-loading.min.js'(cdnUrl=${system.cdnUrl})}"></script>
-    <script th:src="@{'{cdnUrl}/plugins/dashborad/jquery.app.js?v={cdnVersion}'(cdnUrl=${system.cdnUrl},cdnVersion=${system.cdnVersion})}"></script>
-    <script th:src="@{'{cdnUrl}/js/base.js?v={cdnVersion}'(cdnUrl=${system.cdnUrl},cdnVersion=${system.cdnVersion})}"></script>
+<div th:fragment="footer-js">
+    <script th:src="@{'{cdnUrl}/plugins/jquery/3.2.1/jquery.min.js'(cdnUrl=${app.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/bootstrap/3.3.7/js/bootstrap.min.js'(cdnUrl=${app.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/md5/md5.min.js'(cdnUrl=${app.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/dashborad/detect.js'(cdnUrl=${app.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/dashborad/fastclick.js'(cdnUrl=${app.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/dashborad/wow.min.js'(cdnUrl=${app.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/dashborad/jquery.slimscroll.js'(cdnUrl=${app.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/limonte-sweetalert2/6.4.1/sweetalert2.min.js'(cdnUrl=${app.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/axios/axios.min.js'(cdnUrl=${app.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/vue/vue.min.js'(cdnUrl=${app.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/moment/moment.min.js'(cdnUrl=${app.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/vue-loading/vue-loading.min.js'(cdnUrl=${app.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/dashborad/jquery.app.js'(cdnUrl=${app.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/js/base.js?v={version}'(cdnUrl=${app.cdnUrl},version=${app.version})}"></script>
 </div>
 
 

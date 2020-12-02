@@ -1,30 +1,30 @@
 package sagiri.core.service.impl;
 
 import artoria.beans.BeanUtils;
-import artoria.common.*;
+import artoria.common.PageResult;
+import artoria.common.Paging;
 import artoria.exception.ExceptionUtils;
+import artoria.exception.VerifyUtils;
 import artoria.file.FilenameUtils;
 import artoria.identifier.IdentifierUtils;
 import artoria.io.IOUtils;
-import artoria.spring.RequestContextUtils;
 import artoria.storage.StorageObject;
 import artoria.storage.StorageUtils;
 import artoria.time.DateUtils;
-import artoria.util.*;
-import artoria.exception.VerifyUtils;
-import artoria.validate.ValidatorUtils;
-import org.springframework.web.multipart.MultipartFile;
-import sagiri.core.common.FileUtils;
-import sagiri.core.persistence.entity.Article;
-import sagiri.core.persistence.mapper.ArticleMapper;
-import sagiri.core.service.ArticleService;
+import artoria.util.Assert;
+import artoria.util.CloseUtils;
+import artoria.util.PagingUtils;
+import artoria.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import sagiri.core.persistence.entity.Article;
+import sagiri.core.persistence.mapper.ArticleMapper;
+import sagiri.core.service.ArticleService;
 import sagiri.core.service.dto.ArticleDTO;
 import sagiri.core.service.dto.UploadedFileDTO;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
@@ -102,6 +102,17 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public PageResult<List<ArticleDTO>> queryArticleList(ArticleDTO articleDTO) {
+        if (articleDTO == null) { articleDTO = new ArticleDTO(); }
+        Paging paging = articleDTO.getPaging();
+        if (paging == null) { paging = new Paging(); }
+        Article article = BeanUtils.beanToBean(articleDTO, Article.class);
+        PagingUtils.startPage(paging);
+        List<Article> articleList = articleMapper.querySelective(article);
+        return PagingUtils.handleResult(articleList, ArticleDTO.class);
+    }
+
+    @Override
     public List<UploadedFileDTO> uploadFiles(List<MultipartFile> files) {
         try {
             Date createTime = new Date();
@@ -109,8 +120,10 @@ public class ArticleServiceImpl implements ArticleService {
             for (MultipartFile file : files) {
                 String originalFilename = file.getOriginalFilename();
                 String contentType = file.getContentType();
+
                 long size = file.getSize();
                 System.out.println(originalFilename + " >> " + size + " >> " + contentType);
+
                 Map<String, Object> metadata = new LinkedHashMap<>();
                 metadata.put("originalFilename", originalFilename);
                 metadata.put("content-type", contentType);

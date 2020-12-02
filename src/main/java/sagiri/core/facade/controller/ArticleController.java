@@ -1,5 +1,6 @@
 package sagiri.core.facade.controller;
 
+import artoria.common.PageResult;
 import artoria.common.Result;
 import artoria.exception.ExceptionUtils;
 import artoria.file.FilenameUtils;
@@ -35,17 +36,6 @@ public class ArticleController {
     @Autowired
     private ArticleService articleService;
 
-    @RequestMapping(value = "/article/index", method = RequestMethod.GET)
-    public String index(@RequestParam String str, Model model) {
-        Map<String, Object> system = new HashMap<>();
-        system.put("cdnUrl", "/admin");
-        // 暂时还不清楚这个版本是什么
-        system.put("cdnVersion", "");
-
-        model.addAttribute("system", system);
-        return "/admin/articles";
-    }
-
     @ResponseBody
     @RequestMapping(value = "/article/add", method = RequestMethod.POST)
     public Result<Object> addArticle(@RequestBody ArticleDTO articleDTO) {
@@ -58,6 +48,13 @@ public class ArticleController {
     public Result<Object> editArticle(@RequestBody ArticleDTO articleDTO) {
         articleService.editArticle(articleDTO);
         return new Result<Object>(articleDTO.getId());
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/article/queryList", method = RequestMethod.POST)
+    public PageResult<List<ArticleDTO>> queryArticleList(@RequestBody ArticleDTO articleDTO) {
+
+        return articleService.queryArticleList(articleDTO);
     }
 
     @ResponseBody

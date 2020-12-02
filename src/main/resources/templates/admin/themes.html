@@ -1,3 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head th:include="admin/include::header('主题管理')"></head>
+
+<body class="fixed-left">
+<div id="wrapper">
+    <div class="topbar" th:include="admin/include::topbar"></div>
+    <div class="left side-menu" th:include="admin/include::left-side-menu"></div>
+    <div class="content-page">
+        <div class="content">
+            <div class="container">
+
 #include('./header.html',{active:'themes', title:'主题管理'})
 <div id="app" class="row" v-cloak>
     <loading :active.sync="isLoading" :can-cancel="true"></loading>
@@ -25,8 +37,15 @@
         </div>
     </div>
 </div>
-
 #include('./footer.html')
+
+                <footer class="footer text-right" th:include="admin/include::footer"></footer>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="admin/include::footer-js"></div>
+
 <script >
     var tale = new $.tale();
     var vm = new Vue({

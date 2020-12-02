@@ -1,3 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head th:include="admin/include::header('个人设置')"></head>
+
+<body class="fixed-left">
+<div id="wrapper">
+    <div class="topbar" th:include="admin/include::topbar"></div>
+    <div class="left side-menu" th:include="admin/include::left-side-menu"></div>
+    <div class="content-page">
+        <div class="content">
+            <div class="container">
+
 #include('./header.html',{active:'home', title:'个人设置'})
 <div class="row">
 
@@ -78,9 +90,16 @@
             </div>
         </div>
     </div>
-
 </div>
 #include('./footer.html')
+
+                <footer class="footer text-right" th:include="admin/include::footer"></footer>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="admin/include::footer-js"></div>
+
 <script src="${cdnURL()}/plugins/jquery-validate/1.15.1/jquery.validate.min.js"></script>
 <script src="${cdnURL()}/plugins/jquery-validate/1.15.1/localization/messages_zh.min.js"></script>
 <script >
