@@ -36,6 +36,117 @@
 </head>
 
 
+<head th:fragment="header_with_editor(title)">
+    <meta charset="utf-8"/>
+    <title th:text="${title} + ' - Sagiri'">Sagiri</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="biezhi" name="author"/>
+    <meta content="${_csrf_token}" name="csrf_token"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <link rel="shortcut icon" href="/static/admin/images/favicon.png"/>
+    #if(allow_cloud_CDN() == "true")
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+    <link href="https://cdn.bootcss.com/limonte-sweetalert2/6.4.1/sweetalert2.min.css" rel="stylesheet"/>
+    <link th:href="@{'{cdnUrl}/plugins/vue-loading/vue-loading.min.css'(cdnUrl=${app.cdnUrl})}" rel="stylesheet"/>
+    <link th:href="@{'{cdnUrl}/css/style.min.css?v={version}'(cdnUrl=${app.cdnUrl},version=${app.version})}" rel="stylesheet"/>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.0/respond.min.js"></script>
+    <![endif]-->
+    #else
+    <link th:href="@{'{cdnUrl}/plugins/bootstrap/3.3.7/css/bootstrap.min.css'(cdnUrl=${app.cdnUrl})}" rel="stylesheet"/>
+    <link th:href="@{'{cdnUrl}/plugins/font-awesome/4.7.0/css/font-awesome.min.css'(cdnUrl=${app.cdnUrl})}" rel="stylesheet"/>
+    <link th:href="@{'{cdnUrl}/plugins/limonte-sweetalert2/6.4.1/sweetalert2.min.css'(cdnUrl=${app.cdnUrl})}" rel="stylesheet"/>
+    <link th:href="@{'{cdnUrl}/plugins/vue-loading/vue-loading.min.css'(cdnUrl=${app.cdnUrl})}" rel="stylesheet"/>
+    <link th:href="@{'{cdnUrl}/css/style.min.css?v={version}'(cdnUrl=${app.cdnUrl},version=${app.version})}" rel="stylesheet"/>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script th:src="@{'{cdnUrl}/plugins/html5shiv/3.7.0/html5shiv.js'(cdnUrl=${app.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/respond.js/1.3.0/respond.min.js'(cdnUrl=${app.cdnUrl})}"></script>
+    <![endif]-->
+    #end
+
+    <link th:href="@{'{cdnUrl}/plugins/tagsinput/jquery.tagsinput.css'(cdnUrl=${app.cdnUrl})}" rel="stylesheet">
+    <link th:href="@{'{cdnUrl}/plugins/toggles/toggles.css'(cdnUrl=${app.cdnUrl})}" rel="stylesheet">
+    <link th:href="@{'{cdnUrl}/plugins/datetimepicker/bootstrap-datetimepicker.min.css'(cdnUrl=${app.cdnUrl})}" rel="stylesheet">
+    <link th:href="@{'{cdnUrl}/plugins/mditor/css/mditor.min.css'(cdnUrl=${app.cdnUrl})}" rel="stylesheet"/>
+    <link th:href="@{'{cdnUrl}/plugins/summernote/0.8.2/summernote.css'(cdnUrl=${app.cdnUrl})}" rel="stylesheet">
+    <link th:href="@{'{cdnUrl}/plugins/dropzone/4.3.0/min/dropzone.min.css'(cdnUrl=${app.cdnUrl})}" rel="stylesheet">
+
+    <style rel="stylesheet">
+        #tags_tagsinput {
+            background-color: #fafafa;
+            border: 1px solid #eeeeee;
+        }
+
+        #tags_addTag input {
+            width: 100%;
+        }
+
+        #tags_addTag {
+            margin-top: -5px;
+        }
+
+        .mditor .editor{
+            font-size: 14px;
+            font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+        }
+        .mditor .backdrop, .mditor .textarea, .mditor .viewer{
+            font-size: 14px;
+        }
+        .markdown-body{
+            font-size: 14px;
+        }
+        .note-toolbar {
+            text-align: center;
+        }
+
+        .note-editor.note-frame {
+            border: none;
+        }
+
+        .note-editor .note-toolbar {
+            background-color: #f5f5f5;
+            padding-bottom: 10px;
+        }
+
+        .note-toolbar .note-btn-group {
+            margin: 0;
+        }
+
+        .note-toolbar .note-btn {
+            border: none;
+        }
+
+        #articleForm #dropzone {
+            min-height: 200px;
+            background-color: #dbdde0;
+            line-height:200px;
+            margin-bottom: 10px;
+        }
+        #articleForm .dropzone {
+            border: 1px dashed #8662c6;
+            border-radius: 5px;
+            background: white;
+        }
+        #articleForm .dropzone .dz-message {
+            font-weight: 400;
+        }
+        #articleForm .dropzone .dz-message .note {
+            font-size: 0.8em;
+            font-weight: 200;
+            display: block;
+            margin-top: 1.4rem;
+        }
+    </style>
+</head>
+
+
+
 
 <div th:fragment="topbar">
     <div class="topbar-left">
@@ -78,7 +189,8 @@
 
 
 
-<div th:fragment="left-side-menu">
+
+<div th:fragment="left_side_menu">
     <div class="sidebar-inner slimscrollleft">
         <div id="sidebar-menu">
             <ul>
@@ -145,7 +257,7 @@
 
 
 
-<div th:fragment="footer-js">
+<div th:fragment="footer_js">
     <script th:src="@{'{cdnUrl}/plugins/jquery/3.2.1/jquery.min.js'(cdnUrl=${app.cdnUrl})}"></script>
     <script th:src="@{'{cdnUrl}/plugins/bootstrap/3.3.7/js/bootstrap.min.js'(cdnUrl=${app.cdnUrl})}"></script>
     <script th:src="@{'{cdnUrl}/plugins/md5/md5.min.js'(cdnUrl=${app.cdnUrl})}"></script>
@@ -160,6 +272,38 @@
     <script th:src="@{'{cdnUrl}/plugins/vue-loading/vue-loading.min.js'(cdnUrl=${app.cdnUrl})}"></script>
     <script th:src="@{'{cdnUrl}/plugins/dashborad/jquery.app.js'(cdnUrl=${app.cdnUrl})}"></script>
     <script th:src="@{'{cdnUrl}/js/base.js?v={version}'(cdnUrl=${app.cdnUrl},version=${app.version})}"></script>
+</div>
+
+
+<div th:fragment="footer_with_editor_js">
+    <script th:src="@{'{cdnUrl}/plugins/jquery/3.2.1/jquery.min.js'(cdnUrl=${app.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/bootstrap/3.3.7/js/bootstrap.min.js'(cdnUrl=${app.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/md5/md5.min.js'(cdnUrl=${app.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/dashborad/detect.js'(cdnUrl=${app.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/dashborad/fastclick.js'(cdnUrl=${app.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/dashborad/wow.min.js'(cdnUrl=${app.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/dashborad/jquery.slimscroll.js'(cdnUrl=${app.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/limonte-sweetalert2/6.4.1/sweetalert2.min.js'(cdnUrl=${app.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/axios/axios.min.js'(cdnUrl=${app.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/vue/vue.min.js'(cdnUrl=${app.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/moment/moment.min.js'(cdnUrl=${app.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/vue-loading/vue-loading.min.js'(cdnUrl=${app.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/dashborad/jquery.app.js'(cdnUrl=${app.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/js/base.js?v={version}'(cdnUrl=${app.cdnUrl},version=${app.version})}"></script>
+
+    #include('../footer.html')
+    <script th:src="@{'{cdnUrl}/plugins/tagsinput/jquery.tagsinput.min.js'(cdnUrl=${app.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/datetimepicker/bootstrap-datetimepicker.min.js'(cdnUrl=${app.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/datetimepicker/bootstrap-datetimepicker.zh-CN.js'(cdnUrl=${app.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/jquery-multi-select/jquery.quicksearch.js'(cdnUrl=${app.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/mditor/js/mditor.min.js'(cdnUrl=${app.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/wysihtml5/0.3.0/wysihtml5.min.js'(cdnUrl=${app.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/summernote/0.8.2/summernote.min.js'(cdnUrl=${app.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/summernote/0.8.2/lang/summernote-zh-CN.min.js'(cdnUrl=${app.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/vue-select/vue-select.js'(cdnUrl=${app.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/jquery-toggles/2.0.4/toggles.min.js'(cdnUrl=${app.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/dropzone/4.3.0/min/dropzone.min.js'(cdnUrl=${app.cdnUrl})}"></script>
+    <script th:src="@{'{cdnUrl}/plugins/to-markdown/3.1.0/to-markdown.min.js'(cdnUrl=${app.cdnUrl})}"></script>
 </div>
 
 

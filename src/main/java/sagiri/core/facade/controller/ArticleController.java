@@ -2,27 +2,21 @@ package sagiri.core.facade.controller;
 
 import artoria.common.PageResult;
 import artoria.common.Result;
-import artoria.exception.ExceptionUtils;
-import artoria.file.FilenameUtils;
-import artoria.io.IOUtils;
+import artoria.exception.BusinessException;
 import artoria.spring.RequestContextUtils;
-import artoria.storage.StorageObject;
-import artoria.storage.StorageUtils;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import sagiri.core.common.FileUtils;
-import sagiri.core.service.ArticleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import sagiri.core.common.SysUtils;
+import sagiri.core.service.ArticleService;
 import sagiri.core.service.dto.ArticleDTO;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.*;
+import java.util.List;
 
 /**
  * ArticleController.
@@ -36,32 +30,25 @@ public class ArticleController {
     @Autowired
     private ArticleService articleService;
 
-    @ResponseBody
-    @RequestMapping(value = "/article/add", method = RequestMethod.POST)
-    public Result<Object> addArticle(@RequestBody ArticleDTO articleDTO) {
-        articleService.addArticle(articleDTO);
-        return new Result<Object>(articleDTO.getId());
+    /**
+     * 文章的列表页面
+     */
+    @RequestMapping(value = "/admin/articles", method = RequestMethod.GET)
+    public String articleListPage(Model model) {
+        model.addAttribute("app", SysUtils.app());
+        return "/admin/articles";
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/article/edit", method = RequestMethod.POST)
-    public Result<Object> editArticle(@RequestBody ArticleDTO articleDTO) {
-        articleService.editArticle(articleDTO);
-        return new Result<Object>(articleDTO.getId());
+    @RequestMapping(value = "/admin/article/add", method = RequestMethod.GET)
+    public String articleNew(Model model) {
+        model.addAttribute("app", SysUtils.app());
+        return "/admin/article/new";
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/article/queryList", method = RequestMethod.POST)
-    public PageResult<List<ArticleDTO>> queryArticleList(@RequestBody ArticleDTO articleDTO) {
-
-        return articleService.queryArticleList(articleDTO);
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "/article/file/upload", method = RequestMethod.POST)
-    public Result<Object> uploadFiles(@RequestParam("files") List<MultipartFile> files) {
-
-        return new Result<Object>(articleService.uploadFiles(files));
+    @RequestMapping(value = "/admin/article/edit", method = RequestMethod.GET)
+    public String articleEdit(Model model) {
+        model.addAttribute("app", SysUtils.app());
+        return "/admin/article/edit";
     }
 
     @RequestMapping(value = "/article/file/{year}/{month}/{day}/{name}", method = RequestMethod.GET)
@@ -72,6 +59,41 @@ public class ArticleController {
         String fileAddress = String.format("/%s/%s/%s/%s", year, month, day, name);
         HttpServletResponse response = RequestContextUtils.getResponse();
         articleService.readFile(fileAddress, response);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/api/article/add", method = RequestMethod.POST)
+    public Result<Object> addArticle(@RequestBody ArticleDTO articleDTO) {
+        articleService.addArticle(articleDTO);
+        return new Result<Object>(articleDTO.getId());
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/api/article/edit", method = RequestMethod.POST)
+    public Result<Object> editArticle(@RequestBody ArticleDTO articleDTO) {
+        articleService.editArticle(articleDTO);
+        return new Result<Object>(articleDTO.getId());
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/api/article/delete", method = RequestMethod.POST)
+    public Result<Object> deleteArticle(@RequestBody ArticleDTO articleDTO) {
+        articleService.deleteArticle(articleDTO);
+        return new Result<Object>(articleDTO.getId());
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/api/article/list", method = RequestMethod.POST)
+    public PageResult<List<ArticleDTO>> queryArticleList(@RequestBody ArticleDTO articleDTO) {
+
+        return articleService.queryArticleList(articleDTO);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/api/article/file/upload", method = RequestMethod.POST)
+    public Result<Object> uploadFiles(@RequestParam("files") List<MultipartFile> files) {
+
+        return new Result<Object>(articleService.uploadFiles(files));
     }
 
 }

@@ -3,7 +3,7 @@ package sagiri;
 import artoria.generator.JavaCodeGenerator;
 import artoria.jdbc.DatabaseClient;
 import artoria.jdbc.SimpleDataSource;
-import artoria.template.VelocityRenderer;
+import artoria.template.VelocityTemplateEngine;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -18,7 +18,7 @@ public class GenerateTest {
                 .setBaseTemplatePath("classpath:templates/generator/java/custom1")
                 .setBaseOutputPath("src\\main\\java")
                 .setBasePackageName("sagiri.core")
-                .setRenderer(new VelocityRenderer())
+                .setTemplateEngine(new VelocityTemplateEngine())
                 .addRemovedTableNamePrefixes("t_")
 //                .addExcludedTables("t_user_bak")
                 .addReservedTables("t_article")

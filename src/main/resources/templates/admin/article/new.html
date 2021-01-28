@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
-<head th:include="admin/include::header('发布文章')"></head>
+<head th:include="admin/include::header_with_editor('发布文章')"></head>
 
 <body class="fixed-left">
 <div id="wrapper">
     <div class="topbar" th:include="admin/include::topbar"></div>
-    <div class="left side-menu" th:include="admin/include::left-side-menu"></div>
+    <div class="left side-menu" th:include="admin/include::left_side_menu"></div>
     <div class="content-page">
         <div class="content">
             <div class="container">
@@ -135,8 +135,8 @@
         </div>
     </div>
 </div>
-<div th:replace="admin/include::footer-js"></div>
+<div th:include="admin/include::footer_with_editor_js"></div>
 
-<script src="/static/admin/js/new_article.js?v=${version}" ></script>
+<script th:src="@{'/admin/js/new_article.js?v={version}'(version=${app.version})}" ></script>
 </body>
 </html>

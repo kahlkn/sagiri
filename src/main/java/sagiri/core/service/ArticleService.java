@@ -26,6 +26,11 @@ public interface ArticleService {
     void editArticle(ArticleDTO articleDTO);
 
     /**
+     * 删除文章
+     */
+    void deleteArticle(ArticleDTO articleDTO);
+
+    /**
      * 编辑文章
      */
     PageResult<List<ArticleDTO>> queryArticleList(ArticleDTO articleDTO);

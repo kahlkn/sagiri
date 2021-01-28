@@ -226,7 +226,10 @@ $.tale.prototype.gravatar = function(email, options){
 /**
  * Vue 全局
  */
-Vue.filter('formatUnix', function (value, pattern) {
+Vue.filter('formatTimestamp', function (value, pattern) {
+    if (value && (value + "").length >= 13) {
+        value = value / 1000;
+    }
     if (value) {
         return moment.unix(value).format(pattern || 'YYYY/MM/DD HH:mm:ss')
     }

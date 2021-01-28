@@ -102,6 +102,17 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public void deleteArticle(ArticleDTO articleDTO) {
+        VerifyUtils.notNull(articleDTO, PARAMETER_IS_REQUIRED);
+        VerifyUtils.notBlank(articleDTO.getId(), PARAMETER_IS_REQUIRED);
+        //
+        Article article = BeanUtils.beanToBean(articleDTO, Article.class);
+        article.setUpdaterId(SYSTEM);
+        int effect = articleMapper.deleteSelective(article);
+        VerifyUtils.isTrue(effect == ONE, INTERNAL_SERVER_BUSY);
+    }
+
+    @Override
     public PageResult<List<ArticleDTO>> queryArticleList(ArticleDTO articleDTO) {
         if (articleDTO == null) { articleDTO = new ArticleDTO(); }
         Paging paging = articleDTO.getPaging();

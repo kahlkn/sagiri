@@ -123,7 +123,7 @@
         </div>
     </div>
 </div>
-<div th:replace="admin/include::footer-js"></div>
+<div th:replace="admin/include::footer_js"></div>
 
 <script >
     var tale = new $.tale();
