@@ -11,6 +11,7 @@ import artoria.io.IOUtils;
 import artoria.storage.StorageObject;
 import artoria.storage.StorageUtils;
 import artoria.time.DateUtils;
+import artoria.user.UserInfo;
 import artoria.util.Assert;
 import artoria.util.CloseUtils;
 import artoria.util.PagingUtils;
@@ -19,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import sagiri.common.UserUtils;
 import sagiri.content.persistence.entity.Article;
 import sagiri.content.persistence.mapper.ArticleMapper;
 import sagiri.content.service.ArticleService;
@@ -65,15 +67,17 @@ public class ArticleServiceImpl implements ArticleService {
             articleDTO.setStatus(ZERO);
         }
         //
+        UserInfo userInfo = UserUtils.getUserInfo();
+        String loginId = userInfo.getId();
         Date nowDate = new Date();
         //
         Article article = BeanUtils.beanToBean(articleDTO, Article.class);
         if (article.getStatus() == ONE) {
             article.setReleaseTime(nowDate);
         }
-        article.setCreatorId(SYSTEM);
+        article.setCreatorId(loginId);
         article.setCreateTime(nowDate);
-        article.setUpdaterId(SYSTEM);
+        article.setUpdaterId(loginId);
         article.setUpdateTime(nowDate);
         article.setAliveFlag(ONE);
         //

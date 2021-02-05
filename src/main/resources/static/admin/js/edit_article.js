@@ -85,7 +85,10 @@ var vm = new Vue({
         load: function () {
             var $vm = this;
             var pos = window.location.toString().lastIndexOf("/");
-            var cid = window.location.toString().substring(pos + 1)
+            var cid = window.location.toString().substring(pos + 1);
+            // var search = window.location.search;
+            // search = search.substring(1, search.length);
+            // var targetPageId = search.split("&")[0].split("=")[1];
             tale.get({
                 url: '/admin/api/categories',
                 success: function (data) {

@@ -14,7 +14,7 @@ import sagiri.content.common.SysUtils;
  */
 @Slf4j
 @Controller
-public class ArticleController {
+public class ArticlePageController {
 
     /**
      * 文章的列表页面

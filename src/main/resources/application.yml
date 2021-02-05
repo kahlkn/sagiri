@@ -38,7 +38,11 @@ logging:
   home: /tmp/logs/
   level:
     root: info
-    sagiri.persistence.mapper: debug
+    sagiri.collector.persistence.mapper: debug
+    sagiri.content.persistence.mapper: debug
+    sagiri.spider.persistence.mapper: debug
+    sagiri.system.persistence.mapper: debug
+    sagiri.tools.persistence.mapper: debug
     sagiri.persistence.mapper.DomainInfoMapper.insertSelective: info
     sagiri.persistence.mapper.DomainInfoMapper.updateByPrimaryKeySelective: info
 
