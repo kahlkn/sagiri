@@ -35,6 +35,25 @@ CREATE TABLE `t_web_page_address` (
 
 
 
+CREATE TABLE `t_computer` (
+  `number_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '计算机的数字ID',
+  `id` varchar(32) NOT NULL COMMENT '计算机ID',
+  `name` varchar(80) NOT NULL COMMENT '名称',
+  `cpu` varchar(50) NOT NULL DEFAULT '' COMMENT 'CPU',
+  `memory` varchar(50) NOT NULL DEFAULT '' COMMENT '内存',
+  `system` varchar(50) NOT NULL DEFAULT '' COMMENT '系统',
+  `remark` varchar(300) NOT NULL DEFAULT '' COMMENT '备注',
+
+  `creator_id` varchar(32) NOT NULL COMMENT '创建者ID',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `updater_id` varchar(32) NOT NULL COMMENT '更新者ID',
+  `update_time` datetime NOT NULL COMMENT '更新时间',
+  `alive_flag` tinyint(4) NOT NULL DEFAULT '1' COMMENT '数据状态',
+  PRIMARY KEY (`number_id`),
+  KEY `idx_id` (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='计算机表';
+
+
 
 
 

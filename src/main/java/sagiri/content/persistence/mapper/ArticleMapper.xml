@@ -23,8 +23,8 @@
     </resultMap>
 
     <sql id="Base_Column_List" >
-        `id`,
         `number_id`,
+        `id`,
         `title`,
         `type`,
         `category`,
@@ -42,8 +42,8 @@
     </sql>
 
     <sql id="Base_Selective_Where" >
-        <if test="id != null and id != ''">and `id` = #{id}</if>
         <if test="numberId != null and numberId != ''">and `number_id` = #{numberId}</if>
+        <if test="id != null and id != ''">and `id` = #{id}</if>
         <if test="title != null and title != ''">and `title` = #{title}</if>
         <if test="type != null">and `type` = #{type}</if>
         <if test="category != null and category != ''">and `category` = #{category}</if>
@@ -65,8 +65,8 @@
             <include refid="Base_Column_List" />
         )
         values (
-            #{id},
             #{numberId},
+            #{id},
             #{title},
             #{type},
             #{category},
@@ -91,8 +91,8 @@
         values
         <foreach collection="recordList" index="index" item="item" separator="," >
         (
-            #{item.id},
             #{item.numberId},
+            #{item.id},
             #{item.title},
             #{item.type},
             #{item.category},
@@ -114,8 +114,8 @@
     <insert id="insertSelective" parameterType="sagiri.content.persistence.entity.Article" >
         insert into `t_article`
         <trim prefix="(" suffix=")" suffixOverrides="," >
-            <if test="id != null" >`id`, </if>
             <if test="numberId != null" >`number_id`, </if>
+            <if test="id != null" >`id`, </if>
             <if test="title != null" >`title`, </if>
             <if test="type != null" >`type`, </if>
             <if test="category != null" >`category`, </if>
@@ -132,8 +132,8 @@
             <if test="aliveFlag != null" >`alive_flag`, </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
-            <if test="id != null" >#{id}, </if>
             <if test="numberId != null" >#{numberId}, </if>
+            <if test="id != null" >#{id}, </if>
             <if test="title != null" >#{title}, </if>
             <if test="type != null" >#{type}, </if>
             <if test="category != null" >#{category}, </if>
@@ -181,8 +181,8 @@
             `update_time` = NOW(),
             `alive_flag` = 0
         where `alive_flag` = 1
-            <if test="id != null" >and `id` = #{id}</if>
             <if test="numberId != null" >and `number_id` = #{numberId}</if>
+            <if test="id != null" >and `id` = #{id}</if>
             <if test="title != null" >and `title` = #{title}</if>
             <if test="type != null" >and `type` = #{type}</if>
             <if test="category != null" >and `category` = #{category}</if>
@@ -202,8 +202,8 @@
     <update id="updateByPrimaryKey" parameterType="sagiri.content.persistence.entity.Article" >
         update `t_article`
         set
-            `id` = #{id},
             `number_id` = #{numberId},
+            `id` = #{id},
             `title` = #{title},
             `type` = #{type},
             `category` = #{category},
@@ -225,8 +225,8 @@
     <update id="updateByPrimaryKeySelective" parameterType="sagiri.content.persistence.entity.Article" >
         update `t_article`
         <set>
-            <if test="id != null" >`id` = #{id}, </if>
             <if test="numberId != null" >`number_id` = #{numberId}, </if>
+            <if test="id != null" >`id` = #{id}, </if>
             <if test="title != null" >`title` = #{title}, </if>
             <if test="type != null" >`type` = #{type}, </if>
             <if test="category != null" >`category` = #{category}, </if>

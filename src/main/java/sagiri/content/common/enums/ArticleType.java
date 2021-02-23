@@ -2,21 +2,21 @@ package sagiri.content.common.enums;
 
 public enum ArticleType {
     /**
-     * 默认
+     * 默认文章
      */
-    DEFAULT(0, "默认"),
+    DEFAULT( 0, "默认文章"),
     /**
-     * 我的
+     * 我的文章
      */
-    MINE(1, "我的"),
+    MINE(    1, "我的文章"),
     /**
-     * 笔记
+     * 笔记文章
      */
-    NOTE(2, "笔记"),
+    NOTE(    2, "笔记文章"),
     /**
-     * 网上的
+     * 网络文章
      */
-    INTERNET(6, "网上的"),
+    INTERNET(6, "网络文章"),
     ;
 
     ArticleType(Integer code, String description) {

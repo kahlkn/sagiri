@@ -1,4 +1,4 @@
-package sagiri.common;
+package sagiri.system.common;
 
 import artoria.user.UserInfo;
 

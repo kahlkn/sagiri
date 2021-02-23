@@ -3,35 +3,22 @@ package sagiri.content.service.impl;
 import artoria.beans.BeanUtils;
 import artoria.common.PageResult;
 import artoria.common.Paging;
-import artoria.exception.ExceptionUtils;
 import artoria.exception.VerifyUtils;
-import artoria.file.FilenameUtils;
 import artoria.identifier.IdentifierUtils;
-import artoria.io.IOUtils;
-import artoria.storage.StorageObject;
-import artoria.storage.StorageUtils;
-import artoria.time.DateUtils;
 import artoria.user.UserInfo;
-import artoria.util.Assert;
-import artoria.util.CloseUtils;
 import artoria.util.PagingUtils;
 import artoria.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-import sagiri.common.UserUtils;
 import sagiri.content.persistence.entity.Article;
 import sagiri.content.persistence.mapper.ArticleMapper;
 import sagiri.content.service.ArticleService;
 import sagiri.content.service.dto.ArticleDTO;
-import sagiri.content.service.dto.UploadedFileDTO;
+import sagiri.system.common.UserUtils;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 
 import static artoria.common.Constants.*;
 import static artoria.common.InternalErrorCode.INTERNAL_SERVER_BUSY;
@@ -45,8 +32,6 @@ import static artoria.common.InternalErrorCode.PARAMETER_IS_REQUIRED;
 @Slf4j
 @Service
 public class ArticleServiceImpl implements ArticleService {
-//    private static String bucket = ".\\article";
-    private static String bucket = "E:\\sagiri\\article";
 
     @Autowired
     private ArticleMapper articleMapper;
@@ -126,65 +111,5 @@ public class ArticleServiceImpl implements ArticleService {
         List<Article> articleList = articleMapper.querySelective(article);
         return PagingUtils.handleResult(articleList, ArticleDTO.class);
     }
-
-    @Override
-    public List<UploadedFileDTO> uploadFiles(List<MultipartFile> files) {
-        try {
-            Date createTime = new Date();
-            List<UploadedFileDTO> fileList = new ArrayList<>();
-            for (MultipartFile file : files) {
-                String originalFilename = file.getOriginalFilename();
-                String contentType = file.getContentType();
-
-                long size = file.getSize();
-                System.out.println(originalFilename + " >> " + size + " >> " + contentType);
-
-                Map<String, Object> metadata = new LinkedHashMap<>();
-                metadata.put("originalFilename", originalFilename);
-                metadata.put("content-type", contentType);
-
-                String directoryName = DateUtils.format(createTime, "yyyy/MM/dd/");
-                String fileName = String.valueOf(IdentifierUtils.nextStringIdentifier());
-                String objectKey = directoryName + fileName + "." + FilenameUtils.getExtension(originalFilename);
-
-                Assert.notBlank(objectKey, "Variable \"objectKey\" must not blank. ");
-                StorageUtils.putObject(bucket, objectKey, file.getBytes(), metadata);
-
-
-                UploadedFileDTO uploadedFileDTO = new UploadedFileDTO();
-                uploadedFileDTO.setName(originalFilename);
-                uploadedFileDTO.setAddress("/article/file/" + objectKey);
-                fileList.add(uploadedFileDTO);
-            }
-            return fileList;
-        }
-        catch (IOException e) {
-            throw ExceptionUtils.wrap(e);
-        }
-    }
-
-    @Override
-    public void readFile(String fileAddress, HttpServletResponse response) {
-        OutputStream outputStream = null;
-        InputStream objectContent = null;
-        try {
-            StorageObject storageObject = StorageUtils.getObject(bucket, fileAddress);
-            objectContent = storageObject.getObjectContent();
-            Map<String, Object> metadata = storageObject.getMetadata();
-            String contentType = (String) metadata.get("content-type");
-            response.setContentType(contentType);
-            outputStream = response.getOutputStream();
-            IOUtils.copyLarge(objectContent, outputStream);
-        }
-        catch (IOException e) {
-            throw ExceptionUtils.wrap(e);
-        }
-        finally {
-            CloseUtils.closeQuietly(objectContent);
-            CloseUtils.closeQuietly(outputStream);
-        }
-    }
-
-
 
 }

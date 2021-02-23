@@ -1,11 +1,8 @@
 package sagiri.content.service;
 
 import artoria.common.PageResult;
-import org.springframework.web.multipart.MultipartFile;
 import sagiri.content.service.dto.ArticleDTO;
-import sagiri.content.service.dto.UploadedFileDTO;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -34,15 +31,5 @@ public interface ArticleService {
      * 编辑文章
      */
     PageResult<List<ArticleDTO>> queryArticleList(ArticleDTO articleDTO);
-
-    /**
-     * 上传文件
-     */
-    List<UploadedFileDTO> uploadFiles(List<MultipartFile> files);
-
-    /**
-     * 读取文件
-     */
-    void readFile(String fileAddress, HttpServletResponse response);
 
 }

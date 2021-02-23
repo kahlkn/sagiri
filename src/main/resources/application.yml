@@ -82,5 +82,8 @@ artoria:
         allowedOrigins:
           - "*"
 
+sagiri:
+  file:
+    home-path: F:\\sagiri
 
 

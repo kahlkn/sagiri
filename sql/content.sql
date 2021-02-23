@@ -17,8 +17,8 @@ CREATE TABLE `t_article_category` (
 
 DROP TABLE IF EXISTS `t_article`;
 CREATE TABLE `t_article` (
-  `id` varchar(32) NOT NULL COMMENT '文章ID',
   `number_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '文章的数字ID',
+  `id` varchar(32) NOT NULL COMMENT '文章ID',
   `title` varchar(100) NOT NULL COMMENT '文章标题',
   `type` tinyint(4) NOT NULL DEFAULT '0' COMMENT '文章类型',
   `category` varchar(40) NOT NULL COMMENT '文章分类',
