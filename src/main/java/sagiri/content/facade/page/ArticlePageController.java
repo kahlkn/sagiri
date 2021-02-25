@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import sagiri.content.common.SysUtils;
+import sagiri.content.common.util.SysUtils;
 
 /**
  * ArticleController.

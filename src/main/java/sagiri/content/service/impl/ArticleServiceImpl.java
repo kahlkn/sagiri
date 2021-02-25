@@ -4,10 +4,8 @@ import artoria.beans.BeanUtils;
 import artoria.common.PageResult;
 import artoria.common.Paging;
 import artoria.exception.VerifyUtils;
-import artoria.identifier.IdentifierUtils;
 import artoria.user.UserInfo;
 import artoria.util.PagingUtils;
-import artoria.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,14 +13,15 @@ import sagiri.content.persistence.entity.Article;
 import sagiri.content.persistence.mapper.ArticleMapper;
 import sagiri.content.service.ArticleService;
 import sagiri.content.service.dto.ArticleDTO;
-import sagiri.system.common.UserUtils;
+import sagiri.system.common.util.UserUtils;
 
 import java.util.Date;
 import java.util.List;
 
-import static artoria.common.Constants.*;
-import static artoria.common.InternalErrorCode.INTERNAL_SERVER_BUSY;
-import static artoria.common.InternalErrorCode.PARAMETER_IS_REQUIRED;
+import static artoria.common.Constants.ONE;
+import static artoria.common.Constants.ZERO;
+import static sagiri.content.common.ContentErrorCode.*;
+import static sagiri.system.common.SystemErrorCode.E10110001;
 
 /**
  * ArticleServiceImpl.
@@ -37,25 +36,24 @@ public class ArticleServiceImpl implements ArticleService {
     private ArticleMapper articleMapper;
 
     @Override
-    public void addArticle(ArticleDTO articleDTO) {
-        VerifyUtils.notNull(articleDTO, PARAMETER_IS_REQUIRED);
-        VerifyUtils.notBlank(articleDTO.getTitle(), PARAMETER_IS_REQUIRED);
-        VerifyUtils.notNull(articleDTO.getType(), PARAMETER_IS_REQUIRED);
-        VerifyUtils.notBlank(articleDTO.getCategory(), PARAMETER_IS_REQUIRED);
-        VerifyUtils.notBlank(articleDTO.getAuthorId(), PARAMETER_IS_REQUIRED);
-        VerifyUtils.notBlank(articleDTO.getAuthorName(), PARAMETER_IS_REQUIRED);
-        VerifyUtils.notBlank(articleDTO.getContent(), PARAMETER_IS_REQUIRED);
-        if (StringUtils.isBlank(articleDTO.getId())) {
-            articleDTO.setId(IdentifierUtils.nextStringIdentifier());
-        }
+    public void add(ArticleDTO articleDTO) {
+        // 参数校验
+        VerifyUtils.notNull(articleDTO, E10110001);
+        VerifyUtils.notBlank(articleDTO.getTitle(), E12110022);
+        VerifyUtils.notNull(articleDTO.getType(), E12110023);
+        VerifyUtils.notBlank(articleDTO.getCategory(), E12110024);
+        VerifyUtils.notBlank(articleDTO.getAuthorId(), E12110025);
+        VerifyUtils.notBlank(articleDTO.getAuthorName(), E12110025);
+        VerifyUtils.notBlank(articleDTO.getContent(), E12110026);
+        // 默认值处理
         if (articleDTO.getStatus() == null) {
             articleDTO.setStatus(ZERO);
         }
-        //
+        // 当前登录人和时间
         UserInfo userInfo = UserUtils.getUserInfo();
         String loginId = userInfo.getId();
         Date nowDate = new Date();
-        //
+        // 转换和处理
         Article article = BeanUtils.beanToBean(articleDTO, Article.class);
         if (article.getStatus() == ONE) {
             article.setReleaseTime(nowDate);
@@ -65,47 +63,59 @@ public class ArticleServiceImpl implements ArticleService {
         article.setUpdaterId(loginId);
         article.setUpdateTime(nowDate);
         article.setAliveFlag(ONE);
-        //
+        // 新增
         int effect = articleMapper.insertSelective(article);
-        VerifyUtils.isTrue(effect == ONE, INTERNAL_SERVER_BUSY);
+        VerifyUtils.isTrue(effect == ONE, E12110041);
     }
 
     @Override
-    public void editArticle(ArticleDTO articleDTO) {
-        VerifyUtils.notNull(articleDTO, PARAMETER_IS_REQUIRED);
-        VerifyUtils.notBlank(articleDTO.getId(), PARAMETER_IS_REQUIRED);
-        //
+    public void edit(ArticleDTO articleDTO) {
+        // 参数校验
+        VerifyUtils.notNull(articleDTO, E10110001);
+        VerifyUtils.notNull(articleDTO.getId(), E12110021);
+        // 当前登录人和时间
+        UserInfo userInfo = UserUtils.getUserInfo();
+        String loginId = userInfo.getId();
         Date nowDate = new Date();
-        //
+        // 转换和处理
         Article article = BeanUtils.beanToBean(articleDTO, Article.class);
         if (article.getStatus() == ONE) {
             article.setReleaseTime(nowDate);
         }
-        article.setUpdaterId(SYSTEM);
-        article.setUpdateTime(nowDate);
-        //
-        article.setNumberId(null);
         article.setType(null);
-        int effect = articleMapper.updateByIdSelective(article);
-        VerifyUtils.isTrue(effect == ONE, INTERNAL_SERVER_BUSY);
+        article.setUpdaterId(loginId);
+        article.setUpdateTime(nowDate);
+        // 编辑
+        int effect = articleMapper.updateByPrimaryKeySelective(article);
+        VerifyUtils.isTrue(effect == ONE, E12110042);
     }
 
     @Override
-    public void deleteArticle(ArticleDTO articleDTO) {
-        VerifyUtils.notNull(articleDTO, PARAMETER_IS_REQUIRED);
-        VerifyUtils.notBlank(articleDTO.getId(), PARAMETER_IS_REQUIRED);
-        //
-        Article article = BeanUtils.beanToBean(articleDTO, Article.class);
-        article.setUpdaterId(SYSTEM);
-        int effect = articleMapper.deleteSelective(article);
-        VerifyUtils.isTrue(effect == ONE, INTERNAL_SERVER_BUSY);
+    public void delete(Long articleId) {
+        // 参数校验
+        VerifyUtils.notNull(articleId, E12110021);
+        // 删除
+        int effect = articleMapper
+                .deleteByPrimaryKey(articleId, UserUtils.getUserInfo().getId());
+        VerifyUtils.isTrue(effect == ONE, E12110043);
     }
 
     @Override
-    public PageResult<List<ArticleDTO>> queryArticleList(ArticleDTO articleDTO) {
+    public ArticleDTO findById(Long articleId) {
+        // 参数校验
+        VerifyUtils.notNull(articleId, E12110021);
+        // 查询
+        Article article = articleMapper.queryByPrimaryKey(articleId);
+        return BeanUtils.beanToBean(article, ArticleDTO.class);
+    }
+
+    @Override
+    public PageResult<List<ArticleDTO>> queryList(ArticleDTO articleDTO) {
+        // 参数预处理
         if (articleDTO == null) { articleDTO = new ArticleDTO(); }
         Paging paging = articleDTO.getPaging();
         if (paging == null) { paging = new Paging(); }
+        // 转换和查询
         Article article = BeanUtils.beanToBean(articleDTO, Article.class);
         PagingUtils.startPage(paging);
         List<Article> articleList = articleMapper.querySelective(article);

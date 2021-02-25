@@ -4,8 +4,7 @@
 
     <!-- **** (Start) This will be covered, please do not modify. **** -->
     <resultMap id="BaseResultMap" type="sagiri.content.persistence.entity.Article" >
-        <id column="number_id" property="numberId" />
-        <result column="id" property="id" />
+        <id column="id" property="id" />
         <result column="title" property="title" />
         <result column="type" property="type" />
         <result column="category" property="category" />
@@ -23,7 +22,6 @@
     </resultMap>
 
     <sql id="Base_Column_List" >
-        `number_id`,
         `id`,
         `title`,
         `type`,
@@ -42,7 +40,6 @@
     </sql>
 
     <sql id="Base_Selective_Where" >
-        <if test="numberId != null and numberId != ''">and `number_id` = #{numberId}</if>
         <if test="id != null and id != ''">and `id` = #{id}</if>
         <if test="title != null and title != ''">and `title` = #{title}</if>
         <if test="type != null">and `type` = #{type}</if>
@@ -65,7 +62,6 @@
             <include refid="Base_Column_List" />
         )
         values (
-            #{numberId},
             #{id},
             #{title},
             #{type},
@@ -91,7 +87,6 @@
         values
         <foreach collection="recordList" index="index" item="item" separator="," >
         (
-            #{item.numberId},
             #{item.id},
             #{item.title},
             #{item.type},
@@ -111,10 +106,9 @@
         </foreach>
     </insert>
 
-    <insert id="insertSelective" parameterType="sagiri.content.persistence.entity.Article" >
+    <insert id="insertSelective" parameterType="sagiri.content.persistence.entity.Article" useGeneratedKeys="true" keyProperty="id">
         insert into `t_article`
         <trim prefix="(" suffix=")" suffixOverrides="," >
-            <if test="numberId != null" >`number_id`, </if>
             <if test="id != null" >`id`, </if>
             <if test="title != null" >`title`, </if>
             <if test="type != null" >`type`, </if>
@@ -132,7 +126,6 @@
             <if test="aliveFlag != null" >`alive_flag`, </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
-            <if test="numberId != null" >#{numberId}, </if>
             <if test="id != null" >#{id}, </if>
             <if test="title != null" >#{title}, </if>
             <if test="type != null" >#{type}, </if>
@@ -158,7 +151,7 @@
             `update_time` = NOW(),
             `alive_flag` = 0
         where `alive_flag` = 1
-            and `number_id` = #{numberId}
+            and `id` = #{id}
     </delete>
 
     <delete id="deleteByPrimaryKeyList" >
@@ -168,8 +161,8 @@
             `update_time` = NOW(),
             `alive_flag` = 0
         where `alive_flag` = 1
-            and `number_id` in
-            <foreach collection="numberIdList" index="index" item="item" open="(" separator="," close=")">
+            and `id` in
+            <foreach collection="idList" index="index" item="item" open="(" separator="," close=")">
                     #{item}
             </foreach>
     </delete>
@@ -181,7 +174,6 @@
             `update_time` = NOW(),
             `alive_flag` = 0
         where `alive_flag` = 1
-            <if test="numberId != null" >and `number_id` = #{numberId}</if>
             <if test="id != null" >and `id` = #{id}</if>
             <if test="title != null" >and `title` = #{title}</if>
             <if test="type != null" >and `type` = #{type}</if>
@@ -202,7 +194,6 @@
     <update id="updateByPrimaryKey" parameterType="sagiri.content.persistence.entity.Article" >
         update `t_article`
         set
-            `number_id` = #{numberId},
             `id` = #{id},
             `title` = #{title},
             `type` = #{type},
@@ -219,13 +210,12 @@
             `update_time` = #{updateTime},
             `alive_flag` = #{aliveFlag}
         where `alive_flag` = 1
-            and `number_id` = #{numberId}
+            and `id` = #{id}
     </update>
 
     <update id="updateByPrimaryKeySelective" parameterType="sagiri.content.persistence.entity.Article" >
         update `t_article`
         <set>
-            <if test="numberId != null" >`number_id` = #{numberId}, </if>
             <if test="id != null" >`id` = #{id}, </if>
             <if test="title != null" >`title` = #{title}, </if>
             <if test="type != null" >`type` = #{type}, </if>
@@ -243,7 +233,7 @@
             <if test="aliveFlag != null" >`alive_flag` = #{aliveFlag}, </if>
         </set>
         where `alive_flag` = 1
-            and `number_id` = #{numberId}
+            and `id` = #{id}
     </update>
 
     <select id="countSelective" resultType="int" parameterType="sagiri.content.persistence.entity.Article" >
@@ -259,7 +249,7 @@
             <include refid="Base_Column_List" />
         from `t_article`
         where `alive_flag` = 1
-            and `number_id` = #{numberId}
+            and `id` = #{id}
     </select>
 
     <select id="queryByPrimaryKeyList" resultMap="BaseResultMap" >
@@ -267,8 +257,8 @@
             <include refid="Base_Column_List" />
         from `t_article`
         where `alive_flag` = 1
-            and `number_id` in
-            <foreach collection="numberIdList" index="index" item="item" open="(" separator="," close=")">
+            and `id` in
+            <foreach collection="idList" index="index" item="item" open="(" separator="," close=")">
                     #{item}
             </foreach>
     </select>
@@ -291,24 +281,5 @@
     </select>
     <!-- **** (End) This will be covered, please do not modify. **** -->
     <!-- Generated by artoria-extend in 2020-12-01T14:37:55.967+0800. -->
-
-    <update id="updateByIdSelective" parameterType="sagiri.content.persistence.entity.Article" >
-        update `t_article`
-        <set>
-            <if test="title != null" >`title` = #{title}, </if>
-            <if test="type != null" >`type` = #{type}, </if>
-            <if test="category != null" >`category` = #{category}, </if>
-            <if test="authorId != null" >`author_id` = #{authorId}, </if>
-            <if test="authorName != null" >`author_name` = #{authorName}, </if>
-            <if test="content != null" >`content` = #{content}, </if>
-            <if test="origin != null" >`origin` = #{origin}, </if>
-            <if test="status != null" >`status` = #{status}, </if>
-            <if test="releaseTime != null" >`release_time` = #{releaseTime}, </if>
-            <if test="updaterId != null" >`updater_id` = #{updaterId}, </if>
-            <if test="updateTime != null" >`update_time` = #{updateTime}, </if>
-        </set>
-        where `alive_flag` = 1
-        and `id` = #{id}
-    </update>
 
 </mapper>

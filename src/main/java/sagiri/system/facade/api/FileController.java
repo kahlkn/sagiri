@@ -1,7 +1,6 @@
 package sagiri.system.facade.api;
 
 import artoria.common.Result;
-import artoria.spring.RequestContextUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,24 +18,23 @@ public class FileController {
     @Autowired
     private FileService fileService;
 
-    @RequestMapping(value = "/file/{directory}/{year}/{month}/{day}/{name}", method = RequestMethod.GET)
-    public void readFile(@PathVariable String directory,
+    @RequestMapping(value = "/file/{folder}/{year}/{month}/{day}/{name}", method = RequestMethod.GET)
+    public void readFile(@PathVariable String folder,
                          @PathVariable String year,
                          @PathVariable String month,
                          @PathVariable String day,
                          @PathVariable String name,
                          HttpServletResponse response) {
-        String address = String.format("/file/%s/%s/%s/%s/%s", directory, year, month, day, name);
-//        HttpServletResponse response = RequestContextUtils.getResponse();
+        String address = String.format("/file/%s/%s/%s/%s/%s", folder, year, month, day, name);
         fileService.readFile(address, response);
     }
 
     @ResponseBody
     @RequestMapping(value = "/file/upload", method = RequestMethod.POST)
-    public Result<Object> uploadFiles(@RequestParam String directory,
+    public Result<Object> uploadFiles(@RequestParam String folder,
                                       @RequestParam("files") List<MultipartFile> files) {
 
-        return new Result<Object>(fileService.saveFiles(directory, files));
+        return new Result<Object>(fileService.saveFiles(folder, files));
     }
 
 }

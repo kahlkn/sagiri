@@ -1,4 +1,4 @@
-package sagiri.collector.service.impl;
+package sagiri.system.service.impl;
 
 import artoria.beans.BeanUtils;
 import artoria.exception.BusinessException;
@@ -6,10 +6,10 @@ import artoria.exception.VerifyUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sagiri.collector.persistence.entity.EventRecord;
-import sagiri.collector.persistence.mapper.EventRecordMapper;
-import sagiri.collector.service.EventRecordService;
-import sagiri.collector.service.dto.EventRecordDTO;
+import sagiri.system.persistence.entity.EventRecord;
+import sagiri.system.persistence.mapper.EventRecordMapper;
+import sagiri.system.service.EventRecordService;
+import sagiri.system.service.dto.EventRecordDTO;
 
 import java.util.Date;
 

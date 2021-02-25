@@ -6,9 +6,9 @@
     <resultMap id="BaseResultMap" type="sagiri.content.persistence.entity.ArticleCategory" >
         <id column="id" property="id" />
         <result column="parent_id" property="parentId" />
-        <result column="code" property="code" />
         <result column="name" property="name" />
         <result column="description" property="description" />
+        <result column="sort" property="sort" />
         <result column="creator_id" property="creatorId" />
         <result column="create_time" property="createTime" />
         <result column="updater_id" property="updaterId" />
@@ -19,9 +19,9 @@
     <sql id="Base_Column_List" >
         `id`,
         `parent_id`,
-        `code`,
         `name`,
         `description`,
+        `sort`,
         `creator_id`,
         `create_time`,
         `updater_id`,
@@ -32,9 +32,9 @@
     <sql id="Base_Selective_Where" >
         <if test="id != null and id != ''">and `id` = #{id}</if>
         <if test="parentId != null and parentId != ''">and `parent_id` = #{parentId}</if>
-        <if test="code != null and code != ''">and `code` = #{code}</if>
         <if test="name != null and name != ''">and `name` = #{name}</if>
         <if test="description != null and description != ''">and `description` = #{description}</if>
+        <if test="sort != null">and `sort` = #{sort}</if>
         <if test="creatorId != null and creatorId != ''">and `creator_id` = #{creatorId}</if>
         <if test="createTime != null">and `create_time` = #{createTime}</if>
         <if test="updaterId != null and updaterId != ''">and `updater_id` = #{updaterId}</if>
@@ -49,9 +49,9 @@
         values (
             #{id},
             #{parentId},
-            #{code},
             #{name},
             #{description},
+            #{sort},
             #{creatorId},
             #{createTime},
             #{updaterId},
@@ -69,9 +69,9 @@
         (
             #{item.id},
             #{item.parentId},
-            #{item.code},
             #{item.name},
             #{item.description},
+            #{item.sort},
             #{item.creatorId},
             #{item.createTime},
             #{item.updaterId},
@@ -86,9 +86,9 @@
         <trim prefix="(" suffix=")" suffixOverrides="," >
             <if test="id != null" >`id`, </if>
             <if test="parentId != null" >`parent_id`, </if>
-            <if test="code != null" >`code`, </if>
             <if test="name != null" >`name`, </if>
             <if test="description != null" >`description`, </if>
+            <if test="sort != null" >`sort`, </if>
             <if test="creatorId != null" >`creator_id`, </if>
             <if test="createTime != null" >`create_time`, </if>
             <if test="updaterId != null" >`updater_id`, </if>
@@ -98,9 +98,9 @@
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="id != null" >#{id}, </if>
             <if test="parentId != null" >#{parentId}, </if>
-            <if test="code != null" >#{code}, </if>
             <if test="name != null" >#{name}, </if>
             <if test="description != null" >#{description}, </if>
+            <if test="sort != null" >#{sort}, </if>
             <if test="creatorId != null" >#{creatorId}, </if>
             <if test="createTime != null" >#{createTime}, </if>
             <if test="updaterId != null" >#{updaterId}, </if>
@@ -141,9 +141,9 @@
         where `alive_flag` = 1
             <if test="id != null" >and `id` = #{id}</if>
             <if test="parentId != null" >and `parent_id` = #{parentId}</if>
-            <if test="code != null" >and `code` = #{code}</if>
             <if test="name != null" >and `name` = #{name}</if>
             <if test="description != null" >and `description` = #{description}</if>
+            <if test="sort != null" >and `sort` = #{sort}</if>
             <if test="creatorId != null" >and `creator_id` = #{creatorId}</if>
             <if test="createTime != null" >and `create_time` = #{createTime}</if>
             <if test="updaterId != null" >and `updater_id` = #{updaterId}</if>
@@ -156,9 +156,9 @@
         set
             `id` = #{id},
             `parent_id` = #{parentId},
-            `code` = #{code},
             `name` = #{name},
             `description` = #{description},
+            `sort` = #{sort},
             `creator_id` = #{creatorId},
             `create_time` = #{createTime},
             `updater_id` = #{updaterId},
@@ -173,9 +173,9 @@
         <set>
             <if test="id != null" >`id` = #{id}, </if>
             <if test="parentId != null" >`parent_id` = #{parentId}, </if>
-            <if test="code != null" >`code` = #{code}, </if>
             <if test="name != null" >`name` = #{name}, </if>
             <if test="description != null" >`description` = #{description}, </if>
+            <if test="sort != null" >`sort` = #{sort}, </if>
             <if test="creatorId != null" >`creator_id` = #{creatorId}, </if>
             <if test="createTime != null" >`create_time` = #{createTime}, </if>
             <if test="updaterId != null" >`updater_id` = #{updaterId}, </if>
@@ -231,5 +231,22 @@
     </select>
     <!-- **** (End) This will be covered, please do not modify. **** -->
     <!-- Generated by artoria-extend in 2020-11-30T16:23:05.440+0800. -->
+
+    <select id="findList" resultMap="BaseResultMap" parameterType="sagiri.content.persistence.entity.ArticleCategory">
+        select
+            `id`,
+            `parent_id`,
+            `name`,
+            `description`,
+            `sort`
+        from `t_article_category`
+        where `alive_flag` = 1
+            <if test="id != null and id != ''">and `id` = #{id}</if>
+            <if test="parentId != null and parentId != ''">and `parent_id` = #{parentId}</if>
+            <if test="name != null and name != ''">and `name` = #{name}</if>
+            <if test="description != null and description != ''">and `description` = #{description}</if>
+            <if test="sort != null">and `sort` = #{sort}</if>
+        order by `sort` asc
+    </select>
 
 </mapper>

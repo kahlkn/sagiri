@@ -15,7 +15,7 @@ public interface FileService {
     /**
      * 保存文件
      */
-    FileInfo saveFile(String folder, Date time, String fileName, String contentType, InputStream in, Map<String, Object> m);
+    FileInfo saveFile(String folder, Date time, String originalName, String contentType, InputStream in, Map<String, Object> m);
 
     /**
      * 保存文件

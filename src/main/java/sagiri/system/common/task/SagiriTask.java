@@ -1,10 +1,11 @@
-package sagiri.system.common;
+package sagiri.system.common.task;
 
 import artoria.exception.ExceptionUtils;
 import artoria.file.FilenameUtils;
 import artoria.util.CloseUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import sagiri.system.common.util.FileUtils;
 
 import java.io.File;
 import java.io.FileInputStream;

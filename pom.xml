@@ -115,13 +115,13 @@
         <dependency>
             <groupId>com.github.kahlkn</groupId>
             <artifactId>misaka</artifactId>
-            <version>1.0.0.20191020.beta</version>
+            <version>1.0.0.20190646-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>com.github.kahlkn</groupId>
             <artifactId>misaka-extend</artifactId>
-            <version>1.0.0.20191020.beta</version>
+            <version>1.0.0.20190646-SNAPSHOT</version>
         </dependency>
 
         <dependency>

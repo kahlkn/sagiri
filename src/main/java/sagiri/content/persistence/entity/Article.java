@@ -18,13 +18,9 @@ public class Article implements Serializable {
 
     /* (Start) This will be covered, please do not modify. */
     /**
-     * 文章的数字ID
-     */
-    private Long numberId;
-    /**
      * 文章ID
      */
-    private String id;
+    private Long id;
     /**
      * 文章标题
      */

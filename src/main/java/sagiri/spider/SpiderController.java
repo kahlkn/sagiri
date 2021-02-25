@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import sagiri.system.service.FileService;
 
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @Controller
@@ -34,9 +32,7 @@ public class SpiderController {
                 List<String> imageList = weiBoContent.getImageList();
                 if (CollectionUtils.isEmpty(imageList)) { continue; }
                 for (String image : imageList) {
-                    Map<String, Object> metadata = new LinkedHashMap<>();
-                    metadata.put("origin", image);
-                    fileService.saveFile("tmp", image, metadata);
+                    fileService.saveFile("tmp", image, null);
                     System.out.println("saveFile: " + image);
                     ThreadUtils.sleepQuietly(500);
                 }

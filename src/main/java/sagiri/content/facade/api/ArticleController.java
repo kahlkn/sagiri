@@ -5,7 +5,10 @@ import artoria.common.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import sagiri.content.service.ArticleService;
 import sagiri.content.service.dto.ArticleDTO;
 
@@ -25,30 +28,37 @@ public class ArticleController {
 
     @ResponseBody
     @RequestMapping(value = "/api/admin/article/add", method = RequestMethod.POST)
-    public Result<Object> addArticle(@RequestBody ArticleDTO articleDTO) {
-        articleService.addArticle(articleDTO);
-        return new Result<Object>(articleDTO.getId());
+    public Result<Object> add(@RequestBody ArticleDTO articleDTO) {
+        articleService.add(articleDTO);
+        return new Result<>();
     }
 
     @ResponseBody
     @RequestMapping(value = "/api/admin/article/edit", method = RequestMethod.POST)
-    public Result<Object> editArticle(@RequestBody ArticleDTO articleDTO) {
-        articleService.editArticle(articleDTO);
-        return new Result<Object>(articleDTO.getId());
+    public Result<Object> edit(@RequestBody ArticleDTO articleDTO) {
+        articleService.edit(articleDTO);
+        return new Result<>();
     }
 
     @ResponseBody
     @RequestMapping(value = "/api/admin/article/delete", method = RequestMethod.POST)
-    public Result<Object> deleteArticle(@RequestBody ArticleDTO articleDTO) {
-        articleService.deleteArticle(articleDTO);
-        return new Result<Object>(articleDTO.getId());
+    public Result<Object> delete(@RequestBody ArticleDTO articleDTO) {
+        articleService.delete(articleDTO.getId());
+        return new Result<>();
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/api/admin/article/detail", method = RequestMethod.POST)
+    public Result<Object> detail(@RequestBody ArticleDTO articleDTO) {
+
+        return new Result<Object>(articleService.findById(articleDTO.getId()));
     }
 
     @ResponseBody
     @RequestMapping(value = "/api/admin/article/list", method = RequestMethod.POST)
-    public PageResult<List<ArticleDTO>> queryArticleList(@RequestBody ArticleDTO articleDTO) {
+    public PageResult<List<ArticleDTO>> queryList(@RequestBody ArticleDTO articleDTO) {
 
-        return articleService.queryArticleList(articleDTO);
+        return articleService.queryList(articleDTO);
     }
 
 }

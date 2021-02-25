@@ -1,6 +1,6 @@
-package sagiri.collector.service;
+package sagiri.system.service;
 
-import sagiri.collector.service.dto.EventRecordDTO;
+import sagiri.system.service.dto.EventRecordDTO;
 
 /**
  * EventRecordService.

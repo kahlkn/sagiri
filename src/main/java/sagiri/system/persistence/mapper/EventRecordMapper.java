@@ -1,8 +1,8 @@
-package sagiri.collector.persistence.mapper;
+package sagiri.system.persistence.mapper;
 
-import sagiri.collector.persistence.entity.EventRecord;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import sagiri.system.persistence.entity.EventRecord;
 
 import java.util.List;
 

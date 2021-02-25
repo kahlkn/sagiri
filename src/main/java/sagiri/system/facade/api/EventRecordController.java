@@ -1,6 +1,6 @@
-package sagiri.collector.facade.controller;
+package sagiri.system.facade.api;
 
-import sagiri.collector.service.EventRecordService;
+import sagiri.system.service.EventRecordService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

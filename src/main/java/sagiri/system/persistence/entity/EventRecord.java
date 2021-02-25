@@ -1,4 +1,4 @@
-package sagiri.collector.persistence.entity;
+package sagiri.system.persistence.entity;
 
 import lombok.Data;
 
@@ -78,7 +78,7 @@ public class EventRecord implements Serializable {
      */
     private String propertiesJson;
     /**
-     * 创建者ID
+     * 创建人ID
      */
     private String creatorId;
     /**
@@ -86,7 +86,7 @@ public class EventRecord implements Serializable {
      */
     private Date createTime;
     /**
-     * 更新者ID
+     * 更新人ID
      */
     private String updaterId;
     /**

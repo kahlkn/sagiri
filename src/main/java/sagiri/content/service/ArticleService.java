@@ -15,21 +15,26 @@ public interface ArticleService {
     /**
      * 增加文章
      */
-    void addArticle(ArticleDTO articleDTO);
+    void add(ArticleDTO articleDTO);
 
     /**
      * 编辑文章
      */
-    void editArticle(ArticleDTO articleDTO);
+    void edit(ArticleDTO articleDTO);
 
     /**
      * 删除文章
      */
-    void deleteArticle(ArticleDTO articleDTO);
+    void delete(Long articleId);
 
     /**
-     * 编辑文章
+     * 根据文章ID查询文章
      */
-    PageResult<List<ArticleDTO>> queryArticleList(ArticleDTO articleDTO);
+    ArticleDTO findById(Long articleId);
+
+    /**
+     * 分页条件查询文章列表
+     */
+    PageResult<List<ArticleDTO>> queryList(ArticleDTO articleDTO);
 
 }

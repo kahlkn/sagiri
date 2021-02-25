@@ -26,10 +26,6 @@ public class ArticleCategory implements Serializable {
      */
     private Long parentId;
     /**
-     * 分类代码
-     */
-    private String code;
-    /**
      * 分类名称
      */
     private String name;
@@ -37,6 +33,10 @@ public class ArticleCategory implements Serializable {
      * 分类描述
      */
     private String description;
+    /**
+     * 排序
+     */
+    private Integer sort;
     /**
      * 创建者ID
      */

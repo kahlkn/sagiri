@@ -1,4 +1,4 @@
-package sagiri.collector.common;
+package sagiri.system.common;
 
 import artoria.beans.BeanUtils;
 import artoria.message.Message;
@@ -7,8 +7,8 @@ import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import sagiri.collector.service.EventRecordService;
-import sagiri.collector.service.dto.EventRecordDTO;
+import sagiri.system.service.EventRecordService;
+import sagiri.system.service.dto.EventRecordDTO;
 
 import java.util.Map;
 

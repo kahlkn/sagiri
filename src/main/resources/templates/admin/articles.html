@@ -42,9 +42,10 @@
 
                                 <select v-model="search1.type" class="form-control">
                                     <option value="" selected>文章类型</option>
-                                    <option value="0">默认</option>
-                                    <option value="1">我的</option>
-                                    <option value="2">笔记</option>
+                                    <option value="0">默认文章</option>
+                                    <option value="1">我的文章</option>
+                                    <option value="2">笔记文章</option>
+                                    <option value="6">网络文章</option>
                                 </select>
 
                                 <button type="button" class="btn btn-success waves-effect waves-light m-l-10"
@@ -186,7 +187,7 @@
                 var $vm = this;
                 $vm.search1.pageNum = pageNum;
                 tale.post({
-                    url : '/api/article/list',
+                    url : '/api/admin/article/list',
                     data: $vm.search1,
                     success: function (result) {
                         if(result && result.success){
@@ -208,7 +209,7 @@
                     title: '确定删除该文章吗?',
                     then: function () {
                         tale.post({
-                            url: '/api/article/delete',
+                            url: '/api/admin/article/delete',
                             data: {
                                 id: articleId
                             },

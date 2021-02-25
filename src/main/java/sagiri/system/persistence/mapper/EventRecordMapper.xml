@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="sagiri.collector.persistence.mapper.EventRecordMapper" >
+<mapper namespace="sagiri.system.persistence.mapper.EventRecordMapper" >
 
     <!-- **** (Start) This will be covered, please do not modify. **** -->
-    <resultMap id="BaseResultMap" type="sagiri.collector.persistence.entity.EventRecord" >
+    <resultMap id="BaseResultMap" type="sagiri.system.persistence.entity.EventRecord" >
         <id column="id" property="id" />
         <result column="event_name" property="eventName" />
         <result column="event_type" property="eventType" />
@@ -72,7 +72,7 @@
         <if test="aliveFlag != null">and `alive_flag` = #{aliveFlag}</if>
     </sql>
 
-    <insert id="insert" parameterType="sagiri.collector.persistence.entity.EventRecord" >
+    <insert id="insert" parameterType="sagiri.system.persistence.entity.EventRecord" >
         insert into `t_event_record` (
             <include refid="Base_Column_List" />
         )
@@ -131,7 +131,7 @@
         </foreach>
     </insert>
 
-    <insert id="insertSelective" parameterType="sagiri.collector.persistence.entity.EventRecord" >
+    <insert id="insertSelective" parameterType="sagiri.system.persistence.entity.EventRecord" >
         insert into `t_event_record`
         <trim prefix="(" suffix=")" suffixOverrides="," >
             <if test="id != null" >`id`, </if>
@@ -202,7 +202,7 @@
             </foreach>
     </delete>
 
-    <delete id="deleteSelective" parameterType="sagiri.collector.persistence.entity.EventRecord" >
+    <delete id="deleteSelective" parameterType="sagiri.system.persistence.entity.EventRecord" >
         update `t_event_record`
         set
             `updater_id` = #{updaterId},
@@ -231,7 +231,7 @@
             <if test="aliveFlag != null" >and `alive_flag` = #{aliveFlag}</if>
     </delete>
 
-    <update id="updateByPrimaryKey" parameterType="sagiri.collector.persistence.entity.EventRecord" >
+    <update id="updateByPrimaryKey" parameterType="sagiri.system.persistence.entity.EventRecord" >
         update `t_event_record`
         set
             `id` = #{id},
@@ -258,7 +258,7 @@
             and `id` = #{id}
     </update>
 
-    <update id="updateByPrimaryKeySelective" parameterType="sagiri.collector.persistence.entity.EventRecord" >
+    <update id="updateByPrimaryKeySelective" parameterType="sagiri.system.persistence.entity.EventRecord" >
         update `t_event_record`
         <set>
             <if test="id != null" >`id` = #{id}, </if>
@@ -286,7 +286,7 @@
             and `id` = #{id}
     </update>
 
-    <select id="countSelective" resultType="int" parameterType="sagiri.collector.persistence.entity.EventRecord" >
+    <select id="countSelective" resultType="int" parameterType="sagiri.system.persistence.entity.EventRecord" >
         select
             count(0)
         from `t_event_record`
@@ -313,7 +313,7 @@
             </foreach>
     </select>
 
-    <select id="findOne" resultMap="BaseResultMap" parameterType="sagiri.collector.persistence.entity.EventRecord">
+    <select id="findOne" resultMap="BaseResultMap" parameterType="sagiri.system.persistence.entity.EventRecord">
         select
             <include refid="Base_Column_List" />
         from `t_event_record`
@@ -322,7 +322,7 @@
         limit 1
     </select>
 
-    <select id="querySelective" resultMap="BaseResultMap" parameterType="sagiri.collector.persistence.entity.EventRecord">
+    <select id="querySelective" resultMap="BaseResultMap" parameterType="sagiri.system.persistence.entity.EventRecord">
         select
             <include refid="Base_Column_List" />
         from `t_event_record`

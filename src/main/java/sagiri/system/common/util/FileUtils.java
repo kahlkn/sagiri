@@ -1,4 +1,4 @@
-package sagiri.system.common;
+package sagiri.system.common.util;
 
 import artoria.exception.ExceptionUtils;
 import artoria.logging.Logger;

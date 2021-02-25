@@ -1,4 +1,4 @@
-package sagiri.content.common;
+package sagiri.content.common.util;
 
 import java.util.HashMap;
 import java.util.Map;
