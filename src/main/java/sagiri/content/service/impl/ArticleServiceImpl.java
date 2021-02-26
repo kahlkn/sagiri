@@ -41,9 +41,8 @@ public class ArticleServiceImpl implements ArticleService {
         VerifyUtils.notNull(articleDTO, E10110001);
         VerifyUtils.notBlank(articleDTO.getTitle(), E12110022);
         VerifyUtils.notNull(articleDTO.getType(), E12110023);
-        VerifyUtils.notBlank(articleDTO.getCategory(), E12110024);
+        VerifyUtils.notNull(articleDTO.getCategoryId(), E12110024);
         VerifyUtils.notBlank(articleDTO.getAuthorId(), E12110025);
-        VerifyUtils.notBlank(articleDTO.getAuthorName(), E12110025);
         VerifyUtils.notBlank(articleDTO.getContent(), E12110026);
         // 默认值处理
         if (articleDTO.getStatus() == null) {
@@ -110,7 +109,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public PageResult<List<ArticleDTO>> queryList(ArticleDTO articleDTO) {
+    public PageResult<List<ArticleDTO>> pagingList(ArticleDTO articleDTO) {
         // 参数预处理
         if (articleDTO == null) { articleDTO = new ArticleDTO(); }
         Paging paging = articleDTO.getPaging();

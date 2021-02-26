@@ -55,10 +55,10 @@ public class ArticleController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/api/admin/article/list", method = RequestMethod.POST)
-    public PageResult<List<ArticleDTO>> queryList(@RequestBody ArticleDTO articleDTO) {
+    @RequestMapping(value = "/api/admin/article/paging-list", method = RequestMethod.POST)
+    public PageResult<List<ArticleDTO>> pagingList(@RequestBody ArticleDTO articleDTO) {
 
-        return articleService.queryList(articleDTO);
+        return articleService.pagingList(articleDTO);
     }
 
 }

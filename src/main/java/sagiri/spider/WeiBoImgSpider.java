@@ -19,11 +19,12 @@ import static artoria.common.Constants.ONE;
 public class WeiBoImgSpider {
 
     public static void main(String[] args) {
-        for (int i = 1; i < 2; i++) {
+        for (int i = 1; i <= 2; i++) {
             List<WeiBoContent> list = doSome1("2304131792328230", i);
             for (WeiBoContent weiBoContent : list) {
                 System.out.println(weiBoContent);
             }
+            System.out.println(">>>>>>>> 条数：" + list.size());
         }
     }
 

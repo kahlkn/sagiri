@@ -52,7 +52,7 @@ public class ArticleCategoryController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/api/admin/article/category/selectList", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/admin/article/category/select-list", method = RequestMethod.POST)
     public Result<Object> selectList(@RequestBody ArticleCategoryDTO articleCategoryDTO) {
 
         return new Result<Object>(articleCategoryService.selectList(articleCategoryDTO));

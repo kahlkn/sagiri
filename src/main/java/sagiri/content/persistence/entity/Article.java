@@ -30,21 +30,21 @@ public class Article implements Serializable {
      */
     private Integer type;
     /**
-     * 文章分类
+     * 文章分类ID
      */
-    private String category;
+    private Long categoryId;
     /**
      * 作者ID
      */
     private String authorId;
     /**
-     * 作者名称
-     */
-    private String authorName;
-    /**
      * 文章内容
      */
     private String content;
+    /**
+     * 文章格式
+     */
+    private String format;
     /**
      * 文章来源
      */

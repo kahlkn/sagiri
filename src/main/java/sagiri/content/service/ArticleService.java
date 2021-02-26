@@ -35,6 +35,6 @@ public interface ArticleService {
     /**
      * 分页条件查询文章列表
      */
-    PageResult<List<ArticleDTO>> queryList(ArticleDTO articleDTO);
+    PageResult<List<ArticleDTO>> pagingList(ArticleDTO articleDTO);
 
 }

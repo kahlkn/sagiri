@@ -7,10 +7,10 @@
         <id column="id" property="id" />
         <result column="title" property="title" />
         <result column="type" property="type" />
-        <result column="category" property="category" />
+        <result column="category_id" property="categoryId" />
         <result column="author_id" property="authorId" />
-        <result column="author_name" property="authorName" />
         <result column="content" property="content" />
+        <result column="format" property="format" />
         <result column="origin" property="origin" />
         <result column="status" property="status" />
         <result column="release_time" property="releaseTime" />
@@ -25,10 +25,10 @@
         `id`,
         `title`,
         `type`,
-        `category`,
+        `category_id`,
         `author_id`,
-        `author_name`,
         `content`,
+        `format`,
         `origin`,
         `status`,
         `release_time`,
@@ -43,10 +43,10 @@
         <if test="id != null and id != ''">and `id` = #{id}</if>
         <if test="title != null and title != ''">and `title` = #{title}</if>
         <if test="type != null">and `type` = #{type}</if>
-        <if test="category != null and category != ''">and `category` = #{category}</if>
+        <if test="categoryId != null and categoryId != ''">and `category_id` = #{categoryId}</if>
         <if test="authorId != null and authorId != ''">and `author_id` = #{authorId}</if>
-        <if test="authorName != null and authorName != ''">and `author_name` = #{authorName}</if>
         <if test="content != null and content != ''">and `content` = #{content}</if>
+        <if test="format != null and format != ''">and `format` = #{format}</if>
         <if test="origin != null and origin != ''">and `origin` = #{origin}</if>
         <if test="status != null">and `status` = #{status}</if>
         <if test="releaseTime != null">and `release_time` = #{releaseTime}</if>
@@ -65,10 +65,10 @@
             #{id},
             #{title},
             #{type},
-            #{category},
+            #{categoryId},
             #{authorId},
-            #{authorName},
             #{content},
+            #{format},
             #{origin},
             #{status},
             #{releaseTime},
@@ -90,10 +90,10 @@
             #{item.id},
             #{item.title},
             #{item.type},
-            #{item.category},
+            #{item.categoryId},
             #{item.authorId},
-            #{item.authorName},
             #{item.content},
+            #{item.format},
             #{item.origin},
             #{item.status},
             #{item.releaseTime},
@@ -106,16 +106,16 @@
         </foreach>
     </insert>
 
-    <insert id="insertSelective" parameterType="sagiri.content.persistence.entity.Article" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertSelective" parameterType="sagiri.content.persistence.entity.Article" >
         insert into `t_article`
         <trim prefix="(" suffix=")" suffixOverrides="," >
             <if test="id != null" >`id`, </if>
             <if test="title != null" >`title`, </if>
             <if test="type != null" >`type`, </if>
-            <if test="category != null" >`category`, </if>
+            <if test="categoryId != null" >`category_id`, </if>
             <if test="authorId != null" >`author_id`, </if>
-            <if test="authorName != null" >`author_name`, </if>
             <if test="content != null" >`content`, </if>
+            <if test="format != null" >`format`, </if>
             <if test="origin != null" >`origin`, </if>
             <if test="status != null" >`status`, </if>
             <if test="releaseTime != null" >`release_time`, </if>
@@ -129,10 +129,10 @@
             <if test="id != null" >#{id}, </if>
             <if test="title != null" >#{title}, </if>
             <if test="type != null" >#{type}, </if>
-            <if test="category != null" >#{category}, </if>
+            <if test="categoryId != null" >#{categoryId}, </if>
             <if test="authorId != null" >#{authorId}, </if>
-            <if test="authorName != null" >#{authorName}, </if>
             <if test="content != null" >#{content}, </if>
+            <if test="format != null" >#{format}, </if>
             <if test="origin != null" >#{origin}, </if>
             <if test="status != null" >#{status}, </if>
             <if test="releaseTime != null" >#{releaseTime}, </if>
@@ -177,10 +177,10 @@
             <if test="id != null" >and `id` = #{id}</if>
             <if test="title != null" >and `title` = #{title}</if>
             <if test="type != null" >and `type` = #{type}</if>
-            <if test="category != null" >and `category` = #{category}</if>
+            <if test="categoryId != null" >and `category_id` = #{categoryId}</if>
             <if test="authorId != null" >and `author_id` = #{authorId}</if>
-            <if test="authorName != null" >and `author_name` = #{authorName}</if>
             <if test="content != null" >and `content` = #{content}</if>
+            <if test="format != null" >and `format` = #{format}</if>
             <if test="origin != null" >and `origin` = #{origin}</if>
             <if test="status != null" >and `status` = #{status}</if>
             <if test="releaseTime != null" >and `release_time` = #{releaseTime}</if>
@@ -197,10 +197,10 @@
             `id` = #{id},
             `title` = #{title},
             `type` = #{type},
-            `category` = #{category},
+            `category_id` = #{categoryId},
             `author_id` = #{authorId},
-            `author_name` = #{authorName},
             `content` = #{content},
+            `format` = #{format},
             `origin` = #{origin},
             `status` = #{status},
             `release_time` = #{releaseTime},
@@ -219,10 +219,10 @@
             <if test="id != null" >`id` = #{id}, </if>
             <if test="title != null" >`title` = #{title}, </if>
             <if test="type != null" >`type` = #{type}, </if>
-            <if test="category != null" >`category` = #{category}, </if>
+            <if test="categoryId != null" >`category_id` = #{categoryId}, </if>
             <if test="authorId != null" >`author_id` = #{authorId}, </if>
-            <if test="authorName != null" >`author_name` = #{authorName}, </if>
             <if test="content != null" >`content` = #{content}, </if>
+            <if test="format != null" >`format` = #{format}, </if>
             <if test="origin != null" >`origin` = #{origin}, </if>
             <if test="status != null" >`status` = #{status}, </if>
             <if test="releaseTime != null" >`release_time` = #{releaseTime}, </if>

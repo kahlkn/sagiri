@@ -24,23 +24,23 @@
                         <div class="row p-b-10 m-l-10">
                             <form class="form-inline" role="form">
                                 <div class="form-group">
-                                    <input v-model="search.title" type="text" class="form-control" placeholder="文章名称">
+                                    <input v-model="search.title" type="text" class="form-control" placeholder="文章标题">
                                 </div>
 
-                                <select v-model="search.categories" class="form-control">
+                                <select v-model="search.category" class="form-control">
                                     <option value="" selected>所属分类</option>
-                                    <option v-for="item in categories" :value="item.name">
+                                    <option v-for="item in categories" :value="item.id">
                                         {{ item.name }}
                                     </option>
                                 </select>
 
                                 <select v-model="search.status" class="form-control">
                                     <option value="" selected>发布状态</option>
-                                    <option value="publish">已发布</option>
-                                    <option value="draft">草稿</option>
+                                    <option value="0">草稿</option>
+                                    <option value="1">已发布</option>
                                 </select>
 
-                                <select v-model="search1.type" class="form-control">
+                                <select v-model="search.type" class="form-control">
                                     <option value="" selected>文章类型</option>
                                     <option value="0">默认文章</option>
                                     <option value="1">我的文章</option>
@@ -150,14 +150,10 @@
             articlePage: {},
             isLoading: true,
             search: {
-                type: 'post',
                 title:'',
-                status: '',
-                categories: '',
-                page: 1
-            },
-            search1: {
                 type: '',
+                category: '',
+                status: '',
                 pageNum: 1,
             },
             categories:[]
@@ -172,10 +168,11 @@
         methods: {
             loadOnce: function(){
                 var $vm = this;
-                tale.get({
-                    url: '/admin/api/categories',
+                tale.post({
+                    url: '/api/admin/article/category/select-list',
+                    data: {},
                     success: function (data) {
-                        $vm.categories = data.payload
+                        $vm.categories = data.data
                     },
                     error: function (error) {
                         console.log(error);
@@ -185,10 +182,10 @@
             },
             load: function (pageNum) {
                 var $vm = this;
-                $vm.search1.pageNum = pageNum;
+                $vm.search.pageNum = pageNum;
                 tale.post({
-                    url : '/api/admin/article/list',
-                    data: $vm.search1,
+                    url : '/api/admin/article/paging-list',
+                    data: $vm.search,
                     success: function (result) {
                         if(result && result.success){
                             $vm.articlePage = result;

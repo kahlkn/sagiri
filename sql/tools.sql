@@ -1,6 +1,9 @@
 
 
 
+
+
+
 CREATE TABLE `t_computer` (
   `number_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '计算机的数字ID',
   `id` varchar(32) NOT NULL COMMENT '计算机ID',
