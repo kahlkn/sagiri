@@ -28,6 +28,11 @@ public interface ArticleService {
     void delete(Long articleId);
 
     /**
+     * 文章详情
+     */
+    ArticleDTO detail(Long articleId);
+
+    /**
      * 根据文章ID查询文章
      */
     ArticleDTO findById(Long articleId);

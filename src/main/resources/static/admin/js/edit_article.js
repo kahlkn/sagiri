@@ -16,7 +16,7 @@ var vm = new Vue({
             tags: '',
             content: '',
             status: 'draft',
-            fmtType: 'markdown',
+            format: 'markdown',
             thumbImg: '',
             allowComment: true,
             allowPing: true,
@@ -51,10 +51,13 @@ var vm = new Vue({
             callbacks: {
                 onImageUpload: function (files) {
                     var data = new FormData();
-                    data.append('image_up', files[0]);
+                    data.append('folder', "123");
+                    for (let i = 0; i < files.length; i++) {
+                        data.append('files', files[i]);
+                    }
                     tale.showLoading();
                     $.ajax({
-                        url: '/admin/api/attach/upload',
+                        url: '/file/upload',
                         method: 'POST',
                         data: data,
                         processData: false,
@@ -66,9 +69,12 @@ var vm = new Vue({
                         success: function (result) {
                             tale.hideLoading();
                             if (result && result.success) {
-                                var url = $('#attach_url').val() + result.payload[0].fkey;
+                                /*var url = $('#attach_url').val() + result.payload[0].fkey;
                                 console.log('url =>' + url);
-                                htmlEditor.summernote('insertImage', url);
+                                htmlEditor.summernote('insertImage', url);*/
+                                result.data.forEach(function (item) {
+                                    htmlEditor.summernote('insertImage', item.address);
+                                });
                             } else {
                                 tale.alertError(result.msg || '图片上传失败');
                             }
@@ -84,17 +90,17 @@ var vm = new Vue({
     methods: {
         load: function () {
             var $vm = this;
-            var pos = window.location.toString().lastIndexOf("/");
-            var cid = window.location.toString().substring(pos + 1);
-            // var search = window.location.search;
-            // search = search.substring(1, search.length);
-            // var targetPageId = search.split("&")[0].split("=")[1];
-            tale.get({
-                url: '/admin/api/categories',
-                success: function (data) {
-                    for(item in data.payload){
-                        $vm.categories.push(data.payload[item].name);
-                    }
+            // var pos = window.location.toString().lastIndexOf("?");
+            // var articleId = window.location.toString().substring(pos + 4);
+            var articleId = getQueryVariable('id');
+
+            tale.post({
+                url: '/api/admin/article/category/select-list',
+                data: {},
+                success: function (result) {
+                    result.data.forEach(function (item) {
+                        $vm.categories.push(item.name);
+                    });
                 },
                 error: function (error) {
                     console.log(error);
@@ -102,21 +108,23 @@ var vm = new Vue({
                 }
             });
 
-            tale.get({
-                url: '/admin/api/articles/' + cid,
-                success: function (data) {
-                    $vm.article = data.payload;
-                    $vm.article.tags = data.payload.tags || "";
+            tale.post({
+                url: '/api/admin/article/detail',
+                data: { id : articleId },
+                success: function (result) {
+                    alert(JSON.stringify(result.data));
+                    $vm.article = result.data;
+                    $vm.article.tags = result.data.tags || "";
                     $vm.article.selected = [];
 
-                    var selected = data.payload.categories.split(',');
+                    var selected = result.data.categories.split(',');
                     for(item in selected){
                         $vm.article.selected.push(selected[item]);
                     }
 
                     $vm.article.createdTime = moment.unix($vm.article.created).format('YYYY-MM-DD HH:mm')
 
-                    var tags = data.payload.tags.split(',');
+                    var tags = result.data.tags.split(',');
                     for(i in tags){
                         $('#tags').addTag(tags[i]);
                     }
@@ -170,16 +178,11 @@ var vm = new Vue({
                         $('#dropzone-container').hide();
                     }
 
-                    tale.get({
-                        url: '/admin/api/articles/content/' + cid,
-                        success: function (data) {
-                            if ($vm.article.fmtType === 'markdown') {
-                                mditor.value = data;
-                            } else {
-                                htmlEditor.summernote("code", data);
-                            }
-                        }
-                    });
+                    if (result.data.format === 'markdown') {
+                        mditor.value = result.data.content;
+                    } else {
+                        htmlEditor.summernote("code", result.data.content);
+                    }
 
                 },
                 error: function (error) {
@@ -190,7 +193,7 @@ var vm = new Vue({
         },
         autoSave: function (callback) {
             var $vm = this;
-            var content = $vm.article.fmtType === 'markdown' ? mditor.value : htmlEditor.summernote('code');
+            var content = $vm.article.format === 'markdown' ? mditor.value : htmlEditor.summernote('code');
             if ($vm.article.title !== '' && content !== '') {
                 $vm.article.content = content;
                 $vm.article.categories = $vm.article.selected.join(',');
@@ -217,7 +220,7 @@ var vm = new Vue({
             }
         },
         switchEditor: function (event) {
-            var type = this.article.fmtType;
+            var type = this.article.format;
             var this_ = event.target;
             if (type === 'markdown') {
                 // 切换为富文本编辑器
@@ -231,7 +234,7 @@ var vm = new Vue({
 
                 this_.innerHTML = '切换为Markdown编辑器';
 
-                this.article.fmtType = 'html';
+                this.article.format = 'html';
             } else {
                 // 切换为markdown编辑器
                 if ($('#html-container .note-editable').html().length > 0) {
@@ -241,7 +244,7 @@ var vm = new Vue({
                 $('#html-container').hide();
                 $('#md-container').show();
 
-                this.article.fmtType = 'markdown';
+                this.article.format = 'markdown';
 
                 this_.innerHTML = '切换为富文本编辑器';
                 htmlEditor.summernote("code", "");
@@ -249,7 +252,7 @@ var vm = new Vue({
         },
         publish: function (status) {
             var $vm = this;
-            var content = this.article.fmtType === 'markdown' ? mditor.value : htmlEditor.summernote('code');
+            var content = this.article.format === 'markdown' ? mditor.value : htmlEditor.summernote('code');
             var title = $vm.article.title;
             if (title === '') {
                 tale.alertWarn('请输入文章标题');

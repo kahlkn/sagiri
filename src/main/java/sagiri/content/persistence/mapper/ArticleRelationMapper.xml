@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="sagiri.content.persistence.mapper.ArticleRelationMapper" >
+
+    <!-- **** (Start) This will be covered, please do not modify. **** -->
+    <resultMap id="BaseResultMap" type="sagiri.content.persistence.entity.ArticleRelation" >
+        <id column="id" property="id" />
+        <result column="article_id" property="articleId" />
+        <result column="type" property="type" />
+        <result column="target_id" property="targetId" />
+        <result column="creator_id" property="creatorId" />
+        <result column="create_time" property="createTime" />
+        <result column="updater_id" property="updaterId" />
+        <result column="update_time" property="updateTime" />
+        <result column="alive_flag" property="aliveFlag" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        `id`,
+        `article_id`,
+        `type`,
+        `target_id`,
+        `creator_id`,
+        `create_time`,
+        `updater_id`,
+        `update_time`,
+        `alive_flag`
+    </sql>
+
+    <sql id="Base_Selective_Where" >
+        <if test="id != null and id != ''">and `id` = #{id}</if>
+        <if test="articleId != null and articleId != ''">and `article_id` = #{articleId}</if>
+        <if test="type != null">and `type` = #{type}</if>
+        <if test="targetId != null and targetId != ''">and `target_id` = #{targetId}</if>
+        <if test="creatorId != null and creatorId != ''">and `creator_id` = #{creatorId}</if>
+        <if test="createTime != null">and `create_time` = #{createTime}</if>
+        <if test="updaterId != null and updaterId != ''">and `updater_id` = #{updaterId}</if>
+        <if test="updateTime != null">and `update_time` = #{updateTime}</if>
+        <if test="aliveFlag != null">and `alive_flag` = #{aliveFlag}</if>
+    </sql>
+
+    <insert id="insert" parameterType="sagiri.content.persistence.entity.ArticleRelation" >
+        insert into `t_article_relation` (
+            <include refid="Base_Column_List" />
+        )
+        values (
+            #{id},
+            #{articleId},
+            #{type},
+            #{targetId},
+            #{creatorId},
+            #{createTime},
+            #{updaterId},
+            #{updateTime},
+            #{aliveFlag}
+        )
+    </insert>
+
+    <insert id="insertBatch" >
+        insert into `t_article_relation` (
+            <include refid="Base_Column_List" />
+        )
+        values
+        <foreach collection="recordList" index="index" item="item" separator="," >
+        (
+            #{item.id},
+            #{item.articleId},
+            #{item.type},
+            #{item.targetId},
+            #{item.creatorId},
+            #{item.createTime},
+            #{item.updaterId},
+            #{item.updateTime},
+            #{item.aliveFlag}
+        )
+        </foreach>
+    </insert>
+
+    <insert id="insertSelective" parameterType="sagiri.content.persistence.entity.ArticleRelation" >
+        insert into `t_article_relation`
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >`id`, </if>
+            <if test="articleId != null" >`article_id`, </if>
+            <if test="type != null" >`type`, </if>
+            <if test="targetId != null" >`target_id`, </if>
+            <if test="creatorId != null" >`creator_id`, </if>
+            <if test="createTime != null" >`create_time`, </if>
+            <if test="updaterId != null" >`updater_id`, </if>
+            <if test="updateTime != null" >`update_time`, </if>
+            <if test="aliveFlag != null" >`alive_flag`, </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >#{id}, </if>
+            <if test="articleId != null" >#{articleId}, </if>
+            <if test="type != null" >#{type}, </if>
+            <if test="targetId != null" >#{targetId}, </if>
+            <if test="creatorId != null" >#{creatorId}, </if>
+            <if test="createTime != null" >#{createTime}, </if>
+            <if test="updaterId != null" >#{updaterId}, </if>
+            <if test="updateTime != null" >#{updateTime}, </if>
+            <if test="aliveFlag != null" >#{aliveFlag}, </if>
+        </trim>
+    </insert>
+
+    <delete id="deleteByPrimaryKey" >
+        update `t_article_relation`
+        set
+            `updater_id` = #{updaterId},
+            `update_time` = NOW(),
+            `alive_flag` = 0
+        where `alive_flag` = 1
+            and `id` = #{id}
+    </delete>
+
+    <delete id="deleteByPrimaryKeyList" >
+        update `t_article_relation`
+        set
+            `updater_id` = #{updaterId},
+            `update_time` = NOW(),
+            `alive_flag` = 0
+        where `alive_flag` = 1
+            and `id` in
+            <foreach collection="idList" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+            </foreach>
+    </delete>
+
+    <delete id="deleteSelective" parameterType="sagiri.content.persistence.entity.ArticleRelation" >
+        update `t_article_relation`
+        set
+            `updater_id` = #{updaterId},
+            `update_time` = NOW(),
+            `alive_flag` = 0
+        where `alive_flag` = 1
+            <if test="id != null" >and `id` = #{id}</if>
+            <if test="articleId != null" >and `article_id` = #{articleId}</if>
+            <if test="type != null" >and `type` = #{type}</if>
+            <if test="targetId != null" >and `target_id` = #{targetId}</if>
+            <if test="creatorId != null" >and `creator_id` = #{creatorId}</if>
+            <if test="createTime != null" >and `create_time` = #{createTime}</if>
+            <if test="updaterId != null" >and `updater_id` = #{updaterId}</if>
+            <if test="updateTime != null" >and `update_time` = #{updateTime}</if>
+            <if test="aliveFlag != null" >and `alive_flag` = #{aliveFlag}</if>
+    </delete>
+
+    <update id="updateByPrimaryKey" parameterType="sagiri.content.persistence.entity.ArticleRelation" >
+        update `t_article_relation`
+        set
+            `id` = #{id},
+            `article_id` = #{articleId},
+            `type` = #{type},
+            `target_id` = #{targetId},
+            `creator_id` = #{creatorId},
+            `create_time` = #{createTime},
+            `updater_id` = #{updaterId},
+            `update_time` = #{updateTime},
+            `alive_flag` = #{aliveFlag}
+        where `alive_flag` = 1
+            and `id` = #{id}
+    </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="sagiri.content.persistence.entity.ArticleRelation" >
+        update `t_article_relation`
+        <set>
+            <if test="id != null" >`id` = #{id}, </if>
+            <if test="articleId != null" >`article_id` = #{articleId}, </if>
+            <if test="type != null" >`type` = #{type}, </if>
+            <if test="targetId != null" >`target_id` = #{targetId}, </if>
+            <if test="creatorId != null" >`creator_id` = #{creatorId}, </if>
+            <if test="createTime != null" >`create_time` = #{createTime}, </if>
+            <if test="updaterId != null" >`updater_id` = #{updaterId}, </if>
+            <if test="updateTime != null" >`update_time` = #{updateTime}, </if>
+            <if test="aliveFlag != null" >`alive_flag` = #{aliveFlag}, </if>
+        </set>
+        where `alive_flag` = 1
+            and `id` = #{id}
+    </update>
+
+    <select id="countSelective" resultType="int" parameterType="sagiri.content.persistence.entity.ArticleRelation" >
+        select
+            count(0)
+        from `t_article_relation`
+        where `alive_flag` = 1
+            <include refid="Base_Selective_Where" />
+    </select>
+
+    <select id="queryByPrimaryKey" resultMap="BaseResultMap" >
+        select
+            <include refid="Base_Column_List" />
+        from `t_article_relation`
+        where `alive_flag` = 1
+            and `id` = #{id}
+    </select>
+
+    <select id="queryByPrimaryKeyList" resultMap="BaseResultMap" >
+        select
+            <include refid="Base_Column_List" />
+        from `t_article_relation`
+        where `alive_flag` = 1
+            and `id` in
+            <foreach collection="idList" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+            </foreach>
+    </select>
+
+    <select id="findOne" resultMap="BaseResultMap" parameterType="sagiri.content.persistence.entity.ArticleRelation">
+        select
+            <include refid="Base_Column_List" />
+        from `t_article_relation`
+        where `alive_flag` = 1
+            <include refid="Base_Selective_Where" />
+        limit 1
+    </select>
+
+    <select id="querySelective" resultMap="BaseResultMap" parameterType="sagiri.content.persistence.entity.ArticleRelation">
+        select
+            <include refid="Base_Column_List" />
+        from `t_article_relation`
+        where `alive_flag` = 1
+            <include refid="Base_Selective_Where" />
+    </select>
+    <!-- **** (End) This will be covered, please do not modify. **** -->
+    <!-- Generated by artoria-extend in 2021-03-05T10:23:45.759+0800. -->
+
+    <delete id="batchDelete">
+        update `t_article_relation`
+        set
+            `updater_id` = #{updaterId},
+            `update_time` = NOW(),
+            `alive_flag` = 0
+        where `alive_flag` = 1
+            and `article_id` = #{articleId}
+            <if test="type != null">and `type` = #{type}</if>
+            <if test="targetIdList != null and targetIdList.size() > 0">
+                and `target_id` in
+                <foreach collection="targetIdList" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+    </delete>
+
+    <select id="findListByArticleIdList" resultMap="BaseResultMap" >
+        select
+            `id`,
+            `article_id`,
+            `type`,
+            `target_id`
+        from `t_article_relation`
+        where `alive_flag` = 1
+            <if test="type != null">and `type` = #{type}</if>
+            and `article_id` in
+            <foreach collection="articleIdList" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+    </select>
+
+</mapper>

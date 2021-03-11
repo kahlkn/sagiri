@@ -19,7 +19,7 @@ public class ArticlePageController {
     /**
      * 文章的列表页面
      */
-    @RequestMapping(value = "/admin/articles", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/article/list", method = RequestMethod.GET)
     public String articleListPage(Model model) {
         model.addAttribute("app", SysUtils.app());
         return "/admin/articles";

@@ -30,10 +30,6 @@ public class Article implements Serializable {
      */
     private Integer type;
     /**
-     * 文章分类ID
-     */
-    private Long categoryId;
-    /**
      * 作者ID
      */
     private String authorId;
@@ -57,6 +53,30 @@ public class Article implements Serializable {
      * 发布时间
      */
     private Date releaseTime;
+    /**
+     * 自定义访问路径
+     */
+    private String slug;
+    /**
+     * 封面图
+     */
+    private String thumbImg;
+    /**
+     * 标签
+     */
+    private String tags;
+    /**
+     * 分类
+     */
+    private String categories;
+    /**
+     * Ping
+     */
+    private Integer allowPing;
+    /**
+     * Feed
+     */
+    private Integer allowFeed;
     /**
      * 创建者ID
      */

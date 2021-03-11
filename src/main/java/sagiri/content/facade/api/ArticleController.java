@@ -51,7 +51,7 @@ public class ArticleController {
     @RequestMapping(value = "/api/admin/article/detail", method = RequestMethod.POST)
     public Result<Object> detail(@RequestBody ArticleDTO articleDTO) {
 
-        return new Result<Object>(articleService.findById(articleDTO.getId()));
+        return new Result<Object>(articleService.detail(articleDTO.getId()));
     }
 
     @ResponseBody

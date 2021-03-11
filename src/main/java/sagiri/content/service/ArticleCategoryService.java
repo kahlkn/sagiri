@@ -32,6 +32,11 @@ public interface ArticleCategoryService {
     ArticleCategoryDTO findById(Long categoryId);
 
     /**
+     * 根据文章分类ID集合批量查询文章分类对象集合
+     */
+    List<ArticleCategoryDTO> findListByIdList(List<Long> categoryIdList);
+
+    /**
      * 条件查询文章分类的选择列表
      */
     List<ArticleCategoryDTO> selectList(ArticleCategoryDTO categoryDTO);

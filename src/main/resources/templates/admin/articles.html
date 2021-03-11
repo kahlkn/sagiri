@@ -72,14 +72,14 @@
                                 <tbody>
                                 <tr v-for="item in articlePage.data">
                                     <td>
-                                        <a :href="'/admin/article/edit/' + item.cid">{{ item.id }}</a>
+                                        <a :href="'/admin/article/edit/' + item.id">{{ item.id }}</a>
                                     </td>
                                     <td>
-                                        <a :href="'/admin/article/edit/' + item.cid">{{ item.title }}</a>
+                                        <a :href="'/admin/article/edit/' + item.id">{{ item.title }}</a>
                                     </td>
                                     <td>{{ item.type }}</td>
-                                    <td>{{ item.category }}</td>
-                                    <td>{{ item.authorName }}</td>
+                                    <td>{{ item.categoryId }}</td>
+                                    <td>{{ item.authorId }}</td>
                                     <td>{{ item.origin }}</td>
                                     <td>
                                         <span v-show="item.status == '0'" class="label label-default">草稿</span>
@@ -95,7 +95,7 @@
                                            class="btn btn-danger btn-sm waves-effect waves-light m-b-5">
                                             <i class="fa fa-trash-o"></i> <span>删除</span>
                                         </a>
-                                        <a v-show="item.status == 'publish'"
+                                        <a v-show="item.status == 1"
                                            class="btn btn-warning btn-sm waves-effect waves-light m-b-5"
                                            :href="'${site_url()}' + item.url"
                                            target="_blank">

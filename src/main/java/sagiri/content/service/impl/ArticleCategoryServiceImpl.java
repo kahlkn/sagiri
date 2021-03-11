@@ -3,6 +3,7 @@ package sagiri.content.service.impl;
 import artoria.beans.BeanUtils;
 import artoria.exception.VerifyUtils;
 import artoria.user.UserInfo;
+import artoria.util.CollectionUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -90,6 +91,16 @@ public class ArticleCategoryServiceImpl implements ArticleCategoryService {
         // 查询
         ArticleCategory articleCategory = articleCategoryMapper.queryByPrimaryKey(categoryId);
         return BeanUtils.beanToBean(articleCategory, ArticleCategoryDTO.class);
+    }
+
+    @Override
+    public List<ArticleCategoryDTO> findListByIdList(List<Long> categoryIdList) {
+        // 参数校验
+        VerifyUtils.notEmpty(categoryIdList, E12110121);
+        // 查询
+        categoryIdList = CollectionUtils.removeDuplicate(categoryIdList);
+        List<ArticleCategory> categoryList = articleCategoryMapper.queryByPrimaryKeyList(categoryIdList);
+        return BeanUtils.beanToBeanInList(categoryList, ArticleCategoryDTO.class);
     }
 
     @Override
