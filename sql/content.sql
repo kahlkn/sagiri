@@ -45,6 +45,9 @@ CREATE TABLE `t_article` (
   `origin` varchar(200) NOT NULL DEFAULT '' COMMENT '文章来源',
   `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '状态：0 草稿，1 发布',
   `release_time` datetime DEFAULT NULL COMMENT '发布时间',
+  `allow_feed` tinyint(4) NOT NULL DEFAULT '1' COMMENT '允许Feed：0 不允许，1 允许',
+  `allow_ping` tinyint(4) NOT NULL DEFAULT '1' COMMENT '允许Ping：0 不允许，1 允许',
+  `allow_comment` tinyint(4) NOT NULL DEFAULT '1' COMMENT '允许评论：0 不允许，1 允许',
   `creator_id` varchar(32) NOT NULL COMMENT '创建者ID',
   `create_time` datetime NOT NULL COMMENT '创建时间',
   `updater_id` varchar(32) NOT NULL COMMENT '更新者ID',
@@ -62,8 +65,7 @@ CREATE TABLE `t_article` (
 ALTER TABLE `sagiri`.`t_article`
 ADD COLUMN `tags` varchar(200) NOT NULL DEFAULT '' COMMENT '标签' AFTER `thumb_img`,
 ADD COLUMN `categories` varchar(200) NOT NULL DEFAULT '' COMMENT '分类' AFTER `tags`,
-ADD COLUMN `allow_ping` tinyint(4) NOT NULL DEFAULT '1' COMMENT 'Ping' AFTER `categories`,
-ADD COLUMN `allow_feed` tinyint(4) NOT NULL DEFAULT '1' COMMENT 'Feed'AFTER `allow_ping`;
+;
 
 
 

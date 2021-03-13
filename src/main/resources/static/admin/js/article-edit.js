@@ -34,7 +34,7 @@ var vm = new Vue({
         var $vm = this;
 
         $("#form_datetime").datetimepicker({
-            format: 'yyyy-mm-dd hh:ii',
+            format: 'yyyy-mm-dd hh:ii:ss',
             autoclose: true,
             todayBtn: true,
             weekStart: 1,
@@ -112,7 +112,6 @@ var vm = new Vue({
                 url: '/api/admin/article/detail',
                 data: { id : articleId },
                 success: function (result) {
-                    alert(JSON.stringify(result.data));
                     $vm.article = result.data;
                     $vm.article.tags = result.data.tags || "";
                     $vm.article.selected = [];
@@ -122,7 +121,8 @@ var vm = new Vue({
                         $vm.article.selected.push(selected[item]);
                     }
 
-                    $vm.article.createdTime = moment.unix($vm.article.created).format('YYYY-MM-DD HH:mm')
+                    //$vm.article.createdTime = moment.unix($vm.article.created).format('YYYY-MM-DD HH:mm');
+                    $vm.article.releaseTime = moment.unix($vm.article.releaseTime/1000).format('YYYY-MM-DD HH:mm:ss');
 
                     var tags = result.data.tags.split(',');
                     for(i in tags){
@@ -199,11 +199,12 @@ var vm = new Vue({
                 $vm.article.categories = $vm.article.selected.join(',');
                 var params = tale.copy($vm.article);
                 params.selected = null;
-                params.created = moment($('#form_datetime').val(), "YYYY-MM-DD HH:mm").unix();
+                //params.created = moment($('#form_datetime').val(), "YYYY-MM-DD HH:mm").unix();
+                params.releaseTime = moment($('#form_datetime').val(), 'YYYY-MM-DD HH:mm:ss').unix() * 1000;
                 params.tags = $('#tags').val();
 
                 tale.post({
-                    url: '/admin/api/article/update',
+                    url: '/api/admin/article/edit',
                     data: params,
                     success: function (result) {
                         if (result && result.success) {

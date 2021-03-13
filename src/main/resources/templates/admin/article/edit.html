@@ -106,7 +106,7 @@
                         <div class="text-left">
                             <label class="col-sm-2 control-label" style="line-height: 30px;">发布时间</label>
                             <div class="col-sm-9 input-append date form_datetime">
-                                <input v-model="article.createdTime" style="width: 150px;" size="16" type="text" readonly class="form-control" id="form_datetime">
+                                <input v-model="article.releaseTime" style="width: 200px;" size="16" type="text" readonly class="form-control" id="form_datetime">
                             </div>
                         </div>
                     </div>
@@ -136,6 +136,6 @@
 </div>
 <div th:include="admin/include::footer_with_editor_js"></div>
 
-<script th:src="@{'/admin/js/edit_article.js?v={version}'(version=${app.version})}" ></script>
+<script th:src="@{'/admin/js/article-edit.js?v={version}'(version=${app.version})}" ></script>
 </body>
 </html>

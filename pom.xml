@@ -103,13 +103,13 @@
         <dependency>
             <groupId>com.github.kahlkn</groupId>
             <artifactId>artoria</artifactId>
-            <version>1.0.0.20190646-SNAPSHOT</version>
+            <version>1.0.0.20190647-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>com.github.kahlkn</groupId>
             <artifactId>artoria-extend</artifactId>
-            <version>1.0.0.20190646-SNAPSHOT</version>
+            <version>1.0.0.20190647-SNAPSHOT</version>
         </dependency>
 
         <dependency>
