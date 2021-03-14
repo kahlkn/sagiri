@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
-<head th:include="admin/include::header_with_editor('编辑文章')"></head>
+<head>
+    <th:block th:include="admin/include::header_content('编辑文章')"></th:block>
+    <th:block th:include="admin/include::header_editor"></th:block>
+</head>
 
 <body class="fixed-left">
 <div id="wrapper">
@@ -39,11 +42,29 @@
                     </div>
 
                     <div class="form-group col-md-6">
-                        <v-select multiple v-model="article.selected" :options="categories"></v-select>
+                        <select v-model="article.type" class="form-control">
+                            <option value="" selected>文章类型</option>
+                            <option value="0">默认文章</option>
+                            <option value="1">我的文章</option>
+                            <option value="2">笔记文章</option>
+                            <option value="6">网络文章</option>
+                        </select>
                     </div>
 
                     <div class="form-group col-md-6">
-                        <input id="tags" type="text" class="form-control" placeholder="请填写文章标签" v-model="article.tags"/>
+                        <v-select multiple v-model="category.selected" :options="category.all"></v-select>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <select v-model="article.authorId" class="form-control" required>
+                            <option value="" selected>文章作者（必须）</option>
+                            <option value="1">默认</option>
+                            <option value="2">爬虫</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <input id="tags" type="text" class="form-control" placeholder="请填写文章标签"/>
                     </div>
 
                     <div class="clearfix"></div>
@@ -114,10 +135,10 @@
                     <div class="form-group col-md-6">
                         <div class="text-right">
                             <a class="btn btn-default waves-effect waves-light" href="/admin/articles">返回列表</a>
-                            <button type="button" class="btn btn-primary waves-effect waves-light" @click="publish('publish')">
+                            <button type="button" class="btn btn-primary waves-effect waves-light" @click="publish(1)">
                                 发布文章
                             </button>
-                            <button type="button" class="btn btn-warning waves-effect waves-light" @click="publish('draft')">
+                            <button type="button" class="btn btn-warning waves-effect waves-light" @click="publish(0)">
                                 存为草稿
                             </button>
                         </div>

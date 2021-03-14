@@ -37,7 +37,7 @@ public class IdentifierAutoConfiguration {
         idGenerator.setTableName(TABLE_NAME);
         idGenerator.setName("ID_GENERATOR:FILE");
         idGenerator.setNumberLength(12);
-        idGenerator.setOffset(110000100000L);
+        idGenerator.setOffset(100000100000L);
         return idGenerator;
     }
 

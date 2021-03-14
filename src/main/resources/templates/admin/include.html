@@ -1,14 +1,15 @@
 
 
-<head th:fragment="header(title)">
-    <meta charset="utf-8"/>
+<th:block th:fragment="header_content(title)"><!--/*-->
+<!--*/--><meta charset="utf-8"/>
     <title th:text="${title} + ' - Sagiri'">Sagiri</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <meta content="biezhi" name="author"/>
     <meta content="${_csrf_token}" name="csrf_token"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <link rel="shortcut icon" href="/static/admin/images/favicon.png"/>
+    <link rel="shortcut icon" href="/admin/images/favicon.png"/>
     #if(allow_cloud_CDN() == "true")
+    <th:block th:if="${app.allowCdn}">
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
     <link href="https://cdn.bootcss.com/limonte-sweetalert2/6.4.1/sweetalert2.min.css" rel="stylesheet"/>
@@ -20,7 +21,9 @@
     <script src="https://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.min.js"></script>
     <script src="https://cdn.bootcss.com/respond.js/1.4.0/respond.min.js"></script>
     <![endif]-->
+    </th:block>
     #else
+    <th:block th:unless="${app.allowCdn}">
     <link th:href="@{'{cdnUrl}/plugins/bootstrap/3.3.7/css/bootstrap.min.css'(cdnUrl=${app.cdnUrl})}" rel="stylesheet"/>
     <link th:href="@{'{cdnUrl}/plugins/font-awesome/4.7.0/css/font-awesome.min.css'(cdnUrl=${app.cdnUrl})}" rel="stylesheet"/>
     <link th:href="@{'{cdnUrl}/plugins/limonte-sweetalert2/6.4.1/sweetalert2.min.css'(cdnUrl=${app.cdnUrl})}" rel="stylesheet"/>
@@ -31,62 +34,27 @@
     <!--[if lt IE 9]>
     <script th:src="@{'{cdnUrl}/plugins/html5shiv/3.7.0/html5shiv.js'(cdnUrl=${app.cdnUrl})}"></script>
     <script th:src="@{'{cdnUrl}/plugins/respond.js/1.3.0/respond.min.js'(cdnUrl=${app.cdnUrl})}"></script>
-    <![endif]-->
-    #end
-</head>
+    <![endif]--><!--/*-->
+    <!--*/--></th:block><!--/*-->
+<!--*/--></th:block>
 
 
-<head th:fragment="header_with_editor(title)">
-    <meta charset="utf-8"/>
-    <title th:text="${title} + ' - Sagiri'">Sagiri</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <meta content="biezhi" name="author"/>
-    <meta content="${_csrf_token}" name="csrf_token"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <link rel="shortcut icon" href="/static/admin/images/favicon.png"/>
-    #if(allow_cloud_CDN() == "true")
-    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
-    <link href="https://cdn.bootcss.com/limonte-sweetalert2/6.4.1/sweetalert2.min.css" rel="stylesheet"/>
-    <link th:href="@{'{cdnUrl}/plugins/vue-loading/vue-loading.min.css'(cdnUrl=${app.cdnUrl})}" rel="stylesheet"/>
-    <link th:href="@{'{cdnUrl}/css/style.min.css?v={version}'(cdnUrl=${app.cdnUrl},version=${app.version})}" rel="stylesheet"/>
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.min.js"></script>
-    <script src="https://cdn.bootcss.com/respond.js/1.4.0/respond.min.js"></script>
-    <![endif]-->
-    #else
-    <link th:href="@{'{cdnUrl}/plugins/bootstrap/3.3.7/css/bootstrap.min.css'(cdnUrl=${app.cdnUrl})}" rel="stylesheet"/>
-    <link th:href="@{'{cdnUrl}/plugins/font-awesome/4.7.0/css/font-awesome.min.css'(cdnUrl=${app.cdnUrl})}" rel="stylesheet"/>
-    <link th:href="@{'{cdnUrl}/plugins/limonte-sweetalert2/6.4.1/sweetalert2.min.css'(cdnUrl=${app.cdnUrl})}" rel="stylesheet"/>
-    <link th:href="@{'{cdnUrl}/plugins/vue-loading/vue-loading.min.css'(cdnUrl=${app.cdnUrl})}" rel="stylesheet"/>
-    <link th:href="@{'{cdnUrl}/css/style.min.css?v={version}'(cdnUrl=${app.cdnUrl},version=${app.version})}" rel="stylesheet"/>
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script th:src="@{'{cdnUrl}/plugins/html5shiv/3.7.0/html5shiv.js'(cdnUrl=${app.cdnUrl})}"></script>
-    <script th:src="@{'{cdnUrl}/plugins/respond.js/1.3.0/respond.min.js'(cdnUrl=${app.cdnUrl})}"></script>
-    <![endif]-->
-    #end
-
+<th:block th:fragment="header_editor"><!--/*-->
+<!--*/--><!-- Editor Style -->
     <link th:href="@{'{cdnUrl}/plugins/tagsinput/jquery.tagsinput.css'(cdnUrl=${app.cdnUrl})}" rel="stylesheet">
     <link th:href="@{'{cdnUrl}/plugins/toggles/toggles.css'(cdnUrl=${app.cdnUrl})}" rel="stylesheet">
     <link th:href="@{'{cdnUrl}/plugins/datetimepicker/bootstrap-datetimepicker.min.css'(cdnUrl=${app.cdnUrl})}" rel="stylesheet">
     <link th:href="@{'{cdnUrl}/plugins/mditor/css/mditor.min.css'(cdnUrl=${app.cdnUrl})}" rel="stylesheet"/>
     <link th:href="@{'{cdnUrl}/plugins/summernote/0.8.2/summernote.css'(cdnUrl=${app.cdnUrl})}" rel="stylesheet">
     <link th:href="@{'{cdnUrl}/plugins/dropzone/4.3.0/min/dropzone.min.css'(cdnUrl=${app.cdnUrl})}" rel="stylesheet">
-
     <style rel="stylesheet">
         #tags_tagsinput {
             background-color: #fafafa;
             border: 1px solid #eeeeee;
         }
-
         #tags_addTag input {
             width: 100%;
         }
-
         #tags_addTag {
             margin-top: -5px;
         }
@@ -104,11 +72,9 @@
         .note-toolbar {
             text-align: center;
         }
-
         .note-editor.note-frame {
             border: none;
         }
-
         .note-editor .note-toolbar {
             background-color: #f5f5f5;
             padding-bottom: 10px;
@@ -117,7 +83,6 @@
         .note-toolbar .note-btn-group {
             margin: 0;
         }
-
         .note-toolbar .note-btn {
             border: none;
         }
@@ -142,8 +107,8 @@
             display: block;
             margin-top: 1.4rem;
         }
-    </style>
-</head>
+    </style><!--/*-->
+<!--*/--></th:block>
 
 
 

@@ -30,7 +30,7 @@ public class ArticleController {
     @RequestMapping(value = "/api/admin/article/add", method = RequestMethod.POST)
     public Result<Object> add(@RequestBody ArticleDTO articleDTO) {
         articleService.add(articleDTO);
-        return new Result<>();
+        return new Result<Object>(articleDTO.getId());
     }
 
     @ResponseBody

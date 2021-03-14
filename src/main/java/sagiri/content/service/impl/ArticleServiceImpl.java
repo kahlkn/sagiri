@@ -61,9 +61,9 @@ public class ArticleServiceImpl implements ArticleService {
         Date nowDate = new Date();
         // 转换和处理
         Article article = BeanUtils.beanToBean(articleDTO, Article.class);
-        if (article.getStatus() == ONE) {
+//        if (article.getStatus() == ONE) {
             article.setReleaseTime(nowDate);
-        }
+//        }
         article.setCreatorId(loginId);
         article.setCreateTime(nowDate);
         article.setUpdaterId(loginId);
@@ -72,6 +72,7 @@ public class ArticleServiceImpl implements ArticleService {
         // 新增
         int effect = articleMapper.insertSelective(article);
         VerifyUtils.isTrue(effect == ONE, E12110041);
+        articleDTO.setId(article.getId());
     }
 
     @Override
@@ -86,9 +87,9 @@ public class ArticleServiceImpl implements ArticleService {
         Date nowDate = new Date();
         // 转换和处理
         Article article = BeanUtils.beanToBean(articleDTO, Article.class);
-        if (article.getStatus() == ONE) {
-            article.setReleaseTime(nowDate);
-        }
+//        if (article.getStatus() == ONE) {
+//            article.setReleaseTime(nowDate);
+//        }
         article.setType(null);
         article.setUpdaterId(loginId);
         article.setUpdateTime(nowDate);
@@ -121,7 +122,11 @@ public class ArticleServiceImpl implements ArticleService {
         }
         int length = builder.length();
         if (length > ZERO) { builder.deleteCharAt(length - ONE); }
+        articleDTO.setAllowFeed(ZERO);
+        articleDTO.setAllowPing(ONE);
+        articleDTO.setAllowComment(ZERO);
         articleDTO.setCategories(builder.toString());
+        articleDTO.setTags("测试标签1,测试标签2,标签3,可爱,世界第一,元气满满");
         return articleDTO;
     }
 

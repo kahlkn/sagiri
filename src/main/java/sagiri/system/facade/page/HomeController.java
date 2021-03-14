@@ -10,11 +10,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class HomeController {
 
-    @ResponseBody
+//    @ResponseBody
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String home() {
 
-        return "Hello, Sagiri! ";
+//        return "Hello, Sagiri! ";
+        return "redirect:/admin/article/list";
     }
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)

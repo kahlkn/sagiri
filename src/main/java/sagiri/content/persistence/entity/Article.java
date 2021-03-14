@@ -26,6 +26,10 @@ public class Article implements Serializable {
      */
     private String title;
     /**
+     * 自定义访问路径
+     */
+    private String slug;
+    /**
      * 文章类型
      */
     private Integer type;
@@ -34,49 +38,29 @@ public class Article implements Serializable {
      */
     private String authorId;
     /**
-     * 文章内容
+     * 缩略图
      */
-    private String content;
+    private String thumbnail;
     /**
      * 文章格式
      */
     private String format;
     /**
+     * 文章内容
+     */
+    private String content;
+    /**
      * 文章来源
      */
     private String origin;
-    /**
-     * 状态：0 草稿，1 发布
-     */
-    private Integer status;
     /**
      * 发布时间
      */
     private Date releaseTime;
     /**
-     * 自定义访问路径
+     * 状态：0 草稿，1 发布
      */
-    private String slug;
-    /**
-     * 封面图
-     */
-    private String thumbImg;
-    /**
-     * 标签
-     */
-    private String tags;
-    /**
-     * 分类
-     */
-    private String categories;
-    /**
-     * Ping
-     */
-    private Integer allowPing;
-    /**
-     * Feed
-     */
-    private Integer allowFeed;
+    private Integer status;
     /**
      * 创建者ID
      */

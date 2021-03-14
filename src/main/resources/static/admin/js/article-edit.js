@@ -10,21 +10,27 @@ var vm = new Vue({
     el: '#app',
     data: {
         article: {
-            cid: '',
+            id: '',
             title: '',
             slug: '',
-            tags: '',
-            content: '',
-            status: 'draft',
+            type: '',
+            authorId: '',
+            thumbnail: '',
             format: 'markdown',
-            thumbImg: '',
-            allowComment: true,
-            allowPing: true,
-            allowFeed: true,
-            createdTime: moment().format('YYYY-MM-DD HH:mm:ss'),
-            selected: []
+            content: '',
+            origin: '',
+            releaseTime: moment().format('YYYY-MM-DD HH:mm:ss'),
+            status: '0',
+            allowFeed: 1,
+            allowPing: 1,
+            allowComment: 1,
+            categories: '',
+            tags: ''
         },
-        categories: [],
+        category: {
+            selected: [],
+            all: []
+        },
         isLoading: true
     },
     beforeCreate: function(){
@@ -85,7 +91,7 @@ var vm = new Vue({
         });
 
         $vm.load();
-        refreshIntervalId = setInterval("vm.autoSave()", 10 * 1000);
+        refreshIntervalId = setInterval("vm.autoSave()", 20 * 1000);
     },
     methods: {
         load: function () {
@@ -99,7 +105,8 @@ var vm = new Vue({
                 data: {},
                 success: function (result) {
                     result.data.forEach(function (item) {
-                        $vm.categories.push(item.name);
+                        // $vm.categories.push(item.name);
+                        $vm.category.all.push(item.name);
                     });
                 },
                 error: function (error) {
@@ -113,12 +120,12 @@ var vm = new Vue({
                 data: { id : articleId },
                 success: function (result) {
                     $vm.article = result.data;
-                    $vm.article.tags = result.data.tags || "";
-                    $vm.article.selected = [];
+                    //$vm.article.tags = result.data.tags || "";
+                    //$vm.category.selected = [];
 
                     var selected = result.data.categories.split(',');
                     for(item in selected){
-                        $vm.article.selected.push(selected[item]);
+                        $vm.category.selected.push(selected[item]);
                     }
 
                     //$vm.article.createdTime = moment.unix($vm.article.created).format('YYYY-MM-DD HH:mm');
@@ -153,7 +160,7 @@ var vm = new Vue({
                         }
                     });
 
-                    if($vm.article.thumbImg && $vm.article.thumbImg !== ''){
+                    if($vm.article.thumbnail && $vm.article.thumbnail !== ''){
                         $('#addThumb').toggles({
                             on: true,
                             text: {
@@ -161,12 +168,12 @@ var vm = new Vue({
                                 off: '取消'
                             }
                         });
-
                         $('#dropzone-container').removeClass('hide');
                         $('#dropzone-container').show();
                         $('.dz-image').hide();
-                        $('#dropzone').css('background-image', 'url(' + $vm.article.thumbImg + ')');
-                        $('#dropzone').css('background-size', 'cover');
+                        $('#dropzone').css('background-image', 'url(' + $vm.article.thumbnail + ')');
+                        $('#dropzone').css('background-size', 'contain');
+                        $('#dropzone').css('background-repeat', 'no-repeat');
                     } else {
                         $('#addThumb').toggles({
                             on: false,
@@ -196,9 +203,9 @@ var vm = new Vue({
             var content = $vm.article.format === 'markdown' ? mditor.value : htmlEditor.summernote('code');
             if ($vm.article.title !== '' && content !== '') {
                 $vm.article.content = content;
-                $vm.article.categories = $vm.article.selected.join(',');
+                $vm.article.categories = $vm.category.selected.join(',');
                 var params = tale.copy($vm.article);
-                params.selected = null;
+                //params.selected = null;
                 //params.created = moment($('#form_datetime').val(), "YYYY-MM-DD HH:mm").unix();
                 params.releaseTime = moment($('#form_datetime').val(), 'YYYY-MM-DD HH:mm:ss').unix() * 1000;
                 params.tags = $('#tags').val();
@@ -270,7 +277,7 @@ var vm = new Vue({
                     text: '文章保存成功',
                     then: function () {
                         setTimeout(function () {
-                            window.location.href = '/admin/articles';
+                            window.location.href = '/admin/article/list';
                         }, 500);
                     }
                 });
@@ -321,15 +328,15 @@ $(document).ready(function () {
     });
 
     $('#allowComment').on('toggle', function (e, active) {
-        vm.article.allowComment = active;
+        vm.article.allowComment = active ? 1 : 0;
     });
 
     $('#allowPing').on('toggle', function (e, active) {
-        vm.article.allowPing = active;
+        vm.article.allowPing = active ? 1 : 0;
     });
 
     $('#allowFeed').on('toggle', function (e, active) {
-        vm.article.allowFeed = active;
+        vm.article.allowFeed = active ? 1 : 0;
     });
 
     $('#addThumb').on('toggle', function (e, active) {
@@ -339,11 +346,11 @@ $(document).ready(function () {
             var thumbImage = $("#dropzone").css("backgroundImage");
             if(thumbImage && thumbImage.indexOf('url') !== -1){
                 thumbImage = thumbImage.split("(")[1].split(")")[0];
-                vm.article.thumbImg = thumbImage.substring(1, thumbImage.length - 1);
+                vm.article.thumbnail = thumbImage.substring(1, thumbImage.length - 1);
             }
         } else {
             $('#dropzone-container').addClass('hide');
-            vm.article.thumbImg = '';
+            vm.article.thumbnail = '';
         }
     });
 
@@ -354,9 +361,10 @@ $(document).ready(function () {
 
     // 缩略图上传
     $("#dropzone").dropzone({
-        url: "/admin/api/attach/upload",
+        url: "/file/upload",
         filesizeBase: 1024,//定义字节算法 默认1000
         maxFilesize: '10', //MB
+        paramName: 'files',
         fallback: function () {
             tale.alertError('暂不支持您的浏览器上传!');
         },
@@ -367,16 +375,23 @@ $(document).ready(function () {
             'X-CSRF-TOKEN': document.head.querySelector("[name=csrf_token]").content
         },
         init: function () {
+            this.on('sending', function (data, xhr, formData) {
+                //向后台发送该文件的参数
+                formData.append('folder', '123');
+            });
             this.on('success', function (files, result) {
                 console.log("upload success..");
                 console.log(" result => " + result);
                 if (result && result.success) {
-                    var url = attach_url + result.payload[0].fkey;
-                    console.log('url => ' + url);
+                    // var url = attach_url + result.payload[0].fkey;
+                    // console.log('url => ' + url);
+                    console.log(result);
+                    var url = result.data[0].address;
 
-                    vm.article.thumbImg = url;
+                    vm.article.thumbnail = url;
                     thumbdropzone.css('background-image', 'url(' + url + ')');
-                    thumbdropzone.css('background-size', 'cover');
+                    thumbdropzone.css('background-size', 'contain');
+                    thumbdropzone.css('background-repeat', 'no-repeat');
                     $('.dz-image').hide();
                 }
             });

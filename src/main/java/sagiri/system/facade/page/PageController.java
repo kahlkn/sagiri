@@ -27,7 +27,7 @@ public class PageController {
     @RequestMapping(value = "/admin/index", method = RequestMethod.GET)
     public String index(Model model) {
         model.addAttribute("app", SysUtils.app());
-        return "/admin/index";
+        return "admin/index";
     }
 
     /**
@@ -36,55 +36,55 @@ public class PageController {
     @RequestMapping(value = "/admin/profile", method = RequestMethod.GET)
     public String profile(Model model) {
         model.addAttribute("app", SysUtils.app());
-        return "/admin/profile";
+        return "admin/profile";
     }
 
     @RequestMapping(value = "/admin/login", method = RequestMethod.GET)
     public String login(Model model) {
         model.addAttribute("app", SysUtils.app());
-        return "/admin/login";
+        return "admin/login";
     }
 
     @RequestMapping(value = "/admin/attaches", method = RequestMethod.GET)
     public String attaches(Model model) {
         model.addAttribute("app", SysUtils.app());
-        return "/admin/attaches";
+        return "admin/attaches";
     }
 
     @RequestMapping(value = "/admin/categories", method = RequestMethod.GET)
     public String categories(Model model) {
         model.addAttribute("app", SysUtils.app());
-        return "/admin/categories";
+        return "admin/categories";
     }
 
     @RequestMapping(value = "/admin/comments", method = RequestMethod.GET)
     public String comments(Model model) {
         model.addAttribute("app", SysUtils.app());
-        return "/admin/comments";
+        return "admin/comments";
     }
 
     @RequestMapping(value = "/admin/pages", method = RequestMethod.GET)
     public String pages(Model model) {
         model.addAttribute("app", SysUtils.app());
-        return "/admin/pages";
+        return "admin/pages";
     }
 
     @RequestMapping(value = "/admin/setting", method = RequestMethod.GET)
     public String setting(Model model) {
         model.addAttribute("app", SysUtils.app());
-        return "/admin/setting";
+        return "admin/setting";
     }
 
     @RequestMapping(value = "/admin/themes", method = RequestMethod.GET)
     public String themes(Model model) {
         model.addAttribute("app", SysUtils.app());
-        return "/admin/themes";
+        return "admin/themes";
     }
 
     @RequestMapping(value = "/admin/tpl_list", method = RequestMethod.GET)
     public String tpl_list(Model model) {
         model.addAttribute("app", SysUtils.app());
-        return "/admin/tpl_list";
+        return "admin/tpl_list";
     }
 
 
@@ -93,13 +93,13 @@ public class PageController {
     @RequestMapping(value = "/admin/page/new", method = RequestMethod.GET)
     public String pageNew(Model model) {
         model.addAttribute("app", SysUtils.app());
-        return "/admin/page/new";
+        return "admin/page/new";
     }
 
     @RequestMapping(value = "/admin/page/edit", method = RequestMethod.GET)
     public String pageEdit(Model model) {
         model.addAttribute("app", SysUtils.app());
-        return "/admin/page/edit";
+        return "admin/page/edit";
     }
 
 }

@@ -31,7 +31,7 @@ public class FileController {
 
     @ResponseBody
     @RequestMapping(value = "/file/upload", method = RequestMethod.POST)
-    public Result<Object> uploadFiles(@RequestParam String folder,
+    public Result<Object> uploadFiles(@RequestParam(required = false) String folder,
                                       @RequestParam("files") List<MultipartFile> files) {
 
         return new Result<Object>(fileService.saveFiles(folder, files));

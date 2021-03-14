@@ -22,19 +22,19 @@ public class ArticlePageController {
     @RequestMapping(value = "/admin/article/list", method = RequestMethod.GET)
     public String articleListPage(Model model) {
         model.addAttribute("app", SysUtils.app());
-        return "/admin/articles";
+        return "admin/articles";
     }
 
     @RequestMapping(value = "/admin/article/add", method = RequestMethod.GET)
     public String articleNew(Model model) {
         model.addAttribute("app", SysUtils.app());
-        return "/admin/article/new";
+        return "admin/article/new";
     }
 
     @RequestMapping(value = "/admin/article/edit", method = RequestMethod.GET)
     public String articleEdit(Model model) {
         model.addAttribute("app", SysUtils.app());
-        return "/admin/article/edit";
+        return "admin/article/edit";
     }
 
 }
