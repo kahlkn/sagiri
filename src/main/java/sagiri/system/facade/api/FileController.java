@@ -1,6 +1,8 @@
 package sagiri.system.facade.api;
 
 import artoria.common.Result;
+import artoria.servlet.RequestUtils;
+import artoria.spring.RequestContextUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import sagiri.system.service.FileService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +38,11 @@ public class FileController {
     @RequestMapping(value = "/file/upload", method = RequestMethod.POST)
     public Result<Object> uploadFiles(@RequestParam(required = false) String folder,
                                       @RequestParam("files") List<MultipartFile> files) {
-
+        HttpServletRequest request = RequestContextUtils.getRequest();
+        String authorization = request.getHeader("Authorization");
+        if (!"123456".equals(authorization)) {
+            return new Result<>(false, null, "error!");
+        }
         return new Result<Object>(fileService.saveFiles(folder, files));
     }
 

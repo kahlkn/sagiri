@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.kahlkn</groupId>
     <artifactId>sagiri</artifactId>
-    <version>1.0.0.20190445-SNAPSHOT</version>
+    <version>1.0.0.20210627-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>Sagiri</name>
     <url>https://github.com/kahlkn/sagiri</url>
