@@ -1,9 +1,9 @@
 package sagiri;
 
+import artoria.engine.template.VelocityTemplateEngine;
 import artoria.generator.JavaCodeGenerator1;
 import artoria.jdbc.DatabaseClient;
 import artoria.jdbc.SimpleDataSource;
-import artoria.template.VelocityTemplateEngine;
 import org.junit.Ignore;
 import org.junit.Test;
 

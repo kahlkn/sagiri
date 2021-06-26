@@ -1,7 +1,7 @@
 package sagiri.system.common.config;
 
-import artoria.identifier.JdbcStringIdGenerator;
-import artoria.identifier.StringIdentifierGenerator;
+import artoria.identifier.JdbcTimeBasedIdGenerator;
+import artoria.identifier.LongIdentifierGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +17,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 @Configuration
 public class IdentifierAutoConfiguration {
     private static Logger log = LoggerFactory.getLogger(IdentifierAutoConfiguration.class);
+    private static final String EXPIRE_COLUMN = "expire";
     private static final String VALUE_COLUMN = "value";
     private static final String NAME_COLUMN = "name";
     private static final String TABLE_NAME = "t_identifier";
@@ -30,14 +31,13 @@ public class IdentifierAutoConfiguration {
     }
 
     @Bean(name = "fileIdGenerator")
-    public StringIdentifierGenerator fileIdGenerator() {
-        JdbcStringIdGenerator idGenerator = new JdbcStringIdGenerator(transactionTemplate, jdbcTemplate);
+    public LongIdentifierGenerator fileIdGenerator() {
+        JdbcTimeBasedIdGenerator idGenerator = new JdbcTimeBasedIdGenerator(transactionTemplate, jdbcTemplate);
+        idGenerator.setExpireColumn(EXPIRE_COLUMN);
         idGenerator.setValueColumn(VALUE_COLUMN);
         idGenerator.setNameColumn(NAME_COLUMN);
         idGenerator.setTableName(TABLE_NAME);
         idGenerator.setName("ID_GENERATOR:FILE");
-        idGenerator.setNumberLength(12);
-        idGenerator.setOffset(100000100000L);
         return idGenerator;
     }
 

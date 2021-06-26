@@ -48,7 +48,7 @@ public class PageController {
     @RequestMapping(value = "/admin/attaches", method = RequestMethod.GET)
     public String attaches(Model model) {
         model.addAttribute("app", SysUtils.app());
-        return "admin/attaches";
+        return "admin/files";
     }
 
     @RequestMapping(value = "/admin/categories", method = RequestMethod.GET)

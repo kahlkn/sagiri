@@ -2,6 +2,7 @@ package sagiri.system.service;
 
 import artoria.storage.StorageObject;
 import org.springframework.web.multipart.MultipartFile;
+import sagiri.system.service.dto.FileDTO;
 import sagiri.system.service.dto.FileInfo;
 
 import javax.servlet.http.HttpServletResponse;
@@ -11,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 
 public interface FileService {
+
+    List<FileDTO> list(String currentPath, String selected);
 
     /**
      * 保存文件

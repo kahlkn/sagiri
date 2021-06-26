@@ -103,25 +103,25 @@
         <dependency>
             <groupId>com.github.kahlkn</groupId>
             <artifactId>artoria</artifactId>
-            <version>1.0.0.20190647-SNAPSHOT</version>
+            <version>1.0.0.20210627-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>com.github.kahlkn</groupId>
             <artifactId>artoria-extend</artifactId>
-            <version>1.0.0.20190647-SNAPSHOT</version>
+            <version>1.0.0.20210627-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>com.github.kahlkn</groupId>
             <artifactId>misaka</artifactId>
-            <version>1.0.0.20190646-SNAPSHOT</version>
+            <version>1.0.0.20191024.beta</version>
         </dependency>
 
         <dependency>
             <groupId>com.github.kahlkn</groupId>
             <artifactId>misaka-extend</artifactId>
-            <version>1.0.0.20190646-SNAPSHOT</version>
+            <version>1.0.0.20191024.beta</version>
         </dependency>
 
         <dependency>
@@ -151,6 +151,23 @@
             <artifactId>jmh-generator-annprocess</artifactId>
             <version>1.21</version>
             <scope>provided</scope>
+        </dependency>
+
+        <!--<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>-->
+
+        <!--markdown处理-->
+        <dependency>
+            <groupId>com.atlassian.commonmark</groupId>
+            <artifactId>commonmark</artifactId>
+            <version>0.11.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.commonmark</groupId>
+            <artifactId>commonmark-ext-gfm-tables</artifactId>
+            <version>0.11.0</version>
         </dependency>
 
     </dependencies>

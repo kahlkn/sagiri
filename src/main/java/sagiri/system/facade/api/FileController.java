@@ -10,6 +10,7 @@ import sagiri.system.service.FileService;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -18,14 +19,15 @@ public class FileController {
     @Autowired
     private FileService fileService;
 
-    @RequestMapping(value = "/file/{folder}/{year}/{month}/{day}/{name}", method = RequestMethod.GET)
+    @RequestMapping(value = "/file/{folder}/{year}/{month}/{day}/{part}/{name}", method = RequestMethod.GET)
     public void readFile(@PathVariable String folder,
                          @PathVariable String year,
                          @PathVariable String month,
                          @PathVariable String day,
+                         @PathVariable String part,
                          @PathVariable String name,
                          HttpServletResponse response) {
-        String address = String.format("/file/%s/%s/%s/%s/%s", folder, year, month, day, name);
+        String address = String.format("/file/%s/%s/%s/%s/%s/%s", folder, year, month, day, part, name);
         fileService.readFile(address, response);
     }
 
@@ -35,6 +37,14 @@ public class FileController {
                                       @RequestParam("files") List<MultipartFile> files) {
 
         return new Result<Object>(fileService.saveFiles(folder, files));
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/file/list", method = RequestMethod.POST)
+    public Result<Object> listFiles(@RequestBody Map<String, Object> map) {
+        String currentPath = (String) map.get("currentPath");
+        String selected = (String) map.get("selected");
+        return new Result<Object>(fileService.list(currentPath, selected));
     }
 
 }

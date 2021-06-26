@@ -80,7 +80,7 @@ public class DomainInfoServiceImpl implements DomainInfoService {
     @Override
     public void addDomainInfoByName(String domainName, boolean saveRegistered, boolean saveUnregistered) {
         if (!saveRegistered && !saveUnregistered) { return; }
-        WhoisObject whoisObject = whoisProvider.findWhois(domainName);
+        WhoisObject whoisObject = whoisProvider.findByDomainName(domainName);
         if (whoisObject == null) {
             throw new BusinessException("Domain name cannot be found. ");
         }
